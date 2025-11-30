@@ -16,6 +16,7 @@
   --accent: #4a5568;
   --danger: #e53e3e;
   --success: #38a169;
+  --warning: #d69e2e;
   --shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   --radius: 12px;
   --maxWidth: 1200px;
@@ -286,6 +287,10 @@ body {
   background: var(--success);
 }
 
+.btn.warning {
+  background: var(--warning);
+}
+
 #authModal {
   display: none;
   position: fixed;
@@ -350,7 +355,7 @@ body {
 }
 
 .toast.warning {
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid var(--warning);
 }
 
 .loading {
@@ -407,6 +412,7 @@ body {
   display: flex;
   gap: 12px;
   margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
 .admin-table {
@@ -424,6 +430,34 @@ body {
 .admin-table th {
   background: #f8fafc;
   font-weight: 600;
+}
+
+/* Role badges */
+.role-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.role-admin {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.role-leader {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.role-student {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.role-owner {
+  background: #f3e8ff;
+  color: #7c3aed;
 }
 
 /* Create forms */
@@ -572,6 +606,37 @@ body {
 .form-row > * {
   flex: 1;
 }
+
+/* Role selector styles */
+.role-selector {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.role-option {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.role-option.selected {
+  border-color: var(--primary);
+  background: #f7fafc;
+}
+
+.role-option input {
+  display: none;
+}
+
+/* Admin-only content */
+.admin-only {
+  display: none;
+}
 </style>
 </head>
 <body>
@@ -598,7 +663,7 @@ body {
       <div class="nav-item" data-tab="events">
         <span class="material-symbols-outlined icon">event</span>Events
       </div>
-      <div class="nav-item" data-tab="conversations">
+      <div id="conversationsNav" class="nav-item admin-only" data-tab="conversations">
         <span class="material-symbols-outlined icon">chat_bubble</span>Conversations
       </div>
       <div class="nav-item" data-tab="clubs">
@@ -610,7 +675,7 @@ body {
       <div class="nav-item" data-tab="profile">
         <span class="material-symbols-outlined icon">person</span>Profile
       </div>
-      <div id="adminNav" class="nav-item" data-tab="admin" style="display:none">
+      <div id="adminNav" class="nav-item admin-only" data-tab="admin">
         <span class="material-symbols-outlined icon">admin_panel_settings</span>Admin Panel
       </div>
       <!-- Club tabs will be dynamically added here -->
@@ -664,7 +729,7 @@ body {
       <div id="eventsList"></div>
     </section>
     
-    <section id="conversations" class="card" style="display:none">
+    <section id="conversations" class="card admin-only" style="display:none">
       <h3>Conversations</h3>
       <div class="chat-area">
         <div class="chat-window" id="chatWindow"></div>
@@ -678,7 +743,7 @@ body {
     <section id="clubs" class="card" style="display:none">
       <div class="section-title">
         <h3>Clubs</h3>
-        <button id="createClubBtn" class="btn" style="display:none">Create Club</button>
+        <button id="createClubBtn" class="btn admin-only">Create Club</button>
       </div>
       <div id="clubsList"></div>
     </section>
@@ -705,11 +770,12 @@ body {
       </div>
     </section>
     
-    <section id="admin" class="card" style="display:none">
+    <section id="admin" class="card admin-only" style="display:none">
       <h3>Admin Panel</h3>
       <div class="admin-controls">
         <button id="manageUsersBtn" class="btn">Manage Users</button>
         <button id="systemStatsBtn" class="btn">System Stats</button>
+        <button id="manageRolesBtn" class="btn">Manage Roles</button>
       </div>
       <div id="adminContent"></div>
     </section>
@@ -741,11 +807,6 @@ body {
       <button id="modalRegister" class="btn ghost">Register</button>
       <button id="modalLogin" class="btn">Login</button>
     </div>
-    <div style="margin-top: 16px; padding: 12px; background: #f0f7ff; border-radius: 8px;">
-      <p style="margin: 0; font-size: 14px;"><strong>Demo Accounts:</strong></p>
-      <p style="margin: 4px 0; font-size: 12px;">Admin: admin@portal.com / admin123</p>
-      <p style="margin: 4px 0; font-size: 12px;">Student: student@portal.com / student123</p>
-    </div>
   </div>
 </div>
 
@@ -775,6 +836,32 @@ body {
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
       <button id="cancelProjectBtn" class="btn ghost">Cancel</button>
       <button id="saveProjectBtn" class="btn">Create Project</button>
+    </div>
+  </div>
+</div>
+
+<!-- Role Management Modal -->
+<div id="roleModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.45);align-items:center;justify-content:center;z-index:1000;">
+  <div style="background:var(--surface);padding:22px;border-radius:12px;max-width:520px;width:100%;box-shadow:var(--shadow);">
+    <h3>Manage User Role</h3>
+    <div id="roleUserInfo" style="margin-bottom: 16px;"></div>
+    <div class="role-selector">
+      <label class="role-option" for="role-student">
+        <input type="radio" id="role-student" name="userRole" value="student">
+        <div>Student</div>
+      </label>
+      <label class="role-option" for="role-leader">
+        <input type="radio" id="role-leader" name="userRole" value="leader">
+        <div>Leader</div>
+      </label>
+      <label class="role-option" for="role-admin">
+        <input type="radio" id="role-admin" name="userRole" value="admin">
+        <div>Admin</div>
+      </label>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button id="cancelRoleBtn" class="btn ghost">Cancel</button>
+      <button id="saveRoleBtn" class="btn">Save Role</button>
     </div>
   </div>
 </div>
@@ -848,6 +935,58 @@ const openLoginBtn = document.getElementById("openLogin");
 openLoginBtn.addEventListener("click", () => authModal.style.display = "flex");
 authModal.addEventListener("click", e => { 
   if(e.target === authModal) authModal.style.display = "none"; 
+});
+
+// --- Role Management Modal ---
+const roleModal = document.getElementById("roleModal");
+const cancelRoleBtn = document.getElementById("cancelRoleBtn");
+const saveRoleBtn = document.getElementById("saveRoleBtn");
+let currentRoleUser = null;
+
+cancelRoleBtn.addEventListener("click", () => {
+  roleModal.style.display = "none";
+  currentRoleUser = null;
+});
+
+saveRoleBtn.addEventListener("click", () => {
+  if (!currentRoleUser) return;
+  
+  const selectedRole = document.querySelector('input[name="userRole"]:checked');
+  if (!selectedRole) {
+    showToast('Please select a role', 'error');
+    return;
+  }
+  
+  const newRole = selectedRole.value;
+  
+  saveRoleBtn.setAttribute('data-original-text', saveRoleBtn.textContent);
+  setLoading(saveRoleBtn, true);
+  
+  db.collection("users").doc(currentRoleUser.uid).update({
+    role: newRole,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    showToast(`Role updated to ${newRole} for ${currentRoleUser.name}`);
+    roleModal.style.display = "none";
+    currentRoleUser = null;
+    loadUsersForAdmin();
+  })
+  .catch(err => {
+    showToast(err.message, 'error');
+  })
+  .finally(() => {
+    setLoading(saveRoleBtn, false);
+  });
+});
+
+// Role selector interaction
+document.querySelectorAll('.role-option').forEach(option => {
+  option.addEventListener('click', () => {
+    document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
+    option.classList.add('selected');
+    option.querySelector('input').checked = true;
+  });
 });
 
 // --- Club Creation Modal ---
@@ -1010,24 +1149,37 @@ function sendMessage() {
     return;
   }
   
-  // Only admins can send messages
-  if (user.email !== "admin@portal.com") {
-    showToast('Only administrators can send messages', 'error');
-    return;
-  }
-  
-  db.collection("messages").add({
-    text: message,
-    sender: user.uid,
-    senderEmail: user.email,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  })
-  .then(() => {
-    chatInput.value = "";
-  })
-  .catch(err => {
-    showToast(err.message, 'error');
-  });
+  // Check if user has admin role
+  db.collection("users").doc(user.uid).get()
+    .then(doc => {
+      if (doc.exists) {
+        const userData = doc.data();
+        if (userData.role !== 'admin' && userData.role !== 'owner') {
+          showToast('Only administrators can send messages', 'error');
+          return;
+        }
+        
+        // User is admin/owner, allow sending message
+        db.collection("messages").add({
+          text: message,
+          sender: user.uid,
+          senderEmail: user.email,
+          senderName: userData.name || user.email,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+          chatInput.value = "";
+        })
+        .catch(err => {
+          showToast(err.message, 'error');
+        });
+      } else {
+        showToast('User data not found', 'error');
+      }
+    })
+    .catch(err => {
+      showToast(err.message, 'error');
+    });
 }
 
 // Load messages in real-time
@@ -1043,7 +1195,7 @@ db.collection("messages")
       
       const metaDiv = document.createElement("div");
       metaDiv.className = "meta";
-      metaDiv.textContent = `${message.senderEmail} - ${message.timestamp ? new Date(message.timestamp.toDate()).toLocaleString() : 'Just now'}`;
+      metaDiv.textContent = `${message.senderName || message.senderEmail} - ${message.timestamp ? new Date(message.timestamp.toDate()).toLocaleString() : 'Just now'}`;
       
       const textDiv = document.createElement("div");
       textDiv.textContent = message.text;
@@ -1123,7 +1275,12 @@ function saveProfile() {
         profileData.photoURL = photoURL;
       }
       
-      return db.collection("profiles").doc(user.uid).set(profileData, { merge: true });
+      // Update both profiles and users collections
+      const batch = db.batch();
+      batch.set(db.collection("profiles").doc(user.uid), profileData, { merge: true });
+      batch.set(db.collection("users").doc(user.uid), { name: name }, { merge: true });
+      
+      return batch.commit();
     })
     .then(() => {
       showToast("Profile saved successfully!");
@@ -1178,13 +1335,22 @@ document.getElementById("modalRegister").addEventListener("click", () => {
   
   auth.createUserWithEmailAndPassword(email, pass)
     .then(u => {
-      // Store user profile
+      // Store user profile and role
       const profileData = {
         firstName: firstName,
         lastName: lastName,
         name: `${firstName} ${lastName}`,
         email: email,
         grade: grade,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      // Set default role as student
+      const userData = {
+        uid: u.user.uid,
+        email: email,
+        name: `${firstName} ${lastName}`,
+        role: 'student', // Default role
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
       
@@ -1198,10 +1364,16 @@ document.getElementById("modalRegister").addEventListener("click", () => {
       }
       
       return uploadPromise.then(photoURL => {
+        const batch = db.batch();
+        
         if (photoURL) {
           profileData.photoURL = photoURL;
         }
-        return db.collection("profiles").doc(u.user.uid).set(profileData);
+        
+        batch.set(db.collection("profiles").doc(u.user.uid), profileData);
+        batch.set(db.collection("users").doc(u.user.uid), userData);
+        
+        return batch.commit();
       });
     })
     .then(() => {
@@ -1263,41 +1435,83 @@ auth.onAuthStateChanged(user => {
   const logoutBtn = document.getElementById("sidebarLogout");
   const adminNav = document.getElementById("adminNav");
   const createClubBtn = document.getElementById("createClubBtn");
+  const conversationsNav = document.getElementById("conversationsNav");
 
   if(user){
-    // Check if user is admin
-    const isAdmin = user.email === "admin@portal.com";
-    
-    // Load user profile to get name
-    db.collection("profiles").doc(user.uid).get()
+    // Load user data to get role
+    db.collection("users").doc(user.uid).get()
       .then(doc => {
         if (doc.exists) {
-          const data = doc.data();
-          sideName.textContent = data.name || user.email;
-          welcomeText.textContent = `Welcome, ${data.name || user.email}`;
+          const userData = doc.data();
+          const role = userData.role || 'student';
+          const name = userData.name || user.email;
+          
+          sideName.textContent = name;
+          welcomeText.textContent = `Welcome, ${name}`;
+          
+          // Set role display
+          let roleDisplay = '';
+          switch(role) {
+            case 'admin':
+              roleDisplay = 'Administrator';
+              break;
+            case 'leader':
+              roleDisplay = 'Club Leader';
+              break;
+            case 'owner':
+              roleDisplay = 'System Owner';
+              break;
+            default:
+              roleDisplay = 'Student';
+          }
+          
+          sideRole.textContent = roleDisplay;
+          welcomeSub.textContent = roleDisplay + ' Dashboard';
+          
+          // Show/hide admin features based on role
+          const isAdmin = role === 'admin' || role === 'owner';
+          if (isAdmin) {
+            document.querySelectorAll('.admin-only').forEach(el => {
+              el.style.display = 'block';
+            });
+            createClubBtn.style.display = "block";
+          } else {
+            document.querySelectorAll('.admin-only').forEach(el => {
+              el.style.display = 'none';
+            });
+            createClubBtn.style.display = "none";
+            
+            // If on admin page, redirect to dashboard
+            if (document.getElementById('admin').style.display === 'block') {
+              document.getElementById('dashboard').style.display = 'block';
+              document.getElementById('admin').style.display = 'none';
+              document.querySelector('.nav-item.active').classList.remove('active');
+              document.querySelector('[data-tab="dashboard"]').classList.add('active');
+            }
+          }
         } else {
-          sideName.textContent = user.email;
-          welcomeText.textContent = `Welcome, ${user.email}`;
+          // User document doesn't exist, create it
+          db.collection("users").doc(user.uid).set({
+            uid: user.uid,
+            email: user.email,
+            role: 'student',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(() => {
+            // Reload user data
+            auth.onAuthStateChanged(user); // This will trigger the function again
+          });
         }
       })
-      .catch(() => {
+      .catch(err => {
+        console.error("Error loading user data:", err);
         sideName.textContent = user.email;
         welcomeText.textContent = `Welcome, ${user.email}`;
+        sideRole.textContent = "Student";
+        welcomeSub.textContent = "Ready to learn!";
       });
     
-    sideRole.textContent = isAdmin ? "Administrator" : "Student";
-    welcomeSub.textContent = isAdmin ? "Administrator Dashboard" : "Ready to learn!";
     loginBtn.style.display = "none";
     logoutBtn.style.display = "block";
-    
-    // Show/hide admin panel and club creation based on role
-    if (isAdmin) {
-      adminNav.style.display = "flex";
-      createClubBtn.style.display = "block";
-    } else {
-      adminNav.style.display = "none";
-      createClubBtn.style.display = "none";
-    }
     
     // Load user profile
     loadProfile();
@@ -1311,8 +1525,11 @@ auth.onAuthStateChanged(user => {
     welcomeSub.textContent = "Please sign in";
     loginBtn.style.display = "block";
     logoutBtn.style.display = "none";
-    adminNav.style.display = "none";
-    createClubBtn.style.display = "none";
+    
+    // Hide admin features
+    document.querySelectorAll('.admin-only').forEach(el => {
+      el.style.display = 'none';
+    });
     
     // Remove club tabs
     document.querySelectorAll('.club-tab').forEach(tab => tab.remove());
@@ -1526,70 +1743,175 @@ placeholders.forEach(id => {
 });
 
 // --- Admin Panel Functions ---
-document.getElementById("manageUsersBtn").addEventListener("click", () => {
+function loadUsersForAdmin() {
   const adminContent = document.getElementById("adminContent");
-  adminContent.innerHTML = `
-    <h4>User Management</h4>
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Grade</th>
-          <th>Role</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Admin User</td>
-          <td>admin@portal.com</td>
-          <td>-</td>
-          <td>Administrator</td>
-          <td><button class="btn danger" style="padding: 4px 8px; font-size: 12px;">Delete</button></td>
-        </tr>
-        <tr>
-          <td>Student User</td>
-          <td>student@portal.com</td>
-          <td>2BAC</td>
-          <td>Student</td>
-          <td><button class="btn danger" style="padding: 4px 8px; font-size: 12px;">Delete</button></td>
-        </tr>
-      </tbody>
-    </table>
+  
+  db.collection("users").get()
+    .then(snapshot => {
+      let html = `
+        <h4>User Management</h4>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Grade</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+      
+      if (snapshot.empty) {
+        html += `<tr><td colspan="5">No users found</td></tr>`;
+      } else {
+        snapshot.forEach(doc => {
+          const user = doc.data();
+          let roleClass = '';
+          switch(user.role) {
+            case 'admin': roleClass = 'role-admin'; break;
+            case 'leader': roleClass = 'role-leader'; break;
+            case 'owner': roleClass = 'role-owner'; break;
+            default: roleClass = 'role-student';
+          }
+          
+          html += `
+            <tr>
+              <td>${user.name || 'N/A'}</td>
+              <td>${user.email}</td>
+              <td>${user.grade || '-'}</td>
+              <td><span class="role-badge ${roleClass}">${user.role || 'student'}</span></td>
+              <td>
+                <button class="btn" style="padding: 4px 8px; font-size: 12px;" onclick="openRoleModal('${doc.id}', '${user.name || user.email}', '${user.role || 'student'}')">Change Role</button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+      
+      html += `</tbody></table>`;
+      adminContent.innerHTML = html;
+    })
+    .catch(err => {
+      adminContent.innerHTML = `<p>Error loading users: ${err.message}</p>`;
+    });
+}
+
+function openRoleModal(userId, userName, currentRole) {
+  currentRoleUser = {
+    uid: userId,
+    name: userName,
+    currentRole: currentRole
+  };
+  
+  document.getElementById('roleUserInfo').innerHTML = `
+    <p><strong>User:</strong> ${userName}</p>
+    <p><strong>Current Role:</strong> ${currentRole}</p>
   `;
+  
+  // Set the current role as selected
+  document.querySelectorAll('.role-option').forEach(option => {
+    option.classList.remove('selected');
+    const input = option.querySelector('input');
+    if (input.value === currentRole) {
+      option.classList.add('selected');
+      input.checked = true;
+    }
+  });
+  
+  roleModal.style.display = 'flex';
+}
+
+document.getElementById("manageUsersBtn").addEventListener("click", () => {
+  loadUsersForAdmin();
 });
 
 document.getElementById("systemStatsBtn").addEventListener("click", () => {
   const adminContent = document.getElementById("adminContent");
-  adminContent.innerHTML = `
-    <h4>System Statistics</h4>
-    <div class="grid">
-      <div class="card">
-        <h4>Total Users</h4>
-        <p style="font-size: 24px; font-weight: bold; margin: 0;">2</p>
+  
+  // Get counts from all collections
+  Promise.all([
+    db.collection("users").get(),
+    db.collection("projects").get(),
+    db.collection("clubs").get(),
+    db.collection("messages").get()
+  ])
+  .then(([usersSnapshot, projectsSnapshot, clubsSnapshot, messagesSnapshot]) => {
+    adminContent.innerHTML = `
+      <h4>System Statistics</h4>
+      <div class="grid">
+        <div class="card">
+          <h4>Total Users</h4>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">${usersSnapshot.size}</p>
+        </div>
+        <div class="card">
+          <h4>Active Projects</h4>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">${projectsSnapshot.size}</p>
+        </div>
+        <div class="card">
+          <h4>Clubs</h4>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">${clubsSnapshot.size}</p>
+        </div>
+        <div class="card">
+          <h4>Messages</h4>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">${messagesSnapshot.size}</p>
+        </div>
       </div>
-      <div class="card">
-        <h4>Active Projects</h4>
-        <p style="font-size: 24px; font-weight: bold; margin: 0;">3</p>
-      </div>
-      <div class="card">
-        <h4>Clubs</h4>
-        <p style="font-size: 24px; font-weight: bold; margin: 0;">2</p>
-      </div>
-      <div class="card">
-        <h4>Messages Today</h4>
-        <p style="font-size: 24px; font-weight: bold; margin: 0;">5</p>
-      </div>
-    </div>
-  `;
+    `;
+  })
+  .catch(err => {
+    adminContent.innerHTML = `<p>Error loading statistics: ${err.message}</p>`;
+  });
 });
 
-// Create demo accounts on page load
+document.getElementById("manageRolesBtn").addEventListener("click", () => {
+  loadUsersForAdmin();
+});
+
+// Initialize the system with an owner account if needed
+function initializeSystem() {
+  // Check if we need to create initial collections
+  const collections = ['users', 'profiles', 'projects', 'clubs', 'messages', 'assignments', 'events'];
+  
+  // This is just to ensure the collections exist - Firestore creates them automatically
+  // when we add the first document
+  
+  // Create an owner account if it doesn't exist
+  const ownerEmail = 'owner@portal.com';
+  const ownerPassword = 'owner123';
+  
+  // Check if owner exists
+  auth.fetchSignInMethodsForEmail(ownerEmail)
+    .then(methods => {
+      if (methods.length === 0) {
+        // Owner doesn't exist, create it
+        return auth.createUserWithEmailAndPassword(ownerEmail, ownerPassword);
+      }
+    })
+    .then(userCredential => {
+      if (userCredential) {
+        // Set owner role
+        return db.collection("users").doc(userCredential.user.uid).set({
+          uid: userCredential.user.uid,
+          email: ownerEmail,
+          name: 'System Owner',
+          role: 'owner',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    })
+    .then(() => {
+      console.log('System initialized with owner account');
+    })
+    .catch(err => {
+      console.log('Owner account already exists or error:', err);
+    });
+}
+
+// Initialize the system when the page loads
 window.addEventListener('load', () => {
-  // Pre-fill demo accounts for easier testing
-  document.getElementById('modalEmail').value = 'student@portal.com';
-  document.getElementById('modalPass').value = 'student123';
+  initializeSystem();
 });
 </script>
 </body>
