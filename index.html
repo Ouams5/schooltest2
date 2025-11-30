@@ -869,16 +869,31 @@ body {
 <!-- Toast notification -->
 <div id="toast" class="toast"></div>
 
-<!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
 <script>
-// --- Supabase config ---
-const SUPABASE_URL = 'https://dvytzmiicvkdfwjtguel.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2eXR6bWlpY3ZrZGZ3anRndWVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0ODY1ODMsImV4cCI6MjA4MDA2MjU4M30.s1kBfmPvoryQ8knS4aJarSk0r_WRMzmLCq7B-n9Dhqs';
+// --- Firebase config ---
+const firebaseConfig = {
+  apiKey: "AIzaSyBcvybNF9Hn89jb2zRQxknb6l0uMeiS-EM",
+  authDomain: "school-bni-yekhlef-id.firebaseapp.com",
+  projectId: "bniyekhlef-high-school",
+  storageBucket: "school-bni-yekhlef-id",
+  messagingSenderId: "893030570286",
+  appId: "1:893030570286:web:bec5df8427b532f5e202bf",
+  measurementId: "G-4V7JRRR48W"
+};
 
-// Initialize Supabase client
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// --- Initialize Firebase ---
+firebase.initializeApp(firebaseConfig);
+const analytics = firebase.analytics();
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
 
 // --- UI Functions ---
 function showToast(message, type = 'success') {
@@ -947,19 +962,22 @@ saveRoleBtn.addEventListener("click", () => {
   saveRoleBtn.setAttribute('data-original-text', saveRoleBtn.textContent);
   setLoading(saveRoleBtn, true);
   
-  updateUserRole(currentRoleUser.id, newRole)
-    .then(() => {
-      showToast(`Role updated to ${newRole} for ${currentRoleUser.name}`);
-      roleModal.style.display = "none";
-      currentRoleUser = null;
-      loadUsersForAdmin();
-    })
-    .catch(err => {
-      showToast(err.message, 'error');
-    })
-    .finally(() => {
-      setLoading(saveRoleBtn, false);
-    });
+  db.collection("users").doc(currentRoleUser.uid).update({
+    role: newRole,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    showToast(`Role updated to ${newRole} for ${currentRoleUser.name}`);
+    roleModal.style.display = "none";
+    currentRoleUser = null;
+    loadUsersForAdmin();
+  })
+  .catch(err => {
+    showToast(err.message, 'error');
+  })
+  .finally(() => {
+    setLoading(saveRoleBtn, false);
+  });
 });
 
 // Role selector interaction
@@ -998,7 +1016,7 @@ saveClubBtn.addEventListener("click", () => {
     return;
   }
   
-  const user = supabase.auth.user();
+  const user = auth.currentUser;
   if (!user) {
     showToast('Please log in to create clubs', 'error');
     return;
@@ -1009,10 +1027,11 @@ saveClubBtn.addEventListener("click", () => {
   
   let uploadPromise = Promise.resolve(null);
   
-  // Upload logo if selected (Note: Supabase Storage implementation would go here)
-  // For now, we'll skip file upload for simplicity
+  // Upload logo if selected
   if (logoFile) {
-    showToast('File upload not implemented in this demo', 'warning');
+    const storageRef = storage.ref();
+    const clubLogoRef = storageRef.child(`clubLogos/${user.uid}_${Date.now()}`);
+    uploadPromise = clubLogoRef.put(logoFile).then(snapshot => snapshot.ref.getDownloadURL());
   }
   
   uploadPromise
@@ -1023,20 +1042,20 @@ saveClubBtn.addEventListener("click", () => {
         leader1: leader1,
         leader2: leader2 || '',
         description: description,
-        created_by: user.id,
-        creator_email: user.email,
-        created_at: new Date().toISOString(),
-        members: [user.id],
-        member_count: 1,
+        createdBy: user.uid,
+        creatorEmail: user.email,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        members: [user.uid],
+        memberCount: 1,
         funds: 0,
         projects: []
       };
       
       if (logoURL) {
-        clubData.logo_url = logoURL;
+        clubData.logoURL = logoURL;
       }
       
-      return createClub(clubData);
+      return db.collection("clubs").add(clubData);
     })
     .then(() => {
       showToast("Club created successfully!");
@@ -1079,7 +1098,7 @@ saveProjectBtn.addEventListener("click", () => {
     return;
   }
   
-  const user = supabase.auth.user();
+  const user = auth.currentUser;
   if (!user) {
     showToast('Please log in to create projects', 'error');
     return;
@@ -1088,12 +1107,12 @@ saveProjectBtn.addEventListener("click", () => {
   saveProjectBtn.setAttribute('data-original-text', saveProjectBtn.textContent);
   setLoading(saveProjectBtn, true);
   
-  createProject({
+  db.collection("projects").add({
     title: title,
     description: description,
-    created_by: user.id,
-    creator_email: user.email,
-    created_at: new Date().toISOString(),
+    createdBy: user.uid,
+    creatorEmail: user.email,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     status: "active"
   })
   .then(() => {
@@ -1124,34 +1143,39 @@ function sendMessage() {
   const message = chatInput.value.trim();
   if (!message) return;
   
-  const user = supabase.auth.user();
+  const user = auth.currentUser;
   if (!user) {
     showToast('Please log in to send messages', 'error');
     return;
   }
   
   // Check if user has admin role
-  getUserRole(user.id)
-    .then(role => {
-      if (role !== 'admin' && role !== 'owner') {
-        showToast('Only administrators can send messages', 'error');
-        return;
+  db.collection("users").doc(user.uid).get()
+    .then(doc => {
+      if (doc.exists) {
+        const userData = doc.data();
+        if (userData.role !== 'admin' && userData.role !== 'owner') {
+          showToast('Only administrators can send messages', 'error');
+          return;
+        }
+        
+        // User is admin/owner, allow sending message
+        db.collection("messages").add({
+          text: message,
+          sender: user.uid,
+          senderEmail: user.email,
+          senderName: userData.name || user.email,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+          chatInput.value = "";
+        })
+        .catch(err => {
+          showToast(err.message, 'error');
+        });
+      } else {
+        showToast('User data not found', 'error');
       }
-      
-      // User is admin/owner, allow sending message
-      createMessage({
-        text: message,
-        sender: user.id,
-        sender_email: user.email,
-        sender_name: user.user_metadata?.name || user.email,
-        timestamp: new Date().toISOString()
-      })
-      .then(() => {
-        chatInput.value = "";
-      })
-      .catch(err => {
-        showToast(err.message, 'error');
-      });
     })
     .catch(err => {
       showToast(err.message, 'error');
@@ -1159,42 +1183,31 @@ function sendMessage() {
 }
 
 // Load messages in real-time
-function loadMessages() {
-  getMessages()
-    .then(messages => {
-      chatWindow.innerHTML = "";
+db.collection("messages")
+  .orderBy("timestamp", "asc")
+  .onSnapshot(snapshot => {
+    chatWindow.innerHTML = "";
+    
+    snapshot.forEach(doc => {
+      const message = doc.data();
+      const messageDiv = document.createElement("div");
+      messageDiv.className = "message";
       
-      messages.forEach(message => {
-        const messageDiv = document.createElement("div");
-        messageDiv.className = "message";
-        
-        const metaDiv = document.createElement("div");
-        metaDiv.className = "meta";
-        metaDiv.textContent = `${message.sender_name || message.sender_email} - ${message.timestamp ? new Date(message.timestamp).toLocaleString() : 'Just now'}`;
-        
-        const textDiv = document.createElement("div");
-        textDiv.textContent = message.text;
-        
-        messageDiv.appendChild(metaDiv);
-        messageDiv.appendChild(textDiv);
-        chatWindow.appendChild(messageDiv);
-      });
+      const metaDiv = document.createElement("div");
+      metaDiv.className = "meta";
+      metaDiv.textContent = `${message.senderName || message.senderEmail} - ${message.timestamp ? new Date(message.timestamp.toDate()).toLocaleString() : 'Just now'}`;
       
-      // Scroll to bottom
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-    })
-    .catch(err => {
-      console.error("Error loading messages:", err);
+      const textDiv = document.createElement("div");
+      textDiv.textContent = message.text;
+      
+      messageDiv.appendChild(metaDiv);
+      messageDiv.appendChild(textDiv);
+      chatWindow.appendChild(messageDiv);
     });
-}
-
-// Set up real-time subscription for messages
-supabase
-  .from('messages')
-  .on('INSERT', payload => {
-    loadMessages(); // Reload messages when new ones are added
-  })
-  .subscribe();
+    
+    // Scroll to bottom
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  });
 
 // --- Profile System ---
 const saveProfileBtn = document.getElementById("saveProfileBtn");
@@ -1211,7 +1224,7 @@ function handleProfilePicUpload(e) {
   const file = e.target.files[0];
   if (!file) return;
   
-  const user = supabase.auth.user();
+  const user = auth.currentUser;
   if (!user) {
     showToast('Please log in to update profile', 'error');
     return;
@@ -1226,7 +1239,7 @@ function handleProfilePicUpload(e) {
 }
 
 function saveProfile() {
-  const user = supabase.auth.user();
+  const user = auth.currentUser;
   if (!user) {
     showToast('Please log in to save profile', 'error');
     return;
@@ -1242,9 +1255,11 @@ function saveProfile() {
   
   let uploadPromise = Promise.resolve(null);
   
-  // Upload image if selected (Note: Supabase Storage implementation would go here)
+  // Upload image if selected
   if (file) {
-    showToast('File upload not implemented in this demo', 'warning');
+    const storageRef = storage.ref();
+    const profilePicRef = storageRef.child(`profilePics/${user.uid}`);
+    uploadPromise = profilePicRef.put(file).then(snapshot => snapshot.ref.getDownloadURL());
   }
   
   uploadPromise
@@ -1253,15 +1268,19 @@ function saveProfile() {
         name: name,
         grade: grade,
         bio: bio,
-        updated_at: new Date().toISOString()
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       };
       
       if (photoURL) {
-        profileData.photo_url = photoURL;
+        profileData.photoURL = photoURL;
       }
       
-      // Update profile
-      return updateProfile(user.id, profileData);
+      // Update both profiles and users collections
+      const batch = db.batch();
+      batch.set(db.collection("profiles").doc(user.uid), profileData, { merge: true });
+      batch.set(db.collection("users").doc(user.uid), { name: name }, { merge: true });
+      
+      return batch.commit();
     })
     .then(() => {
       showToast("Profile saved successfully!");
@@ -1276,17 +1295,18 @@ function saveProfile() {
 }
 
 function loadProfile() {
-  const user = supabase.auth.user();
+  const user = auth.currentUser;
   if (!user) return;
   
-  getProfile(user.id)
-    .then(profile => {
-      if (profile) {
-        profileName.value = profile.name || "";
-        profileGrade.value = profile.grade || "";
-        profileBio.value = profile.bio || "";
-        if (profile.photo_url) {
-          profilePic.src = profile.photo_url;
+  db.collection("profiles").doc(user.uid).get()
+    .then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        profileName.value = data.name || "";
+        profileGrade.value = data.grade || "";
+        profileBio.value = data.bio || "";
+        if (data.photoURL) {
+          profilePic.src = data.photoURL;
         }
       }
     })
@@ -1313,63 +1333,66 @@ document.getElementById("modalRegister").addEventListener("click", () => {
   button.setAttribute('data-original-text', button.textContent);
   setLoading(button, true);
   
-  supabase.auth.signUp({
-    email: email,
-    password: pass,
-    options: {
-      data: {
-        first_name: firstName,
-        last_name: lastName,
+  auth.createUserWithEmailAndPassword(email, pass)
+    .then(u => {
+      // Store user profile and role
+      const profileData = {
+        firstName: firstName,
+        lastName: lastName,
         name: `${firstName} ${lastName}`,
-        grade: grade
+        email: email,
+        grade: grade,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      // Set default role as student
+      const userData = {
+        uid: u.user.uid,
+        email: email,
+        name: `${firstName} ${lastName}`,
+        role: 'student', // Default role
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      let uploadPromise = Promise.resolve(null);
+      
+      // Upload profile picture if selected
+      if (profilePicFile) {
+        const storageRef = storage.ref();
+        const profilePicRef = storageRef.child(`profilePics/${u.user.uid}`);
+        uploadPromise = profilePicRef.put(profilePicFile).then(snapshot => snapshot.ref.getDownloadURL());
       }
-    }
-  })
-  .then(({ user, error }) => {
-    if (error) throw error;
-    
-    // Store user profile and role
-    const profileData = {
-      first_name: firstName,
-      last_name: lastName,
-      name: `${firstName} ${lastName}`,
-      email: email,
-      grade: grade,
-      created_at: new Date().toISOString()
-    };
-    
-    // Set default role as student
-    const userData = {
-      id: user.id,
-      email: email,
-      name: `${firstName} ${lastName}`,
-      role: 'student', // Default role
-      created_at: new Date().toISOString()
-    };
-    
-    // Create user profile and user record
-    return Promise.all([
-      createProfile(user.id, profileData),
-      createUser(userData)
-    ]);
-  })
-  .then(() => {
-    showToast("Registered successfully! Please check your email for verification.");
-    authModal.style.display="none";
-    // Clear form
-    document.getElementById("modalFirstName").value = "";
-    document.getElementById("modalLastName").value = "";
-    document.getElementById("modalEmail").value = "";
-    document.getElementById("modalPass").value = "";
-    document.getElementById("modalGrade").value = "";
-    document.getElementById("modalProfilePic").value = "";
-  })
-  .catch(err => {
-    showToast(err.message, 'error');
-  })
-  .finally(() => {
-    setLoading(button, false);
-  });
+      
+      return uploadPromise.then(photoURL => {
+        const batch = db.batch();
+        
+        if (photoURL) {
+          profileData.photoURL = photoURL;
+        }
+        
+        batch.set(db.collection("profiles").doc(u.user.uid), profileData);
+        batch.set(db.collection("users").doc(u.user.uid), userData);
+        
+        return batch.commit();
+      });
+    })
+    .then(() => {
+      showToast("Registered successfully!");
+      authModal.style.display="none";
+      // Clear form
+      document.getElementById("modalFirstName").value = "";
+      document.getElementById("modalLastName").value = "";
+      document.getElementById("modalEmail").value = "";
+      document.getElementById("modalPass").value = "";
+      document.getElementById("modalGrade").value = "";
+      document.getElementById("modalProfilePic").value = "";
+    })
+    .catch(err => {
+      showToast(err.message, 'error');
+    })
+    .finally(() => {
+      setLoading(button, false);
+    });
 });
 
 document.getElementById("modalLogin").addEventListener("click", () => {
@@ -1385,29 +1408,25 @@ document.getElementById("modalLogin").addEventListener("click", () => {
   button.setAttribute('data-original-text', button.textContent);
   setLoading(button, true);
   
-  supabase.auth.signInWithPassword({
-    email: email,
-    password: pass
-  })
-  .then(({ error }) => {
-    if (error) throw error;
-    showToast("Logged in successfully!");
-    authModal.style.display="none"; 
-  })
-  .catch(err => {
-    showToast(err.message, 'error');
-  })
-  .finally(() => {
-    setLoading(button, false);
-  });
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(u => { 
+      showToast("Logged in successfully!");
+      authModal.style.display="none"; 
+    })
+    .catch(err => {
+      showToast(err.message, 'error');
+    })
+    .finally(() => {
+      setLoading(button, false);
+    });
 });
 
 document.getElementById("sidebarLogout").addEventListener("click", () => {
-  supabase.auth.signOut().then(() => showToast("Logged out successfully!"));
+  auth.signOut().then(() => showToast("Logged out successfully!"));
 });
 
 // --- Auth state listener ---
-supabase.auth.onAuthStateChange((event, session) => {
+auth.onAuthStateChanged(user => {
   const sideName = document.getElementById("sideName");
   const sideRole = document.getElementById("sideRole");
   const welcomeText = document.getElementById("welcomeText");
@@ -1418,57 +1437,69 @@ supabase.auth.onAuthStateChange((event, session) => {
   const createClubBtn = document.getElementById("createClubBtn");
   const conversationsNav = document.getElementById("conversationsNav");
 
-  if(session?.user){
-    const user = session.user;
-    
+  if(user){
     // Load user data to get role
-    getUserRole(user.id)
-      .then(role => {
-        const name = user.user_metadata?.name || user.email;
-        
-        sideName.textContent = name;
-        welcomeText.textContent = `Welcome, ${name}`;
-        
-        // Set role display
-        let roleDisplay = '';
-        switch(role) {
-          case 'admin':
-            roleDisplay = 'Administrator';
-            break;
-          case 'leader':
-            roleDisplay = 'Club Leader';
-            break;
-          case 'owner':
-            roleDisplay = 'System Owner';
-            break;
-          default:
-            roleDisplay = 'Student';
-        }
-        
-        sideRole.textContent = roleDisplay;
-        welcomeSub.textContent = roleDisplay + ' Dashboard';
-        
-        // Show/hide admin features based on role
-        const isAdmin = role === 'admin' || role === 'owner';
-        if (isAdmin) {
-          document.querySelectorAll('.admin-only').forEach(el => {
-            el.style.display = 'block';
-          });
-          createClubBtn.style.display = "block";
-          loadMessages(); // Load messages for admin
-        } else {
-          document.querySelectorAll('.admin-only').forEach(el => {
-            el.style.display = 'none';
-          });
-          createClubBtn.style.display = "none";
+    db.collection("users").doc(user.uid).get()
+      .then(doc => {
+        if (doc.exists) {
+          const userData = doc.data();
+          const role = userData.role || 'student';
+          const name = userData.name || user.email;
           
-          // If on admin page, redirect to dashboard
-          if (document.getElementById('admin').style.display === 'block') {
-            document.getElementById('dashboard').style.display = 'block';
-            document.getElementById('admin').style.display = 'none';
-            document.querySelector('.nav-item.active').classList.remove('active');
-            document.querySelector('[data-tab="dashboard"]').classList.add('active');
+          sideName.textContent = name;
+          welcomeText.textContent = `Welcome, ${name}`;
+          
+          // Set role display
+          let roleDisplay = '';
+          switch(role) {
+            case 'admin':
+              roleDisplay = 'Administrator';
+              break;
+            case 'leader':
+              roleDisplay = 'Club Leader';
+              break;
+            case 'owner':
+              roleDisplay = 'System Owner';
+              break;
+            default:
+              roleDisplay = 'Student';
           }
+          
+          sideRole.textContent = roleDisplay;
+          welcomeSub.textContent = roleDisplay + ' Dashboard';
+          
+          // Show/hide admin features based on role
+          const isAdmin = role === 'admin' || role === 'owner';
+          if (isAdmin) {
+            document.querySelectorAll('.admin-only').forEach(el => {
+              el.style.display = 'block';
+            });
+            createClubBtn.style.display = "block";
+          } else {
+            document.querySelectorAll('.admin-only').forEach(el => {
+              el.style.display = 'none';
+            });
+            createClubBtn.style.display = "none";
+            
+            // If on admin page, redirect to dashboard
+            if (document.getElementById('admin').style.display === 'block') {
+              document.getElementById('dashboard').style.display = 'block';
+              document.getElementById('admin').style.display = 'none';
+              document.querySelector('.nav-item.active').classList.remove('active');
+              document.querySelector('[data-tab="dashboard"]').classList.add('active');
+            }
+          }
+        } else {
+          // User document doesn't exist, create it
+          db.collection("users").doc(user.uid).set({
+            uid: user.uid,
+            email: user.email,
+            role: 'student',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(() => {
+            // Reload user data
+            auth.onAuthStateChanged(user); // This will trigger the function again
+          });
         }
       })
       .catch(err => {
@@ -1508,68 +1539,65 @@ supabase.auth.onAuthStateChange((event, session) => {
 
 // --- Clubs System ---
 function loadUserClubs() {
-  const user = supabase.auth.user();
+  const user = auth.currentUser;
   if (!user) return;
   
   // Load all clubs
-  getClubs()
-    .then(clubs => {
-      const clubsList = document.getElementById("clubsList");
-      clubsList.innerHTML = "";
+  db.collection("clubs").onSnapshot(snapshot => {
+    const clubsList = document.getElementById("clubsList");
+    clubsList.innerHTML = "";
+    
+    if (snapshot.empty) {
+      clubsList.innerHTML = "<div class='list-item'>No clubs yet. Admins can create clubs.</div>";
+      return;
+    }
+    
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const div = document.createElement("div");
+      div.className = "club-card";
       
-      if (!clubs || clubs.length === 0) {
-        clubsList.innerHTML = "<div class='list-item'>No clubs yet. Admins can create clubs.</div>";
-        return;
+      const isMember = data.members && data.members.includes(user.uid);
+      
+      div.innerHTML = `
+        <div class="club-header">
+          ${data.logoURL ? `<img src="${data.logoURL}" class="club-logo" alt="${data.name} Logo">` : '<div class="club-logo" style="background:#e2e8f0;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined">groups</span></div>'}
+          <div class="club-info">
+            <h3 class="club-name">${data.name}</h3>
+            <p class="club-abbr">${data.abbreviation}</p>
+            <p class="club-leaders">Leaders: ${data.leader1}${data.leader2 ? `, ${data.leader2}` : ''}</p>
+            <p>${data.description}</p>
+          </div>
+        </div>
+        <div class="club-stats">
+          <div class="club-stat">
+            <div class="club-stat-value">${data.memberCount || 1}</div>
+            <div class="club-stat-label">Members</div>
+          </div>
+          <div class="club-stat">
+            <div class="club-stat-value">${data.funds || 0} DH</div>
+            <div class="club-stat-label">Funds</div>
+          </div>
+          <div class="club-stat">
+            <div class="club-stat-value">${data.projects ? data.projects.length : 0}</div>
+            <div class="club-stat-label">Projects</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          ${isMember ? 
+            '<button class="btn success" style="font-size: 12px; padding: 6px 12px;">Already Joined</button>' : 
+            `<button class="btn" style="font-size: 12px; padding: 6px 12px;" onclick="joinClub('${doc.id}')">Join Club</button>`
+          }
+        </div>
+      `;
+      clubsList.appendChild(div);
+      
+      // If user is a member, create a tab for this club
+      if (isMember) {
+        createClubTab(doc.id, data);
       }
-      
-      clubs.forEach(club => {
-        const div = document.createElement("div");
-        div.className = "club-card";
-        
-        const isMember = club.members && club.members.includes(user.id);
-        
-        div.innerHTML = `
-          <div class="club-header">
-            ${club.logo_url ? `<img src="${club.logo_url}" class="club-logo" alt="${club.name} Logo">` : '<div class="club-logo" style="background:#e2e8f0;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined">groups</span></div>'}
-            <div class="club-info">
-              <h3 class="club-name">${club.name}</h3>
-              <p class="club-abbr">${club.abbreviation}</p>
-              <p class="club-leaders">Leaders: ${club.leader1}${club.leader2 ? `, ${club.leader2}` : ''}</p>
-              <p>${club.description}</p>
-            </div>
-          </div>
-          <div class="club-stats">
-            <div class="club-stat">
-              <div class="club-stat-value">${club.member_count || 1}</div>
-              <div class="club-stat-label">Members</div>
-            </div>
-            <div class="club-stat">
-              <div class="club-stat-value">${club.funds || 0} DH</div>
-              <div class="club-stat-label">Funds</div>
-            </div>
-            <div class="club-stat">
-              <div class="club-stat-value">${club.projects ? club.projects.length : 0}</div>
-              <div class="club-stat-label">Projects</div>
-            </div>
-          </div>
-          <div style="margin-top:12px;">
-            ${isMember ? 
-              '<button class="btn success" style="font-size: 12px; padding: 6px 12px;">Already Joined</button>' : 
-              `<button class="btn" style="font-size: 12px; padding: 6px 12px;" onclick="joinClub('${club.id}')">Join Club</button>`
-            }
-          </div>
-        `;
-        clubsList.appendChild(div);
-        
-        // If user is a member, create a tab for this club
-        if (isMember) {
-          createClubTab(club.id, club);
-        }
-      });
-    })
-    .catch(err => {
-      console.error("Error loading clubs:", err);
     });
+  });
 }
 
 function createClubTab(clubId, clubData) {
@@ -1605,7 +1633,7 @@ function createClubTab(clubId, clubData) {
   clubSection.innerHTML = `
     <div class="club-tab-content">
       <div class="club-header">
-        ${clubData.logo_url ? `<img src="${clubData.logo_url}" class="club-logo" alt="${clubData.name} Logo">` : '<div class="club-logo" style="background:#e2e8f0;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined">groups</span></div>'}
+        ${clubData.logoURL ? `<img src="${clubData.logoURL}" class="club-logo" alt="${clubData.name} Logo">` : '<div class="club-logo" style="background:#e2e8f0;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined">groups</span></div>'}
         <div class="club-info">
           <h3>${clubData.name} (${clubData.abbreviation})</h3>
           <p class="club-leaders">Leaders: ${clubData.leader1}${clubData.leader2 ? `, ${clubData.leader2}` : ''}</p>
@@ -1637,7 +1665,7 @@ function createClubTab(clubId, clubData) {
       
       <div class="club-section">
         <h4><span class="material-symbols-outlined">groups</span>Members</h4>
-        <p>Total Members: ${clubData.member_count || 1}</p>
+        <p>Total Members: ${clubData.memberCount || 1}</p>
         <!-- Member list would go here -->
       </div>
     </div>
@@ -1647,79 +1675,65 @@ function createClubTab(clubId, clubData) {
 }
 
 function joinClub(clubId) {
-  const user = supabase.auth.user();
+  const user = auth.currentUser;
   if (!user) {
     showToast('Please log in to join clubs', 'error');
     return;
   }
   
-  getClub(clubId)
-    .then(club => {
-      if (!club) {
-        showToast('Club not found', 'error');
-        return;
-      }
+  const clubRef = db.collection("clubs").doc(clubId);
+  
+  clubRef.get().then(doc => {
+    if (doc.exists) {
+      const data = doc.data();
+      const members = data.members || [];
       
-      const members = club.members || [];
-      
-      if (members.includes(user.id)) {
+      if (members.includes(user.uid)) {
         showToast('You are already a member of this club', 'error');
         return;
       }
       
-      members.push(user.id);
+      members.push(user.uid);
       
-      return updateClub(clubId, {
+      clubRef.update({
         members: members,
-        member_count: members.length
+        memberCount: members.length
+      })
+      .then(() => {
+        showToast('Successfully joined the club!');
+      })
+      .catch(err => {
+        showToast(err.message, 'error');
       });
-    })
-    .then(() => {
-      showToast('Successfully joined the club!');
-    })
-    .catch(err => {
-      showToast(err.message, 'error');
-    });
+    }
+  });
 }
 
-// --- Projects System ---
-function loadProjects() {
-  getProjects()
-    .then(projects => {
-      const projectsList = document.getElementById("projectsList");
-      projectsList.innerHTML = "";
-      
-      if (!projects || projects.length === 0) {
-        projectsList.innerHTML = "<div class='list-item'>No projects yet. Create one to get started!</div>";
-        return;
-      }
-      
-      projects.forEach(project => {
-        const div = document.createElement("div");
-        div.className = "list-item";
-        div.innerHTML = `
-          <div>
-            <strong>${project.title}</strong>
-            <div style="font-size: 14px; color: var(--muted);">${project.description}</div>
-            <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Created by: ${project.creator_email}</div>
-          </div>
-          <div style="font-size: 12px; color: var(--muted);">${project.created_at ? new Date(project.created_at).toLocaleDateString() : 'Recently'}</div>
-        `;
-        projectsList.appendChild(div);
-      });
-    })
-    .catch(err => {
-      console.error("Error loading projects:", err);
-    });
-}
-
-// Set up real-time subscription for projects
-supabase
-  .from('projects')
-  .on('INSERT', payload => {
-    loadProjects(); // Reload projects when new ones are added
-  })
-  .subscribe();
+// --- Firestore real-time updates ---
+const projectsList = document.getElementById("projectsList");
+db.collection("projects").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+  projectsList.innerHTML = "";
+  
+  if (snapshot.empty) {
+    projectsList.innerHTML = "<div class='list-item'>No projects yet. Create one to get started!</div>";
+    return;
+  }
+  
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.className = "list-item";
+    div.innerHTML = `
+      <div>
+        <strong>${data.title}</strong>
+        <div style="font-size: 14px; color: var(--muted);">${data.description}</div>
+        <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Created by: ${data.creatorEmail}</div>
+      </div>
+      <div style="font-size: 12px; color: var(--muted);">${data.createdAt ? new Date(data.createdAt.toDate()).toLocaleDateString() : 'Recently'}</div>
+    `;
+    projectsList.appendChild(div);
+  });
+});
 
 // --- Placeholder for other sections (assignments, events, etc.) ---
 const placeholders = ["assignmentsList","eventsList","reportsList"];
@@ -1732,8 +1746,8 @@ placeholders.forEach(id => {
 function loadUsersForAdmin() {
   const adminContent = document.getElementById("adminContent");
   
-  getUsers()
-    .then(users => {
+  db.collection("users").get()
+    .then(snapshot => {
       let html = `
         <h4>User Management</h4>
         <table class="admin-table">
@@ -1749,10 +1763,11 @@ function loadUsersForAdmin() {
           <tbody>
       `;
       
-      if (!users || users.length === 0) {
+      if (snapshot.empty) {
         html += `<tr><td colspan="5">No users found</td></tr>`;
       } else {
-        users.forEach(user => {
+        snapshot.forEach(doc => {
+          const user = doc.data();
           let roleClass = '';
           switch(user.role) {
             case 'admin': roleClass = 'role-admin'; break;
@@ -1768,7 +1783,7 @@ function loadUsersForAdmin() {
               <td>${user.grade || '-'}</td>
               <td><span class="role-badge ${roleClass}">${user.role || 'student'}</span></td>
               <td>
-                <button class="btn" style="padding: 4px 8px; font-size: 12px;" onclick="openRoleModal('${user.id}', '${user.name || user.email}', '${user.role || 'student'}')">Change Role</button>
+                <button class="btn" style="padding: 4px 8px; font-size: 12px;" onclick="openRoleModal('${doc.id}', '${user.name || user.email}', '${user.role || 'student'}')">Change Role</button>
               </td>
             </tr>
           `;
@@ -1785,7 +1800,7 @@ function loadUsersForAdmin() {
 
 function openRoleModal(userId, userName, currentRole) {
   currentRoleUser = {
-    id: userId,
+    uid: userId,
     name: userName,
     currentRole: currentRole
   };
@@ -1817,30 +1832,30 @@ document.getElementById("systemStatsBtn").addEventListener("click", () => {
   
   // Get counts from all collections
   Promise.all([
-    getUsers(),
-    getProjects(),
-    getClubs(),
-    getMessages()
+    db.collection("users").get(),
+    db.collection("projects").get(),
+    db.collection("clubs").get(),
+    db.collection("messages").get()
   ])
-  .then(([users, projects, clubs, messages]) => {
+  .then(([usersSnapshot, projectsSnapshot, clubsSnapshot, messagesSnapshot]) => {
     adminContent.innerHTML = `
       <h4>System Statistics</h4>
       <div class="grid">
         <div class="card">
           <h4>Total Users</h4>
-          <p style="font-size: 24px; font-weight: bold; margin: 0;">${users?.length || 0}</p>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">${usersSnapshot.size}</p>
         </div>
         <div class="card">
           <h4>Active Projects</h4>
-          <p style="font-size: 24px; font-weight: bold; margin: 0;">${projects?.length || 0}</p>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">${projectsSnapshot.size}</p>
         </div>
         <div class="card">
           <h4>Clubs</h4>
-          <p style="font-size: 24px; font-weight: bold; margin: 0;">${clubs?.length || 0}</p>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">${clubsSnapshot.size}</p>
         </div>
         <div class="card">
           <h4>Messages</h4>
-          <p style="font-size: 24px; font-weight: bold; margin: 0;">${messages?.length || 0}</p>
+          <p style="font-size: 24px; font-weight: bold; margin: 0;">${messagesSnapshot.size}</p>
         </div>
       </div>
     `;
@@ -1854,163 +1869,49 @@ document.getElementById("manageRolesBtn").addEventListener("click", () => {
   loadUsersForAdmin();
 });
 
-// --- Supabase Database Functions ---
-
-// User functions
-async function getUsers() {
-  const { data, error } = await supabase
-    .from('users')
-    .select('*');
+// Initialize the system with an owner account if needed
+function initializeSystem() {
+  // Check if we need to create initial collections
+  const collections = ['users', 'profiles', 'projects', 'clubs', 'messages', 'assignments', 'events'];
   
-  if (error) throw error;
-  return data;
+  // This is just to ensure the collections exist - Firestore creates them automatically
+  // when we add the first document
+  
+  // Create an owner account if it doesn't exist
+  const ownerEmail = 'owner@portal.com';
+  const ownerPassword = 'owner123';
+  
+  // Check if owner exists
+  auth.fetchSignInMethodsForEmail(ownerEmail)
+    .then(methods => {
+      if (methods.length === 0) {
+        // Owner doesn't exist, create it
+        return auth.createUserWithEmailAndPassword(ownerEmail, ownerPassword);
+      }
+    })
+    .then(userCredential => {
+      if (userCredential) {
+        // Set owner role
+        return db.collection("users").doc(userCredential.user.uid).set({
+          uid: userCredential.user.uid,
+          email: ownerEmail,
+          name: 'System Owner',
+          role: 'owner',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    })
+    .then(() => {
+      console.log('System initialized with owner account');
+    })
+    .catch(err => {
+      console.log('Owner account already exists or error:', err);
+    });
 }
 
-async function createUser(userData) {
-  const { data, error } = await supabase
-    .from('users')
-    .insert([userData]);
-  
-  if (error) throw error;
-  return data;
-}
-
-async function updateUserRole(userId, role) {
-  const { data, error } = await supabase
-    .from('users')
-    .update({ role: role, updated_at: new Date().toISOString() })
-    .eq('id', userId);
-  
-  if (error) throw error;
-  return data;
-}
-
-async function getUserRole(userId) {
-  const { data, error } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', userId)
-    .single();
-  
-  if (error) throw error;
-  return data?.role || 'student';
-}
-
-// Profile functions
-async function getProfile(userId) {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .single();
-  
-  if (error && error.code !== 'PGRST116') throw error; // PGRST116 is "not found"
-  return data;
-}
-
-async function createProfile(userId, profileData) {
-  const { data, error } = await supabase
-    .from('profiles')
-    .insert([{ id: userId, ...profileData }]);
-  
-  if (error) throw error;
-  return data;
-}
-
-async function updateProfile(userId, profileData) {
-  const { data, error } = await supabase
-    .from('profiles')
-    .update(profileData)
-    .eq('id', userId);
-  
-  if (error) throw error;
-  return data;
-}
-
-// Project functions
-async function getProjects() {
-  const { data, error } = await supabase
-    .from('projects')
-    .select('*')
-    .order('created_at', { ascending: false });
-  
-  if (error) throw error;
-  return data;
-}
-
-async function createProject(projectData) {
-  const { data, error } = await supabase
-    .from('projects')
-    .insert([projectData]);
-  
-  if (error) throw error;
-  return data;
-}
-
-// Club functions
-async function getClubs() {
-  const { data, error } = await supabase
-    .from('clubs')
-    .select('*');
-  
-  if (error) throw error;
-  return data;
-}
-
-async function getClub(clubId) {
-  const { data, error } = await supabase
-    .from('clubs')
-    .select('*')
-    .eq('id', clubId)
-    .single();
-  
-  if (error) throw error;
-  return data;
-}
-
-async function createClub(clubData) {
-  const { data, error } = await supabase
-    .from('clubs')
-    .insert([clubData]);
-  
-  if (error) throw error;
-  return data;
-}
-
-async function updateClub(clubId, clubData) {
-  const { data, error } = await supabase
-    .from('clubs')
-    .update(clubData)
-    .eq('id', clubId);
-  
-  if (error) throw error;
-  return data;
-}
-
-// Message functions
-async function getMessages() {
-  const { data, error } = await supabase
-    .from('messages')
-    .select('*')
-    .order('timestamp', { ascending: true });
-  
-  if (error) throw error;
-  return data;
-}
-
-async function createMessage(messageData) {
-  const { data, error } = await supabase
-    .from('messages')
-    .insert([messageData]);
-  
-  if (error) throw error;
-  return data;
-}
-
-// Initialize the system
+// Initialize the system when the page loads
 window.addEventListener('load', () => {
-  // Load initial data
-  loadProjects();
+  initializeSystem();
 });
 </script>
 </body>
