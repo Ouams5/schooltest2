@@ -1,208 +1,1236 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>School Hub - Final Boss Edition</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Student Portal — Classroom UI</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<style>
+/* --- KEEP ALL UI STYLES INTACT --- */
+:root{--bg:#f5f7fa;--surface:#fff;--muted:#6b7280;--primary:#1a73e8;--accent:#f59e0b;--danger:#e04848;--shadow:0 6px 18px rgba(19,24,31,0.06);--radius:12px;--maxWidth:1200px;--gap:16px;font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;}
+*{box-sizing:border-box} body{margin:0;padding:24px;background:var(--bg);font-family:var(--font);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;display:flex;justify-content:center;} 
+.app{display:grid;grid-template-columns:260px 1fr;gap:var(--gap);width:100%;max-width:var(--maxWidth);align-items:start;}
+.sidebar{background:var(--surface);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);position:sticky;top:24px;height:calc(100vh - 48px);overflow:auto;}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.logo{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),#6b8af6);border-radius:10px;color:white;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.brand .title{font-weight:600;font-size:16px;}
+.brand .sub{font-size:12px;color:var(--muted);}
+.sidebar-nav{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;font-weight:500;color:#0f172a;cursor:pointer;}
+.nav-item:hover{background:#f3f6ff}
+.nav-item.active{background:linear-gradient(90deg, rgba(26,115,232,0.08), rgba(26,115,232,0.04));border-left:4px solid var(--primary);padding-left:8px;}
+.icon{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;font-size:20px;color:var(--primary);}
+.profile-card{margin-top:16px;padding:12px;border-radius:10px;background:linear-gradient(90deg,#f8fafc,#fff);border:1px solid #eef2ff;}
+.profile-name{font-weight:600;}
+.profile-role{font-size:12px;color:var(--muted);}
+.sidebar button{width:100%;}
+.main{display:flex;flex-direction:column;gap:var(--gap);}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:8px 0;}
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:12px;padding:8px 10px;box-shadow:var(--shadow);min-width:420px;max-width:640px;}
+.search input{border:0;outline:0;background:transparent;width:100%;font-size:14px;}
+.top-actions{display:flex;gap:10px;align-items:center;}
+.card{background:var(--surface);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.list-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px;border:1px solid #f1f5f9;margin-bottom:8px;background:#fff;}
+.chat-area{display:flex;flex-direction:column;gap:12px;}
+.chat-window{height:300px;border-radius:10px;border:1px solid #eef2ff;padding:12px;overflow:auto;background:#f8fbff;}
+.message{padding:10px;border-radius:8px;background:#eef6ff;margin-bottom:8px;}
+.message .meta{font-size:12px;color:var(--muted);margin-bottom:6px;}
+.chat-input{display:flex;gap:10px;align-items:center;}
+.chat-input input{flex:1;padding:12px;border-radius:10px;border:1px solid #eef2ff;background:#ffffff;}
+.btn{padding:10px 12px;border-radius:10px;border:0;background:var(--primary);color:white;cursor:pointer;font-weight:600;}
+.btn.ghost{background:transparent;border:1px solid #e6eefc;color:var(--primary);}
+.btn.danger{background:var(--danger);}
+#authModal{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.45);align-items:center;justify-content:center;z-index:1000;}
+#authModal>div{background:var(--surface);padding:22px;border-radius:12px;max-width:520px;width:100%;box-shadow:var(--shadow);}
+@media(max-width:980px){.app{grid-template-columns:1fr;padding-bottom:160px}.sidebar{position:relative;height:auto}.search{min-width:unset;width:100%}.chat-window{height:200px}}
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+/* Additional styles for improved UI */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  z-index: 1001;
+  transform: translateX(150%);
+  transition: transform 0.3s ease;
+}
+.toast.show {
+  transform: translateX(0);
+}
+.toast.success {
+  border-left: 4px solid #10b981;
+}
+.toast.error {
+  border-left: 4px solid var(--danger);
+}
+.toast.warning {
+  border-left: 4px solid var(--accent);
+}
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
-  <!-- Icons & Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+/* Profile styles */
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary);
+  margin-bottom: 16px;
+}
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+}
+.profile-form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #eef2ff;
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+.file-input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px dashed #eef2ff;
+}
 
-  <style>
-    :root { --bg: linear-gradient(135deg, #0f0f1e, #1e1e3f); --card: rgba(30,30,50,0.95); --primary: #00d4ff; --accent: #ff2e63; --success: #00ff9d; }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: 'Poppins', sans-serif; background: var(--bg); color: #ddd; min-height:100vh; display:flex; overflow:hidden; }
-    
-    nav { width:290px; background: var(--card); padding:30px 20px; backdrop-filter: blur(20px); border-right: 2px solid rgba(0,212,255,0.3); position:relative; }
-    nav::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
-    .logo { text-align:center; font-size:2em; font-weight:700; color:var(--primary); margin-bottom:40px; text-shadow:0 0 20px rgba(0,212,255,0.6); }
-    nav a { display:block; padding:18px 22px; margin:12px 0; background:rgba(0,0,0,0.4); border-radius:18px; color:#ccc; text-decoration:none; transition:all 0.4s; font-weight:600; position:relative; }
-    nav a:hover, nav a.active { background: var(--primary); color:black; transform:translateX(12px); box-shadow:0 10px 30px rgba(0,212,255,0.5); }
-    nav a i { margin-right:15px; }
-    .admin-badge { position:absolute; top:15px; right:15px; background:#ff2e63; color:white; padding:5px 10px; border-radius:10px; font-size:0.7em; animation:pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
+/* Admin styles */
+.admin-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+.admin-table th, .admin-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #f1f5f9;
+}
+.admin-table th {
+  background: #f8fafc;
+  font-weight: 600;
+}
 
-    main { flex:1; padding:40px; overflow-y:auto; }
-    .topbar { background: var(--card); padding:25px; text-align:center; border-radius:25px; margin-bottom:30px; font-size:2em; font-weight:700; color:var(--primary); backdrop-filter:blur(15px); box-shadow:0 15px 40px rgba(0,0,0,0.6); text-shadow:0 0 15px rgba(0,212,255,0.5); }
-    
-    .content { background: var(--card); padding:40px; border-radius:25px; min-height:80vh; backdrop-filter:blur(15px); box-shadow:0 20px 60px rgba(0,0,0,0.7); }
-    .page { animation: slideUp 0.6s ease; }
-    @keyframes slideUp { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:none; } }
+/* Create forms */
+.create-form {
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.create-form input, .create-form textarea, .create-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #eef2ff;
+  font-family: inherit;
+}
 
-    .card { max-width:440px; margin:50px auto; background: var(--card); padding:50px; border-radius:30px; box-shadow:0 30px 80px rgba(0,0,0,0.8); text-align:center; backdrop-filter:blur(20px); border:2px solid rgba(0,212,255,0.3); }
-    .card h2 { font-size:2.8em; margin-bottom:15px; color:var(--primary); }
-    input, textarea { width:100%; padding:18px; margin:15px 0; background:rgba(0,0,0,0.5); border:2px solid transparent; border-radius:16px; color:white; font-size:1.1em; transition:0.4s; }
-    input:focus, textarea:focus { border-color:var(--primary); box-shadow:0 0 25px rgba(0,212,255,0.5); transform:scale(1.03); }
-    button { width:100%; padding:18px; background: var(--primary); border:none; border-radius:16px; color:black; font-size:1.3em; font-weight:700; cursor:pointer; margin-top:15px; transition:0.5s; box-shadow:0 10px 30px rgba(0,212,255,0.4); }
-    button:hover { background:#00ffaa; transform:translateY(-5px) scale(1.05); box-shadow:0 20px 50px rgba(0,255,170,0.6); }
+/* Email verification banner */
+.verification-banner {
+  background: linear-gradient(90deg, #fef3c7, #fef7cd);
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.verification-banner .material-symbols-outlined {
+  color: #d97706;
+}
+.verification-banner button {
+  margin-left: auto;
+  font-size: 14px;
+  padding: 6px 12px;
+}
 
-    .item { background:rgba(0,0,0,0.4); padding:25px; margin:20px 0; border-radius:20px; border-left:6px solid var(--primary); transition:0.5s; position:relative; overflow:hidden; }
-    .item:hover { transform:translateX(15px); box-shadow:0 15px 40px rgba(0,212,255,0.3); }
-    .item::after { content:"NEW"; position:absolute; top:10px; right:-40px; background:var(--accent); color:white; padding:5px 40px; transform:rotate(45deg); font-size:0.8em; opacity:0; transition:0.5s; }
-    .item.new::after { opacity:1; right:10px; }
-
-    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:30px; }
-    .admin-only { background:linear-gradient(135deg,var(--accent),#c00); padding:30px; border-radius:20px; margin:40px 0; display:none; border:3px dashed rgba(255,255,255,0.3); }
-    .success { background:var(--success); color:black; padding:20px; border-radius:20px; margin:20px 0; text-align:center; font-weight:700; animation:bounceIn 0.8s; box-shadow:0 10px 30px rgba(0,255,157,0.4); }
-    .hidden { display:none; }
-    .logout { background:var(--accent) !important; margin-top:100px; }
-    .logout:hover { background:#ff0055 !important; }
-  </style>
+/* Verification modal */
+.verification-modal {
+  background: var(--surface);
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+.verification-option {
+  border: 1px solid #eef2ff;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 12px 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.verification-option:hover {
+  background: #f8fafc;
+  border-color: var(--primary);
+}
+.verification-option h4 {
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.verification-option p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+</style>
 </head>
 <body>
-
-  <nav>
-    <div class="logo">School Hub</div>
-    <div id="adminBadge" class="admin-badge hidden">ADMIN</div>
-    <a onclick="show('home')" class="active">Home</a>
-    <a onclick="show('announcements')">Announcements</a>
-    <a onclick="show('events')">Events</a>
-    <a onclick="show('clubs')">Clubs</a>
-    <a onclick="show('account')">Account</a>
-    <a onclick="show('settings')">Settings</a>
-    <a onclick="logout()" class="logout">Logout</a>
-  </nav>
-
-  <main>
-    <div id="topbar" class="topbar">School Hub</div>
-    <div class="content">
-
-      <!-- Login & Register -->
-      <div id="login" class="card">
-        <h2>School Hub</h2>
-        <p>Login with admin@school.com / admin123</p>
-        <input type="email" id="email" placeholder="Email" value="admin@school.com">
-        <input type="password" id="pass" placeholder="Password" value="admin123">
-        <button onclick="login()">LOGIN</button>
-        <p style="margin-top:25px;"><a href="#" onclick="show('register')" style="color:var(--primary);">No account? Register</a></p>
-      </div>
-
-      <div id="register" class="card hidden">
-        <h2>Join School Hub</h2>
-        <input type="text" id="rname" placeholder="Full Name">
-        <input type="email" id="remail" placeholder="Email">
-        <input type="password" id="rpass" placeholder="Password">
-        <button onclick="reg()">CREATE ACCOUNT</button>
-        <p style="margin-top:25px;"><a href="#" onclick="show('login')" style="color:var(--primary);">Back to login</a></p>
-      </div>
-
-      <!-- Pages -->
-      <div id="home" class="page hidden"></div>
-      <div id="announcements" class="page hidden"></div>
-      <div id="events" class="page hidden"></div>
-      <div id="clubs" class="page hidden"></div>
-      <div id="account" class="page hidden"></div>
-      <div id="settings" class="page hidden"></div>
-
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">SP</div><div><div class="title">Student Portal</div><div class="sub">Classroom UI</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-tab="dashboard"><span class="material-symbols-outlined icon">home</span>Dashboard</div>
+      <div class="nav-item" data-tab="projects"><span class="material-symbols-outlined icon">work</span>Projects</div>
+      <div class="nav-item" data-tab="assignments"><span class="material-symbols-outlined icon">assignment</span>Assignments</div>
+      <div class="nav-item" data-tab="events"><span class="material-symbols-outlined icon">event</span>Events</div>
+      <div class="nav-item" data-tab="conversations"><span class="material-symbols-outlined icon">chat_bubble</span>Conversations</div>
+      <div class="nav-item" data-tab="clubs"><span class="material-symbols-outlined icon">account_balance</span>Study Groups</div>
+      <div class="nav-item" data-tab="reports"><span class="material-symbols-outlined icon">report</span>Reports</div>
+      <div class="nav-item" data-tab="profile"><span class="material-symbols-outlined icon">person</span>Profile</div>
+      <div id="adminNav" class="nav-item" data-tab="admin" style="display:none"><span class="material-symbols-outlined icon">admin_panel_settings</span>Admin Panel</div>
+    </nav>
+    <div class="profile-card">
+      <div class="profile-name" id="sideName">Guest</div>
+      <div class="profile-role" id="sideRole">Not signed in</div>
     </div>
+    <div style="margin-top:12px;display:flex;gap:8px">
+      <button id="sidebarLogout" class="btn ghost" style="flex:1; display:none">Logout</button>
+      <button id="openLogin" class="btn" style="flex:1">Login</button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+    <!-- Email verification banner -->
+    <div id="emailVerificationBanner" class="verification-banner" style="display:none">
+      <span class="material-symbols-outlined">warning</span>
+      <div>
+        <strong>Email Verification Required</strong>
+        <div style="font-size: 14px; margin-top: 4px;">Please verify your email address to access all features.</div>
+      </div>
+      <button id="sendVerificationBtn" class="btn">Verify Email</button>
+      <button id="reloadUserBtn" class="btn ghost">Check Status</button>
+    </div>
+    
+    <div class="topbar">
+      <div class="search"><span class="material-symbols-outlined" style="color:var(--muted)">search</span><input id="globalSearch" placeholder="Search projects, groups, assignments..."></div>
+      <div class="top-actions"><div style="text-align:right"><div id="welcomeText" style="font-weight:600">Welcome</div><div class="small-muted" id="welcomeSub">Please sign in</div></div></div>
+    </div>
+
+    <!-- Sections -->
+    <section id="dashboard" class="card"><h3>Dashboard</h3><p>Welcome to your student dashboard. Select a section from the sidebar to get started.</p></section>
+    
+    <section id="projects" class="card" style="display:none">
+      <div class="section-title">
+        <h3>Projects</h3>
+        <button id="createProjectBtn" class="btn">Create Project</button>
+      </div>
+      <div id="projectsList"></div>
+    </section>
+    
+    <section id="assignments" class="card" style="display:none"><h3>Assignments</h3><div id="assignmentsList"></div></section>
+    <section id="events" class="card" style="display:none"><h3>Events</h3><div id="eventsList"></div></section>
+    
+    <section id="conversations" class="card" style="display:none">
+      <h3>Conversations</h3>
+      <div class="chat-area">
+        <select id="convList"></select>
+        <div class="chat-window" id="chatWindow"></div>
+        <div class="chat-input">
+          <input id="chatInput" placeholder="Type your message...">
+          <button class="btn" id="sendBtn">Send</button>
+        </div>
+      </div>
+    </section>
+    
+    <section id="clubs" class="card" style="display:none">
+      <div class="section-title">
+        <h3>Study Groups</h3>
+        <button id="createGroupBtn" class="btn">Create Group</button>
+      </div>
+      <div id="clubsList"></div>
+    </section>
+    
+    <section id="reports" class="card" style="display:none"><h3>Reports</h3><div id="reportsList"></div></section>
+    
+    <section id="profile" class="card" style="display:none">
+      <h3>Profile</h3>
+      <div class="profile-form">
+        <img id="profilePic" src="https://via.placeholder.com/100" class="profile-pic" alt="Profile Picture">
+        <input type="file" id="profilePicInput" class="file-input" accept="image/*">
+        <input type="text" id="profileName" placeholder="Your Name">
+        <textarea id="profileBio" placeholder="Write something about yourself..."></textarea>
+        <button id="saveProfileBtn" class="btn">Save Profile</button>
+      </div>
+    </section>
+    
+    <section id="admin" class="card" style="display:none">
+      <h3>Admin Panel</h3>
+      <div class="admin-controls">
+        <button id="manageUsersBtn" class="btn">Manage Users</button>
+        <button id="systemStatsBtn" class="btn">System Stats</button>
+        <button id="verifyUsersBtn" class="btn">Verify Users</button>
+      </div>
+      <div id="adminContent"></div>
+    </section>
   </main>
+</div>
 
-  <script>
-    // REPLACE WITH YOUR FIREBASE CONFIG
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "123456",
-      appId: "YOUR_APP_ID"
-    };
+<!-- Auth Modal -->
+<div id="authModal"><div>
+  <h3>Sign in / Register</h3>
+  <input id="modalEmail" placeholder="Email" style="width:100%;padding:8px;margin:4px 0">
+  <input id="modalPass" type="password" placeholder="Password" style="width:100%;padding:8px;margin:4px 0">
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+    <button id="modalRegister" class="btn ghost">Register</button>
+    <button id="modalLogin" class="btn">Login</button>
+  </div>
+  <div style="margin-top: 16px; padding: 12px; background: #f0f7ff; border-radius: 8px;">
+    <p style="margin: 0; font-size: 14px;"><strong>Demo Accounts:</strong></p>
+    <p style="margin: 4px 0; font-size: 12px;">Admin: admin@portal.com / admin123</p>
+    <p style="margin: 4px 0; font-size: 12px;">Student: student@portal.com / student123</p>
+  </div>
+</div></div>
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+<!-- Verification Options Modal -->
+<div id="verificationModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.45);align-items:center;justify-content:center;z-index:1000;">
+  <div class="verification-modal">
+    <h3>Verify Your Email</h3>
+    <p>Choose how you'd like to verify your email address:</p>
+    
+    <div class="verification-option" onclick="sendRealVerificationEmail()">
+      <h4><span class="material-symbols-outlined">mail</span> Send Verification Email</h4>
+      <p>We'll send a verification link to your email address. Check your inbox and spam folder.</p>
+    </div>
+    
+    <div class="verification-option" onclick="simulateEmailVerification()">
+      <h4><span class="material-symbols-outlined">bolt</span> Quick Verification (Testing)</h4>
+      <p>Instantly verify your email for testing purposes. No email will be sent.</p>
+    </div>
+    
+    <div class="verification-option" onclick="showAdminVerification()">
+      <h4><span class="material-symbols-outlined">admin_panel_settings</span> Admin Verification</h4>
+      <p>Request manual verification from an administrator.</p>
+    </div>
+    
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+      <button id="cancelVerificationBtn" class="btn ghost">Cancel</button>
+    </div>
+  </div>
+</div>
 
-    let userData = null;
+<!-- Admin Verification Modal -->
+<div id="adminVerificationModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.45);align-items:center;justify-content:center;z-index:1000;">
+  <div style="background:var(--surface);padding:22px;border-radius:12px;max-width:500px;width:100%;box-shadow:var(--shadow);">
+    <h3>Admin Verification Request</h3>
+    <p>Your verification request has been submitted to administrators. They will review and verify your account shortly.</p>
+    <p><strong>Note:</strong> This is a simulation. In a real application, this would notify actual administrators.</p>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+      <button id="closeAdminModalBtn" class="btn">OK</button>
+    </div>
+  </div>
+</div>
 
-    function show(page) {
-      document.querySelectorAll('.page, .card').forEach(el => el.classList.add('hidden'));
-      document.getElementById(page === 'login' || page === 'register' ? page : page).classList.remove('hidden');
-      document.getElementById('topbar').textContent = page === 'home' ? 'School Hub' : page.charAt(0).toUpperCase() + page.slice(1);
-      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-      if (page !== 'login' && page !== 'register') document.querySelector(`nav a[onclick="show('${page}')"]`).classList.add('active');
-      if (userData && page !== 'login' && page !== 'register') load(page);
-    }
+<!-- Create Project Modal -->
+<div id="createProjectModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.45);align-items:center;justify-content:center;z-index:1000;">
+  <div style="background:var(--surface);padding:22px;border-radius:12px;max-width:520px;width:100%;box-shadow:var(--shadow);">
+    <h3>Create New Project</h3>
+    <input id="projectTitle" placeholder="Project Title" style="width:100%;padding:8px;margin:4px 0">
+    <textarea id="projectDescription" placeholder="Project Description" style="width:100%;padding:8px;margin:4px 0; min-height:100px"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button id="cancelProjectBtn" class="btn ghost">Cancel</button>
+      <button id="saveProjectBtn" class="btn">Create Project</button>
+    </div>
+  </div>
+</div>
 
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const doc = await db.collection('users').doc(user.email).get();
-        userData = doc.exists ? doc.data() : { name: "User", email: user.email, isAdmin: user.email === "admin@school.com" };
-        if (!doc.exists) await db.collection('users').doc(user.email).set(userData);
-        document.getElementById('adminBadge').classList.toggle('hidden', !userData.isAdmin);
-        document.querySelectorAll('.admin-only').forEach(el => el.style.display = userData.isAdmin ? 'block' : 'none');
-        show('home');
+<!-- Create Group Modal -->
+<div id="createGroupModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.45);align-items:center;justify-content:center;z-index:1000;">
+  <div style="background:var(--surface);padding:22px;border-radius:12px;max-width:520px;width:100%;box-shadow:var(--shadow);">
+    <h3>Create Study Group</h3>
+    <input id="groupName" placeholder="Group Name" style="width:100%;padding:8px;margin:4px 0">
+    <textarea id="groupDescription" placeholder="Group Description" style="width:100%;padding:8px;margin:4px 0; min-height:100px"></textarea>
+    <select id="groupSubject" style="width:100%;padding:8px;margin:4px 0">
+      <option value="">Select Subject</option>
+      <option value="math">Mathematics</option>
+      <option value="science">Science</option>
+      <option value="history">History</option>
+      <option value="english">English</option>
+      <option value="programming">Programming</option>
+    </select>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button id="cancelGroupBtn" class="btn ghost">Cancel</button>
+      <button id="saveGroupBtn" class="btn">Create Group</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast"></div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+<script>
+// --- Firebase config ---
+const firebaseConfig = {
+  apiKey: "AIzaSyApBvfatNOG71P8SUB_uYT08zGeOmC8VlY",
+  authDomain: "student-portal-61ead.firebaseapp.com",
+  projectId: "student-portal-61ead",
+  storageBucket: "student-portal-61ead.firebasestorage.app",
+  messagingSenderId: "415484265376",
+  appId: "1:415484265376:web:41d53b79ac5059a0a35ac5",
+  measurementId: "G-JHCC3HQ20M"
+};
+
+// --- Initialize Firebase ---
+firebase.initializeApp(firebaseConfig);
+const analytics = firebase.analytics();
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+// --- UI Functions ---
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = `toast ${type}`;
+  toast.classList.add('show');
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 4000);
+}
+
+function setLoading(button, isLoading) {
+  if (isLoading) {
+    button.disabled = true;
+    button.innerHTML = '<span class="loading"></span>';
+  } else {
+    button.disabled = false;
+    button.innerHTML = button.getAttribute('data-original-text');
+  }
+}
+
+// --- Email Verification Functions ---
+function showVerificationOptions() {
+  document.getElementById('verificationModal').style.display = 'flex';
+}
+
+function sendRealVerificationEmail() {
+  const user = auth.currentUser;
+  if (!user) return;
+  
+  const verificationModal = document.getElementById('verificationModal');
+  verificationModal.style.display = 'none';
+  
+  const button = document.getElementById('sendVerificationBtn');
+  button.setAttribute('data-original-text', button.textContent);
+  setLoading(button, true);
+  
+  user.sendEmailVerification()
+    .then(() => {
+      showToast('Verification email sent! Please check your inbox and spam folder.', 'success');
+      // Store the time we sent the email to prevent spam
+      localStorage.setItem('lastVerificationEmail', Date.now());
+    })
+    .catch(err => {
+      console.error('Error sending verification email:', err);
+      
+      if (err.code === 'auth/too-many-requests') {
+        showToast('Too many requests. Please try again in a few minutes.', 'error');
+      } else if (err.code === 'auth/network-request-failed') {
+        showToast('Network error. Please check your connection and try again.', 'error');
       } else {
-        userData = null;
-        show('login');
+        showToast('Error sending verification email: ' + err.message, 'error');
       }
+    })
+    .finally(() => {
+      setLoading(button, false);
     });
+}
 
-    window.login = () => auth.signInWithEmailAndPassword(document.getElementById('email').value, document.getElementById('pass').value).catch(e => alert(e.message));
-    window.reg = () => {
-      const name = document.getElementById('rname').value;
-      const email = document.getElementById('remail').value;
-      const pass = document.getElementById('rpass').value;
-      if (!name || !email || !pass) return alert("Fill all");
-      auth.createUserWithEmailAndPassword(email, pass).then(() => {
-        db.collection('users').doc(email).set({ name, email, isAdmin: false });
-      }).catch(e => alert(e.message));
-    };
-    window.logout = () => auth.signOut();
+function simulateEmailVerification() {
+  const user = auth.currentUser;
+  if (!user) return;
+  
+  const verificationModal = document.getElementById('verificationModal');
+  verificationModal.style.display = 'none';
+  
+  // Simulate email verification by updating Firestore
+  db.collection("users").doc(user.uid).set({
+    email: user.email,
+    emailVerified: true,
+    verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge: true })
+  .then(() => {
+    showToast('Email verified successfully! (Simulation)', 'success');
+    // Force reload user data
+    user.reload().then(() => {
+      checkEmailVerification();
+    });
+  })
+  .catch(err => {
+    showToast('Error during verification: ' + err.message, 'error');
+  });
+}
 
-    async function load(page) {
-      const el = document.getElementById(page);
-      el.innerHTML = '<div style="text-align:center;padding:80px;color:var(--primary);font-size:2em;"><i class="fas fa-spinner fa-spin"></i></div>';
+function showAdminVerification() {
+  const user = auth.currentUser;
+  if (!user) return;
+  
+  const verificationModal = document.getElementById('verificationModal');
+  verificationModal.style.display = 'none';
+  
+  // Store verification request in Firestore
+  db.collection("verificationRequests").add({
+    userId: user.uid,
+    userEmail: user.email,
+    requestedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    status: 'pending'
+  })
+  .then(() => {
+    document.getElementById('adminVerificationModal').style.display = 'flex';
+  })
+  .catch(err => {
+    showToast('Error submitting verification request: ' + err.message, 'error');
+  });
+}
 
-      if (page === 'home') {
-        const [a, e, c] = await Promise.all([db.collection('announcements').get(), db.collection('events').get(), db.collection('clubs').get()]);
-        el.innerHTML = `
-          <h2 class="animate__animated animate__bounceIn">Welcome, ${userData.name}!</h2>
-          <div class="grid animate__animated animate__fadeInUp">
-            <div class="item"><i class="fas fa-bullhorn fa-3x" style="color:var(--primary)"></i><br><br><strong>${a.size}</strong> Announcements</div>
-            <div class="item"><i class="fas fa-calendar fa-3x" style="color:#00ff9d"></i><br><br><strong>${e.size}</strong> Events</div>
-            <div class="item"><i class="fas fa-users fa-3x" style="color:#ff2e63"></i><br><br><strong>${c.size}</strong> Clubs</div>
-          </div>`;
+function checkEmailVerification() {
+  const user = auth.currentUser;
+  const banner = document.getElementById('emailVerificationBanner');
+  
+  if (user && !user.emailVerified) {
+    banner.style.display = 'flex';
+    
+    // Check if we have a custom verification status in Firestore
+    db.collection("users").doc(user.uid).get()
+      .then(doc => {
+        if (doc.exists && doc.data().emailVerified) {
+          // User is verified in our system, update Firebase auth
+          user.reload().then(() => {
+            if (user.emailVerified) {
+              banner.style.display = 'none';
+            }
+          });
+        }
+      })
+      .catch(err => {
+        console.error("Error checking verification status:", err);
+      });
+  } else {
+    banner.style.display = 'none';
+  }
+}
+
+function reloadUser() {
+  const user = auth.currentUser;
+  if (!user) return;
+  
+  const button = document.getElementById('reloadUserBtn');
+  button.setAttribute('data-original-text', button.textContent);
+  setLoading(button, true);
+  
+  user.reload()
+    .then(() => {
+      if (user.emailVerified) {
+        showToast('Email verified successfully!', 'success');
+        checkEmailVerification();
+      } else {
+        showToast('Email not verified yet. Please check your inbox.', 'warning');
       }
+    })
+    .catch(err => {
+      console.error('Error reloading user:', err);
+      showToast('Error checking verification status: ' + err.message, 'error');
+    })
+    .finally(() => {
+      setLoading(button, false);
+    });
+}
 
-      if (page === 'announcements') renderAnnouncements(el);
-      if (page === 'events') renderEvents(el);
-      if (page === 'clubs') renderClubs(el);
-      if (page === 'account') el.innerHTML = `<div class="grid"><div class="item">Name: ${userData.name}</div><div class="item">Email: ${userData.email}</div><div class="item">Role: ${userData.isAdmin?'ADMIN':'Student'}</div></div>`;
-      if (page === 'settings') el.innerHTML = `<div class="item">School Hub vFinal • Cyber Edition</div><div class="item" style="margin-top:40px"><button style="background:#333;margin:10px;padding:15px 30px;">English</button><button style="background:#333;margin:10px;padding:15px 30px;">العربية</button></div>`;
+// --- Sidebar navigation ---
+const navItems = document.querySelectorAll(".nav-item");
+navItems.forEach(item => {
+  item.addEventListener("click", () => {
+    document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+    const tab = item.dataset.tab;
+    document.getElementById(tab).style.display = "block";
+    navItems.forEach(i => i.classList.remove("active"));
+    item.classList.add("active");
+  });
+});
+
+// --- Modal toggle ---
+const authModal = document.getElementById("authModal");
+const openLoginBtn = document.getElementById("openLogin");
+openLoginBtn.addEventListener("click", () => authModal.style.display = "flex");
+authModal.addEventListener("click", e => { 
+  if(e.target === authModal) authModal.style.display = "none"; 
+});
+
+// Verification modal handlers
+document.getElementById("cancelVerificationBtn").addEventListener("click", () => {
+  document.getElementById("verificationModal").style.display = "none";
+});
+
+document.getElementById("closeAdminModalBtn").addEventListener("click", () => {
+  document.getElementById("adminVerificationModal").style.display = "none";
+});
+
+// --- Project Creation Modal ---
+const createProjectModal = document.getElementById("createProjectModal");
+const createProjectBtn = document.getElementById("createProjectBtn");
+const cancelProjectBtn = document.getElementById("cancelProjectBtn");
+const saveProjectBtn = document.getElementById("saveProjectBtn");
+
+createProjectBtn.addEventListener("click", () => {
+  createProjectModal.style.display = "flex";
+});
+
+cancelProjectBtn.addEventListener("click", () => {
+  createProjectModal.style.display = "none";
+});
+
+saveProjectBtn.addEventListener("click", () => {
+  const title = document.getElementById("projectTitle").value;
+  const description = document.getElementById("projectDescription").value;
+  
+  if (!title || !description) {
+    showToast('Please fill in all fields', 'error');
+    return;
+  }
+  
+  const user = auth.currentUser;
+  if (!user) {
+    showToast('Please log in to create projects', 'error');
+    return;
+  }
+  
+  // Check if email is verified
+  if (!user.emailVerified) {
+    showToast('Please verify your email before creating projects', 'warning');
+    return;
+  }
+  
+  saveProjectBtn.setAttribute('data-original-text', saveProjectBtn.textContent);
+  setLoading(saveProjectBtn, true);
+  
+  db.collection("projects").add({
+    title: title,
+    description: description,
+    createdBy: user.uid,
+    creatorEmail: user.email,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    status: "active"
+  })
+  .then(() => {
+    showToast("Project created successfully!");
+    createProjectModal.style.display = "none";
+    document.getElementById("projectTitle").value = "";
+    document.getElementById("projectDescription").value = "";
+  })
+  .catch(err => {
+    showToast(err.message, 'error');
+  })
+  .finally(() => {
+    setLoading(saveProjectBtn, false);
+  });
+});
+
+// --- Group Creation Modal ---
+const createGroupModal = document.getElementById("createGroupModal");
+const createGroupBtn = document.getElementById("createGroupBtn");
+const cancelGroupBtn = document.getElementById("cancelGroupBtn");
+const saveGroupBtn = document.getElementById("saveGroupBtn");
+
+createGroupBtn.addEventListener("click", () => {
+  createGroupModal.style.display = "flex";
+});
+
+cancelGroupBtn.addEventListener("click", () => {
+  createGroupModal.style.display = "none";
+});
+
+saveGroupBtn.addEventListener("click", () => {
+  const name = document.getElementById("groupName").value;
+  const description = document.getElementById("groupDescription").value;
+  const subject = document.getElementById("groupSubject").value;
+  
+  if (!name || !description || !subject) {
+    showToast('Please fill in all fields', 'error');
+    return;
+  }
+  
+  const user = auth.currentUser;
+  if (!user) {
+    showToast('Please log in to create groups', 'error');
+    return;
+  }
+  
+  // Check if email is verified
+  if (!user.emailVerified) {
+    showToast('Please verify your email before creating groups', 'warning');
+    return;
+  }
+  
+  saveGroupBtn.setAttribute('data-original-text', saveGroupBtn.textContent);
+  setLoading(saveGroupBtn, true);
+  
+  db.collection("studyGroups").add({
+    name: name,
+    description: description,
+    subject: subject,
+    createdBy: user.uid,
+    creatorEmail: user.email,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    members: [user.uid],
+    memberCount: 1
+  })
+  .then(() => {
+    showToast("Study group created successfully!");
+    createGroupModal.style.display = "none";
+    document.getElementById("groupName").value = "";
+    document.getElementById("groupDescription").value = "";
+    document.getElementById("groupSubject").value = "";
+  })
+  .catch(err => {
+    showToast(err.message, 'error');
+  })
+  .finally(() => {
+    setLoading(saveGroupBtn, false);
+  });
+});
+
+// --- Chat System ---
+const sendBtn = document.getElementById("sendBtn");
+const chatInput = document.getElementById("chatInput");
+const chatWindow = document.getElementById("chatWindow");
+
+sendBtn.addEventListener("click", sendMessage);
+chatInput.addEventListener("keypress", (e) => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+function sendMessage() {
+  const message = chatInput.value.trim();
+  if (!message) return;
+  
+  const user = auth.currentUser;
+  if (!user) {
+    showToast('Please log in to send messages', 'error');
+    return;
+  }
+  
+  // Check if email is verified
+  if (!user.emailVerified) {
+    showToast('Please verify your email before sending messages', 'warning');
+    return;
+  }
+  
+  db.collection("messages").add({
+    text: message,
+    sender: user.uid,
+    senderEmail: user.email,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    chatInput.value = "";
+  })
+  .catch(err => {
+    showToast(err.message, 'error');
+  });
+}
+
+// Load messages in real-time
+db.collection("messages")
+  .orderBy("timestamp", "asc")
+  .onSnapshot(snapshot => {
+    chatWindow.innerHTML = "";
+    
+    snapshot.forEach(doc => {
+      const message = doc.data();
+      const messageDiv = document.createElement("div");
+      messageDiv.className = "message";
+      
+      const metaDiv = document.createElement("div");
+      metaDiv.className = "meta";
+      metaDiv.textContent = `${message.senderEmail} - ${message.timestamp ? new Date(message.timestamp.toDate()).toLocaleString() : 'Just now'}`;
+      
+      const textDiv = document.createElement("div");
+      textDiv.textContent = message.text;
+      
+      messageDiv.appendChild(metaDiv);
+      messageDiv.appendChild(textDiv);
+      chatWindow.appendChild(messageDiv);
+    });
+    
+    // Scroll to bottom
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  });
+
+// --- Profile System ---
+const saveProfileBtn = document.getElementById("saveProfileBtn");
+const profilePicInput = document.getElementById("profilePicInput");
+const profilePic = document.getElementById("profilePic");
+const profileName = document.getElementById("profileName");
+const profileBio = document.getElementById("profileBio");
+
+saveProfileBtn.addEventListener("click", saveProfile);
+profilePicInput.addEventListener("change", handleProfilePicUpload);
+
+function handleProfilePicUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const user = auth.currentUser;
+  if (!user) {
+    showToast('Please log in to update profile', 'error');
+    return;
+  }
+  
+  // Show preview
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    profilePic.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProfile() {
+  const user = auth.currentUser;
+  if (!user) {
+    showToast('Please log in to save profile', 'error');
+    return;
+  }
+  
+  const name = profileName.value;
+  const bio = profileBio.value;
+  const file = profilePicInput.files[0];
+  
+  saveProfileBtn.setAttribute('data-original-text', saveProfileBtn.textContent);
+  setLoading(saveProfileBtn, true);
+  
+  let uploadPromise = Promise.resolve(null);
+  
+  // Upload image if selected
+  if (file) {
+    const storageRef = storage.ref();
+    const profilePicRef = storageRef.child(`profilePics/${user.uid}`);
+    uploadPromise = profilePicRef.put(file).then(snapshot => snapshot.ref.getDownloadURL());
+  }
+  
+  uploadPromise
+    .then(photoURL => {
+      const profileData = {
+        name: name,
+        bio: bio,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      if (photoURL) {
+        profileData.photoURL = photoURL;
+      }
+      
+      return db.collection("profiles").doc(user.uid).set(profileData, { merge: true });
+    })
+    .then(() => {
+      showToast("Profile saved successfully!");
+      loadProfile();
+    })
+    .catch(err => {
+      showToast(err.message, 'error');
+    })
+    .finally(() => {
+      setLoading(saveProfileBtn, false);
+    });
+}
+
+function loadProfile() {
+  const user = auth.currentUser;
+  if (!user) return;
+  
+  db.collection("profiles").doc(user.uid).get()
+    .then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        profileName.value = data.name || "";
+        profileBio.value = data.bio || "";
+        if (data.photoURL) {
+          profilePic.src = data.photoURL;
+        }
+      }
+    })
+    .catch(err => {
+      console.error("Error loading profile:", err);
+    });
+}
+
+// --- Auth buttons ---
+document.getElementById("modalRegister").addEventListener("click", () => {
+  const email = document.getElementById("modalEmail").value;
+  const pass = document.getElementById("modalPass").value;
+  const button = document.getElementById("modalRegister");
+  
+  if (!email || !pass) {
+    showToast('Please enter both email and password', 'error');
+    return;
+  }
+  
+  // Store original text and set loading state
+  button.setAttribute('data-original-text', button.textContent);
+  setLoading(button, true);
+  
+  auth.createUserWithEmailAndPassword(email, pass)
+    .then(u => { 
+      // Store user in Firestore
+      db.collection("users").doc(u.user.uid).set({
+        email: u.user.email,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        emailVerified: false
+      }, { merge: true });
+      
+      showToast("Registered successfully! Please verify your email.", 'success');
+      authModal.style.display="none"; 
+    })
+    .catch(err => {
+      showToast(err.message, 'error');
+    })
+    .finally(() => {
+      setLoading(button, false);
+    });
+});
+
+document.getElementById("modalLogin").addEventListener("click", () => {
+  const email = document.getElementById("modalEmail").value;
+  const pass = document.getElementById("modalPass").value;
+  const button = document.getElementById("modalLogin");
+  
+  if (!email || !pass) {
+    showToast('Please enter both email and password', 'error');
+    return;
+  }
+  
+  // Store original text and set loading state
+  button.setAttribute('data-original-text', button.textContent);
+  setLoading(button, true);
+  
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(u => { 
+      showToast("Logged in successfully!");
+      authModal.style.display="none"; 
+    })
+    .catch(err => {
+      showToast(err.message, 'error');
+    })
+    .finally(() => {
+      setLoading(button, false);
+    });
+});
+
+document.getElementById("sidebarLogout").addEventListener("click", () => {
+  auth.signOut().then(() => showToast("Logged out successfully!"));
+});
+
+// --- Email verification button handlers ---
+document.getElementById("sendVerificationBtn").addEventListener("click", showVerificationOptions);
+document.getElementById("reloadUserBtn").addEventListener("click", reloadUser);
+
+// --- Auth state listener ---
+auth.onAuthStateChanged(user => {
+  const sideName = document.getElementById("sideName");
+  const sideRole = document.getElementById("sideRole");
+  const welcomeText = document.getElementById("welcomeText");
+  const welcomeSub = document.getElementById("welcomeSub");
+  const loginBtn = document.getElementById("openLogin");
+  const logoutBtn = document.getElementById("sidebarLogout");
+  const adminNav = document.getElementById("adminNav");
+
+  if(user){
+    // Check if user is admin
+    const isAdmin = user.email === "admin@portal.com";
+    
+    sideName.textContent = user.email;
+    sideRole.textContent = isAdmin ? "Administrator" : "Student";
+    welcomeText.textContent = `Welcome, ${user.email}`;
+    welcomeSub.textContent = isAdmin ? "Administrator Dashboard" : "Ready to learn!";
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "block";
+    
+    // Show/hide admin panel based on role
+    if (isAdmin) {
+      adminNav.style.display = "flex";
+    } else {
+      adminNav.style.display = "none";
     }
+    
+    // Check email verification status
+    checkEmailVerification();
+    
+    // Load user profile
+    loadProfile();
+  } else {
+    sideName.textContent = "Guest";
+    sideRole.textContent = "Not signed in";
+    welcomeText.textContent = "Welcome";
+    welcomeSub.textContent = "Please sign in";
+    loginBtn.style.display = "block";
+    logoutBtn.style.display = "none";
+    adminNav.style.display = "none";
+    
+    // Hide verification banner when logged out
+    document.getElementById('emailVerificationBanner').style.display = 'none';
+  }
+});
 
-    function renderAnnouncements(container) {
-      db.collection('announcements').orderBy('timestamp', 'desc').onSnapshot(snap => {
-        let html = snap.docs.map(doc => `<div class="item new">${doc.data().text}</div>`).join('');
-        if (userData.isAdmin) html += `<div class="admin-only">
-          <input type="text" id="annIn" placeholder="New announcement..." style="margin-bottom:15px;">
-          <button onclick="addAnn()">POST IT</button>
-        </div>`;
-        container.innerHTML = html;
-        setTimeout(() => document.querySelectorAll('.new').forEach(el => el.classList.remove('new')), 3000);
+// --- Firestore real-time updates ---
+const projectsList = document.getElementById("projectsList");
+db.collection("projects").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+  projectsList.innerHTML = "";
+  
+  if (snapshot.empty) {
+    projectsList.innerHTML = "<div class='list-item'>No projects yet. Create one to get started!</div>";
+    return;
+  }
+  
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.className = "list-item";
+    div.innerHTML = `
+      <div>
+        <strong>${data.title}</strong>
+        <div style="font-size: 14px; color: var(--muted);">${data.description}</div>
+        <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">Created by: ${data.creatorEmail}</div>
+      </div>
+      <div style="font-size: 12px; color: var(--muted);">${data.createdAt ? new Date(data.createdAt.toDate()).toLocaleDateString() : 'Recently'}</div>
+    `;
+    projectsList.appendChild(div);
+  });
+});
+
+// Study groups real-time updates
+const clubsList = document.getElementById("clubsList");
+db.collection("studyGroups").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+  clubsList.innerHTML = "";
+  
+  if (snapshot.empty) {
+    clubsList.innerHTML = "<div class='list-item'>No study groups yet. Create one to get started!</div>";
+    return;
+  }
+  
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.className = "list-item";
+    div.innerHTML = `
+      <div>
+        <strong>${data.name}</strong>
+        <div style="font-size: 14px; color: var(--muted);">${data.description}</div>
+        <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">
+          Subject: ${data.subject} • Members: ${data.memberCount || 1} • Created by: ${data.creatorEmail}
+        </div>
+      </div>
+      <button class="btn" style="font-size: 12px; padding: 6px 12px;" onclick="joinGroup('${doc.id}')">Join</button>
+    `;
+    clubsList.appendChild(div);
+  });
+});
+
+// Join group function
+function joinGroup(groupId) {
+  const user = auth.currentUser;
+  if (!user) {
+    showToast('Please log in to join groups', 'error');
+    return;
+  }
+  
+  // Check if email is verified
+  if (!user.emailVerified) {
+    showToast('Please verify your email before joining groups', 'warning');
+    return;
+  }
+  
+  const groupRef = db.collection("studyGroups").doc(groupId);
+  
+  groupRef.get().then(doc => {
+    if (doc.exists) {
+      const data = doc.data();
+      const members = data.members || [];
+      
+      if (members.includes(user.uid)) {
+        showToast('You are already a member of this group', 'error');
+        return;
+      }
+      
+      members.push(user.uid);
+      
+      groupRef.update({
+        members: members,
+        memberCount: members.length
+      })
+      .then(() => {
+        showToast('Successfully joined the group!');
+      })
+      .catch(err => {
+        showToast(err.message, 'error');
       });
     }
+  });
+}
 
-    // Similar real-time for events & clubs (shortened for space — same pattern)
-    window.addAnn = async () => {
-      const text = document.getElementById('annIn').value.trim();
-      if (!text) return;
-      await db.collection('announcements').add({ text, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-      document.getElementById('annIn').value = '';
-      container.innerHTML += `<div class="success animate__animated animate__tada">Posted Successfully!</div>`;
-      setTimeout(() => document.querySelector('.success')?.remove(), 3000);
-    };
+// --- Placeholder for other sections (assignments, events, etc.) ---
+const placeholders = ["assignmentsList","eventsList","reportsList"];
+placeholders.forEach(id => {
+  const container = document.getElementById(id);
+  if(container) container.innerHTML = "<div class='list-item'>No data yet</div>";
+});
 
-    // Add similar addEvent() and addClub() functions if you want — same logic
+// --- Admin Panel Functions ---
+document.getElementById("manageUsersBtn").addEventListener("click", () => {
+  const adminContent = document.getElementById("adminContent");
+  adminContent.innerHTML = `
+    <h4>User Management</h4>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Verified</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>admin@portal.com</td>
+          <td>Administrator</td>
+          <td>Yes</td>
+          <td><button class="btn danger" style="padding: 4px 8px; font-size: 12px;">Delete</button></td>
+        </tr>
+        <tr>
+          <td>student@portal.com</td>
+          <td>Student</td>
+          <td>No</td>
+          <td>
+            <button class="btn" style="padding: 4px 8px; font-size: 12px;" onclick="adminVerifyUser('student@portal.com')">Verify</button>
+            <button class="btn danger" style="padding: 4px 8px; font-size: 12px;">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+});
 
-  </script>
+document.getElementById("systemStatsBtn").addEventListener("click", () => {
+  const adminContent = document.getElementById("adminContent");
+  adminContent.innerHTML = `
+    <h4>System Statistics</h4>
+    <div class="grid">
+      <div class="card">
+        <h4>Total Users</h4>
+        <p style="font-size: 24px; font-weight: bold; margin: 0;">2</p>
+      </div>
+      <div class="card">
+        <h4>Active Projects</h4>
+        <p style="font-size: 24px; font-weight: bold; margin: 0;">3</p>
+      </div>
+      <div class="card">
+        <h4>Study Groups</h4>
+        <p style="font-size: 24px; font-weight: bold; margin: 0;">2</p>
+      </div>
+      <div class="card">
+        <h4>Messages Today</h4>
+        <p style="font-size: 24px; font-weight: bold; margin: 0;">5</p>
+      </div>
+    </div>
+  `;
+});
+
+document.getElementById("verifyUsersBtn").addEventListener("click", () => {
+  const adminContent = document.getElementById("adminContent");
+  adminContent.innerHTML = `
+    <h4>Pending Verification Requests</h4>
+    <div class="list-item">
+      <div>
+        <strong>student@portal.com</strong>
+        <div style="font-size: 14px; color: var(--muted);">Requested: Just now</div>
+      </div>
+      <button class="btn" style="font-size: 12px; padding: 6px 12px;" onclick="adminVerifyUser('student@portal.com')">Approve</button>
+    </div>
+    <div class="list-item">
+      <div>
+        <strong>No pending requests</strong>
+        <div style="font-size: 14px; color: var(--muted);">All users are verified</div>
+      </div>
+    </div>
+  `;
+});
+
+// Admin verification function
+function adminVerifyUser(email) {
+  // In a real app, you would look up the user by email and update their verification status
+  showToast(`User ${email} has been verified manually by admin`, 'success');
+  
+  // If the current user is the one being verified, update their status
+  const user = auth.currentUser;
+  if (user && user.email === email) {
+    db.collection("users").doc(user.uid).update({
+      emailVerified: true,
+      verifiedBy: 'admin',
+      verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+      user.reload().then(() => {
+        checkEmailVerification();
+      });
+    });
+  }
+}
+
+// Create demo accounts on page load
+window.addEventListener('load', () => {
+  // Pre-fill demo accounts for easier testing
+  document.getElementById('modalEmail').value = 'student@portal.com';
+  document.getElementById('modalPass').value = 'student123';
+});
+</script>
 </body>
 </html>
