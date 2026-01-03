@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 <style>
-/* --- ENHANCED UI STYLES --- */
+/* --- CLEAN UI STYLES --- */
 :root {
   --bg: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   --surface: #ffffff;
@@ -19,14 +19,10 @@
   --danger: #ef4444;
   --success: #10b981;
   --warning: #f59e0b;
-  --info: #3b82f6;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --radius: 12px;
-  --radius-sm: 8px;
-  --maxWidth: 1400px;
   --gap: 20px;
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -37,14 +33,12 @@
 
 body {
   margin: 0;
-  padding: 24px;
+  padding: 20px;
   background: var(--bg);
-  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font);
   display: flex;
   justify-content: center;
-  color: #1e293b;
+  color: var(--primary);
   min-height: 100vh;
 }
 
@@ -53,40 +47,28 @@ body {
   grid-template-columns: 280px 1fr;
   gap: var(--gap);
   width: 100%;
-  max-width: var(--maxWidth);
-  align-items: start;
+  max-width: 1400px;
 }
 
-/* Enhanced Sidebar */
+/* Sidebar */
 .sidebar {
   background: var(--surface);
   border-radius: var(--radius);
   padding: 20px;
-  box-shadow: var(--shadow-lg);
-  position: sticky;
-  top: 24px;
-  height: calc(100vh - 48px);
-  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  border: 1px solid #e2e8f0;
-}
-
-.sidebar-content {
-  flex: 1;
-  overflow-y: auto;
-}
-
-.sidebar-footer {
-  padding-top: 16px;
-  border-top: 1px solid #e2e8f0;
+  height: calc(100vh - 40px);
+  position: sticky;
+  top: 20px;
 }
 
 .brand {
   display: flex;
   gap: 12px;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
   padding-bottom: 16px;
   border-bottom: 1px solid #e2e8f0;
 }
@@ -102,7 +84,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow);
 }
 
 .brand .title {
@@ -121,7 +102,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-bottom: 20px;
+  flex: 1;
 }
 
 .nav-item {
@@ -129,18 +110,17 @@ body {
   align-items: center;
   gap: 12px;
   padding: 12px;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   font-weight: 500;
-  color: #475569;
+  color: var(--primary);
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s;
   border: 1px solid transparent;
 }
 
 .nav-item:hover {
   background: var(--surface-secondary);
   border-color: #e2e8f0;
-  transform: translateX(4px);
 }
 
 .nav-item.active {
@@ -150,22 +130,22 @@ body {
   color: var(--primary-light);
 }
 
+.icon {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 20px;
+  color: var(--primary);
+}
+
 .nav-item.active .icon {
   color: var(--primary-light);
 }
 
-.icon {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  font-size: 20px;
-  color: #475569;
-}
-
 .profile-card {
   padding: 16px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--surface-secondary), #fff);
+  border-radius: 8px;
+  background: var(--surface-secondary);
   border: 1px solid #e2e8f0;
-  margin-bottom: 20px;
+  margin-top: auto;
 }
 
 .profile-header {
@@ -179,8 +159,6 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--primary-light);
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   display: flex;
   align-items: center;
@@ -203,37 +181,9 @@ body {
 .profile-role {
   font-size: 12px;
   color: var(--muted);
-  font-weight: 500;
 }
 
-.profile-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.profile-stat {
-  text-align: center;
-  padding: 8px;
-  background: white;
-  border-radius: var(--radius-sm);
-  border: 1px solid #e2e8f0;
-}
-
-.profile-stat-value {
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 14px;
-}
-
-.profile-stat-label {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 2px;
-}
-
-/* Enhanced Main Content */
+/* Main Content */
 .main {
   display: flex;
   flex-direction: column;
@@ -247,11 +197,6 @@ body {
   padding: 12px 0;
 }
 
-.search-container {
-  flex: 1;
-  max-width: 600px;
-}
-
 .search {
   display: flex;
   align-items: center;
@@ -260,13 +205,9 @@ body {
   border-radius: var(--radius);
   padding: 12px 16px;
   box-shadow: var(--shadow);
-  border: 1px solid transparent;
-  transition: var(--transition);
-}
-
-.search:focus-within {
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border: 1px solid #e2e8f0;
+  flex: 1;
+  max-width: 600px;
 }
 
 .search input {
@@ -275,11 +216,7 @@ body {
   background: transparent;
   width: 100%;
   font-size: 14px;
-  color: #1e293b;
-}
-
-.search input::placeholder {
-  color: var(--muted);
+  color: var(--primary);
 }
 
 .top-actions {
@@ -302,18 +239,32 @@ body {
   color: var(--muted);
 }
 
-/* Enhanced Cards */
+.language-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid #e2e8f0;
+  color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.language-btn:hover {
+  background: var(--surface-secondary);
+  border-color: var(--primary-light);
+}
+
+/* Cards */
 .card {
   background: var(--surface);
   border-radius: var(--radius);
   padding: 24px;
   box-shadow: var(--shadow);
   border: 1px solid #e2e8f0;
-  transition: var(--transition);
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
 }
 
 .card-header {
@@ -331,91 +282,27 @@ body {
   color: var(--primary);
 }
 
-.card-actions {
-  display: flex;
-  gap: 8px;
-}
-
-/* Enhanced Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-/* Enhanced List Items */
-.list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-  border-radius: var(--radius-sm);
-  border: 1px solid #e2e8f0;
-  margin-bottom: 8px;
-  background: #fff;
-  transition: var(--transition);
-}
-
-.list-item:hover {
-  border-color: var(--primary-light);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-
-.list-item-content {
-  flex: 1;
-}
-
-.list-item-title {
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: var(--primary);
-}
-
-.list-item-subtitle {
-  font-size: 14px;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-
-.list-item-meta {
-  display: flex;
-  gap: 12px;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.list-item-actions {
-  display: flex;
-  gap: 8px;
-}
-
-/* Enhanced Buttons */
+/* Buttons */
 .btn {
   padding: 10px 16px;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   border: 0;
   background: var(--primary);
   color: white;
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
-  transition: var(--transition);
+  transition: all 0.2s;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   justify-content: center;
-  font-family: 'Poppins', sans-serif;
 }
 
 .btn:hover {
   background: var(--primary-light);
   transform: translateY(-2px);
   box-shadow: var(--shadow);
-}
-
-.btn:active {
-  transform: translateY(0);
 }
 
 .btn.primary {
@@ -434,22 +321,6 @@ body {
   background: #059669;
 }
 
-.btn.warning {
-  background: var(--warning);
-}
-
-.btn.warning:hover {
-  background: #d97706;
-}
-
-.btn.danger {
-  background: var(--danger);
-}
-
-.btn.danger:hover {
-  background: #dc2626;
-}
-
 .btn.ghost {
   background: transparent;
   border: 1px solid #e2e8f0;
@@ -462,93 +333,7 @@ body {
   color: var(--primary-light);
 }
 
-.btn.sm {
-  padding: 6px 12px;
-  font-size: 12px;
-}
-
-/* Enhanced Modals */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.7);
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal {
-  background: var(--surface);
-  padding: 32px;
-  border-radius: var(--radius);
-  max-width: 500px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow-lg);
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-title {
-  font-weight: 600;
-  font-size: 20px;
-  color: var(--primary);
-}
-
-.modal-close {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: var(--radius-sm);
-  transition: var(--transition);
-}
-
-.modal-close:hover {
-  background: var(--surface-secondary);
-}
-
-.modal-body {
-  margin-bottom: 24px;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding-top: 16px;
-  border-top: 1px solid #e2e8f0;
-}
-
-/* Enhanced Forms */
+/* Forms */
 .form-group {
   margin-bottom: 16px;
 }
@@ -564,74 +349,96 @@ body {
 .form-control {
   width: 100%;
   padding: 12px;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   border: 1px solid #e2e8f0;
   background: white;
   font-family: inherit;
   font-size: 14px;
-  transition: var(--transition);
 }
 
 .form-control:focus {
   outline: none;
   border-color: var(--primary-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.form-control.error {
-  border-color: var(--danger);
+/* List Items */
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 8px;
+  background: white;
 }
 
-.form-error {
-  color: var(--danger);
-  font-size: 12px;
-  margin-top: 4px;
+/* Club Cards */
+.club-card {
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  background: white;
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.club-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
-.form-textarea {
-  min-height: 100px;
-  resize: vertical;
+.club-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background: var(--surface-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.form-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 36px;
+.club-info {
+  flex: 1;
 }
 
-/* Enhanced Toast */
-.toast-container {
+.club-name {
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0 0 4px 0;
+  color: var(--primary);
+}
+
+.club-leaders {
+  font-size: 14px;
+  color: var(--accent);
+  margin: 0 0 12px 0;
+}
+
+.club-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--primary);
+  margin: 0 0 16px 0;
+}
+
+/* Toast */
+.toast {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 1001;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.toast {
   background: var(--surface);
   padding: 16px;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-lg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
   min-width: 300px;
-  max-width: 400px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   transform: translateX(150%);
-  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  border-left: 4px solid transparent;
+  transition: transform 0.3s;
+  z-index: 1000;
 }
 
 .toast.show {
@@ -639,100 +446,26 @@ body {
 }
 
 .toast.success {
-  border-left-color: var(--success);
+  border-left: 4px solid var(--success);
 }
 
 .toast.error {
-  border-left-color: var(--danger);
-}
-
-.toast.warning {
-  border-left-color: var(--warning);
+  border-left: 4px solid var(--danger);
 }
 
 .toast.info {
-  border-left-color: var(--info);
+  border-left: 4px solid var(--primary-light);
 }
 
-.toast-icon {
-  font-size: 20px;
-}
-
-.toast-success .toast-icon {
-  color: var(--success);
-}
-
-.toast-error .toast-icon {
-  color: var(--danger);
-}
-
-.toast-warning .toast-icon {
-  color: var(--warning);
-}
-
-.toast-info .toast-icon {
-  color: var(--info);
-}
-
-.toast-content {
-  flex: 1;
-}
-
-.toast-title {
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.toast-message {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-.toast-close {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 2px;
-  border-radius: 4px;
-  color: var(--muted);
-  transition: var(--transition);
-}
-
-.toast-close:hover {
-  color: var(--primary);
-  background: var(--surface-secondary);
-}
-
-/* Enhanced Loading */
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.9);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1002;
-  backdrop-filter: blur(4px);
-}
-
-.loading-overlay.show {
-  display: flex;
-}
-
-.loading-content {
-  text-align: center;
-}
-
-.loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid rgba(59, 130, 246, 0.3);
+/* Loading */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(59, 130, 246, 0.3);
   border-radius: 50%;
   border-top-color: var(--primary-light);
-  animation: spin 1s linear infinite;
-  margin-bottom: 16px;
+  animation: spin 1s ease-in-out infinite;
 }
 
 @keyframes spin {
@@ -741,118 +474,16 @@ body {
   }
 }
 
-/* Dashboard Widgets */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.dashboard-widget {
-  background: white;
-  border-radius: var(--radius);
-  padding: 20px;
-  border: 1px solid #e2e8f0;
-  transition: var(--transition);
-}
-
-.dashboard-widget:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-
-.widget-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.widget-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--surface-secondary);
-  color: var(--primary-light);
-}
-
-.widget-title {
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--primary);
-}
-
-.widget-value {
-  font-weight: 700;
-  font-size: 32px;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-
-.widget-trend {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-/* Role Badges */
-.role-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.role-admin {
-  background: linear-gradient(135deg, #fef2f2, #fee2e2);
-  color: #dc2626;
-  border: 1px solid #fecaca;
-}
-
-.role-leader {
-  background: linear-gradient(135deg, #fffbeb, #fef3c7);
-  color: #d97706;
-  border: 1px solid #fde68a;
-}
-
-.role-student {
-  background: linear-gradient(135deg, #eff6ff, #dbeafe);
-  color: #2563eb;
-  border: 1px solid #bfdbfe;
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 1024px) {
   .app {
     grid-template-columns: 1fr;
-    padding-bottom: 80px;
   }
   
   .sidebar {
     position: relative;
     height: auto;
     top: 0;
-  }
-  
-  .sidebar-content {
-    max-height: 400px;
-  }
-  
-  .search-container {
-    max-width: 100%;
-  }
-  
-  .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -861,140 +492,83 @@ body {
     padding: 16px;
   }
   
-  .card {
-    padding: 20px;
-  }
-  
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .top-actions {
+  .topbar {
     flex-direction: column;
-    align-items: flex-end;
+    gap: 16px;
+    align-items: stretch;
   }
   
-  .modal {
-    padding: 20px;
-    width: 95%;
+  .search {
+    max-width: 100%;
   }
-}
-
-/* Fix for admin-only elements */
-.admin-only {
-  display: none !important;
-}
-
-/* Fix for error messages */
-.error-message {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #dc2626;
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  margin: 16px 0;
-  font-size: 14px;
+  
+  .top-actions {
+    justify-content: space-between;
+  }
 }
 </style>
 </head>
 <body>
 <div class="app">
-  <!-- Enhanced Sidebar -->
+  <!-- Sidebar -->
   <aside class="sidebar">
-    <div class="sidebar-content">
-      <div class="brand">
-        <div class="logo">BY</div>
-        <div>
-          <div class="title">BNI Yekhlef Highschool</div>
-          <div class="sub">Student Portal</div>
-        </div>
-      </div>
-      
-      <nav class="sidebar-nav">
-        <div class="nav-item active" data-tab="dashboard" tabindex="0">
-          <span class="material-symbols-outlined icon">dashboard</span>Dashboard
-        </div>
-        <div class="nav-item" data-tab="projects" tabindex="0">
-          <span class="material-symbols-outlined icon">work</span>Projects
-        </div>
-        <div class="nav-item" data-tab="assignments" tabindex="0">
-          <span class="material-symbols-outlined icon">assignment</span>Assignments
-        </div>
-        <div class="nav-item" data-tab="events" tabindex="0">
-          <span class="material-symbols-outlined icon">event</span>Events
-        </div>
-        <div class="nav-item" data-tab="clubs" tabindex="0">
-          <span class="material-symbols-outlined icon">groups</span>Clubs
-        </div>
-        <div class="nav-item" data-tab="reports" tabindex="0">
-          <span class="material-symbols-outlined icon">analytics</span>Reports
-        </div>
-        <div class="nav-item" data-tab="profile" tabindex="0">
-          <span class="material-symbols-outlined icon">person</span>Profile
-        </div>
-        <div id="adminNav" class="nav-item admin-only" data-tab="admin" tabindex="0">
-          <span class="material-symbols-outlined icon">admin_panel_settings</span>Admin Panel
-        </div>
-      </nav>
-      
-      <div class="profile-card">
-        <div class="profile-header">
-          <div class="profile-avatar" id="sideProfileInitials">GU</div>
-          <div class="profile-info">
-            <div class="profile-name" id="sideName">Guest User</div>
-            <div class="profile-role" id="sideRole">Not signed in</div>
-          </div>
-        </div>
-        <div class="profile-stats">
-          <div class="profile-stat">
-            <div class="profile-stat-value" id="projectsCount">0</div>
-            <div class="profile-stat-label">Projects</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-value" id="clubsCount">0</div>
-            <div class="profile-stat-label">Clubs</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-value" id="assignmentsCount">0</div>
-            <div class="profile-stat-label">Assignments</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-value" id="streakCount">0</div>
-            <div class="profile-stat-label">Day Streak</div>
-          </div>
-        </div>
+    <div class="brand">
+      <div class="logo">BY</div>
+      <div>
+        <div class="title">BNI Yekhlef Highschool</div>
+        <div class="sub">Student Portal</div>
       </div>
     </div>
     
-    <div class="sidebar-footer">
-      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-tab="dashboard">
+        <span class="material-symbols-outlined icon">dashboard</span>Dashboard
+      </div>
+      <div class="nav-item" data-tab="projects">
+        <span class="material-symbols-outlined icon">work</span>Projects
+      </div>
+      <div class="nav-item" data-tab="assignments">
+        <span class="material-symbols-outlined icon">assignment</span>Assignments
+      </div>
+      <div class="nav-item" data-tab="clubs">
+        <span class="material-symbols-outlined icon">groups</span>Clubs
+      </div>
+      <div class="nav-item" data-tab="profile">
+        <span class="material-symbols-outlined icon">person</span>Profile
+      </div>
+      <div id="adminNav" class="nav-item" data-tab="admin" style="display:none">
+        <span class="material-symbols-outlined icon">admin_panel_settings</span>Admin
+      </div>
+    </nav>
+    
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar" id="sideProfileInitials">GU</div>
+        <div class="profile-info">
+          <div class="profile-name" id="sideName">Guest User</div>
+          <div class="profile-role" id="sideRole">Not signed in</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px;">
         <button id="sidebarLogout" class="btn ghost" style="flex:1; display:none">Logout</button>
         <button id="openLogin" class="btn primary" style="flex:1">Login</button>
-      </div>
-      <div style="text-align: center; font-size: 11px; color: var(--muted);">
-        <div>Student Portal v2.0</div>
-        <div id="lastSync">Last sync: --:--</div>
       </div>
     </div>
   </aside>
 
-  <!-- Enhanced Main Content -->
+  <!-- Main Content -->
   <main class="main">
-    <!-- Enhanced Topbar -->
+    <!-- Topbar -->
     <div class="topbar">
-      <div class="search-container">
-        <div class="search">
-          <span class="material-symbols-outlined" style="color:var(--muted)">search</span>
-          <input id="globalSearch" placeholder="Search projects, clubs, assignments, users..." aria-label="Search">
-        </div>
+      <div class="search">
+        <span class="material-symbols-outlined" style="color:var(--muted)">search</span>
+        <input id="globalSearch" placeholder="Search...">
       </div>
       <div class="top-actions">
+        <button class="language-btn" id="languageBtn">
+          <span class="material-symbols-outlined">language</span>
+          <span>English</span>
+        </button>
         <div class="welcome-container">
           <div class="welcome-text" id="welcomeText">Welcome</div>
           <div class="welcome-sub" id="welcomeSub">Please sign in</div>
@@ -1002,1336 +576,798 @@ body {
       </div>
     </div>
 
-    <!-- Enhanced Dashboard -->
+    <!-- Dashboard -->
     <section id="dashboard" class="card">
       <div class="card-header">
-        <h2 class="card-title">Dashboard Overview</h2>
-        <div class="card-actions">
-          <button class="btn btn-icon ghost" id="refreshDashboard" title="Refresh">
-            <span class="material-symbols-outlined">refresh</span>
-          </button>
-        </div>
+        <h2 class="card-title">Dashboard</h2>
       </div>
-      
-      <div class="dashboard-grid">
-        <div class="dashboard-widget">
-          <div class="widget-header">
-            <div class="widget-icon">
-              <span class="material-symbols-outlined">work</span>
-            </div>
-            <div class="widget-title">My Projects</div>
-          </div>
-          <div class="widget-value" id="widgetProjects">0</div>
-          <div class="widget-trend">
-            <span>Active projects</span>
-          </div>
-        </div>
-        
-        <div class="dashboard-widget">
-          <div class="widget-header">
-            <div class="widget-icon">
-              <span class="material-symbols-outlined">assignment</span>
-            </div>
-            <div class="widget-title">Pending Assignments</div>
-          </div>
-          <div class="widget-value" id="widgetAssignments">0</div>
-          <div class="widget-trend">
-            <span>To be completed</span>
-          </div>
-        </div>
-        
-        <div class="dashboard-widget">
-          <div class="widget-header">
-            <div class="widget-icon">
-              <span class="material-symbols-outlined">groups</span>
-            </div>
-            <div class="widget-title">Clubs Joined</div>
-          </div>
-          <div class="widget-value" id="widgetClubs">0</div>
-          <div class="widget-trend">
-            <span>Active memberships</span>
-          </div>
-        </div>
-        
-        <div class="dashboard-widget">
-          <div class="widget-header">
-            <div class="widget-icon">
-              <span class="material-symbols-outlined">trending_up</span>
-            </div>
-            <div class="widget-title">Activity</div>
-          </div>
-          <div class="widget-value" id="widgetActivity">0</div>
-          <div class="widget-trend">
-            <span>This week</span>
-          </div>
-        </div>
-      </div>
-      
-      <div style="margin-top: 24px;">
-        <h3 style="margin-bottom: 16px;">Recent Activity</h3>
-        <div id="recentActivity">No recent activity</div>
-      </div>
+      <p>Welcome to BNI Yekhlef Student Portal. Select a section from the sidebar to get started.</p>
     </section>
     
-    <!-- Enhanced Projects Section -->
+    <!-- Projects -->
     <section id="projects" class="card" style="display:none">
       <div class="card-header">
         <h2 class="card-title">Projects</h2>
-        <div class="card-actions">
-          <button id="createProjectBtn" class="btn primary">
-            <span class="material-symbols-outlined" style="font-size:18px">add</span> Create Project
-          </button>
-        </div>
+        <button id="createProjectBtn" class="btn primary">Create Project</button>
       </div>
-      <div id="projectsList">No projects yet. Create one to get started!</div>
+      <div id="projectsList">No projects yet</div>
     </section>
     
-    <!-- Enhanced Assignments Section -->
+    <!-- Assignments -->
     <section id="assignments" class="card" style="display:none">
       <div class="card-header">
         <h2 class="card-title">Assignments</h2>
-        <div class="card-actions">
-          <button id="submitAssignmentBtn" class="btn primary">
-            <span class="material-symbols-outlined" style="font-size:18px">upload</span> Submit Assignment
-          </button>
-        </div>
       </div>
       <div id="assignmentsList">No assignments yet</div>
     </section>
     
-    <!-- Enhanced Events Section -->
-    <section id="events" class="card" style="display:none">
-      <div class="card-header">
-        <h2 class="card-title">Upcoming Events</h2>
-        <div class="card-actions">
-          <button id="createEventBtn" class="btn primary admin-only">
-            <span class="material-symbols-outlined" style="font-size:18px">add</span> Create Event
-          </button>
-        </div>
-      </div>
-      <div id="eventsList">No upcoming events</div>
-    </section>
-    
-    <!-- Enhanced Clubs Section -->
+    <!-- Clubs -->
     <section id="clubs" class="card" style="display:none">
       <div class="card-header">
-        <h2 class="card-title">Clubs & Organizations</h2>
-        <div class="card-actions">
-          <button id="createClubBtn" class="btn primary admin-only">
-            <span class="material-symbols-outlined" style="font-size:18px">add</span> Create Club
-          </button>
-        </div>
+        <h2 class="card-title">Clubs</h2>
+        <button id="createClubBtn" class="btn primary">Create Club</button>
       </div>
       <div id="clubsList">Loading clubs...</div>
     </section>
     
-    <!-- Enhanced Reports Section -->
-    <section id="reports" class="card" style="display:none">
-      <div class="card-header">
-        <h2 class="card-title">Reports & Analytics</h2>
-        <div class="card-actions">
-          <button id="exportReportBtn" class="btn success">
-            <span class="material-symbols-outlined" style="font-size:18px">download</span> Export
-          </button>
-        </div>
-      </div>
-      <div id="reportsContent">No reports available</div>
-    </section>
-    
-    <!-- Enhanced Profile Section -->
+    <!-- Profile -->
     <section id="profile" class="card" style="display:none">
       <div class="card-header">
         <h2 class="card-title">My Profile</h2>
-        <div class="card-actions">
-          <button id="changePasswordBtn" class="btn ghost" style="display:none">Change Password</button>
-          <button id="saveProfileBtn" class="btn success" style="display:none">Save Profile</button>
-        </div>
+        <button id="saveProfileBtn" class="btn success">Save Profile</button>
       </div>
-      <div class="profile-form" id="profileForm">
-        <div style="text-align: center; padding: 40px 20px;">
-          <div class="profile-avatar" style="width: 80px; height: 80px; margin: 0 auto 20px; font-size: 24px;">GU</div>
-          <h3 style="margin-bottom: 8px;">Guest User</h3>
-          <p style="color: var(--muted); margin-bottom: 24px;">Please login to access your profile</p>
-          <button id="profileLoginBtn" class="btn primary">Login to Continue</button>
+      <div style="max-width: 500px;">
+        <div class="form-group" style="display:flex; gap:24px; align-items:flex-start;">
+          <div style="position:relative">
+            <div class="profile-avatar" id="profileAvatarFallback" style="width:100px;height:100px;font-size:32px">GU</div>
+          </div>
+          <div style="flex:1">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="profileName" class="form-control" placeholder="Your Full Name">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" id="profileEmail" class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Grade</label>
+                <select id="profileGrade" class="form-control">
+                  <option value="">Select Grade</option>
+                  <option value="TC">TC</option>
+                  <option value="1BAC">1BAC</option>
+                  <option value="2BAC">2BAC</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Bio</label>
+          <textarea id="profileBio" class="form-control" placeholder="Tell us about yourself..." rows="4"></textarea>
         </div>
       </div>
     </section>
     
-    <!-- Enhanced Admin Panel -->
-    <section id="admin" class="card admin-only" style="display:none">
+    <!-- Admin -->
+    <section id="admin" class="card" style="display:none">
       <div class="card-header">
         <h2 class="card-title">Admin Panel</h2>
-        <div class="card-actions">
-          <button id="systemHealthBtn" class="btn ghost">System Health</button>
-        </div>
-      </div>
-      <div class="admin-controls">
-        <button id="manageUsersBtn" class="btn primary">Manage Users</button>
-        <button id="systemStatsBtn" class="btn">System Stats</button>
-        <button id="settingsBtn" class="btn">Settings</button>
       </div>
       <div id="adminContent"></div>
     </section>
   </main>
 </div>
 
-<!-- Enhanced Toast Container -->
-<div class="toast-container" id="toastContainer"></div>
+<!-- Toast -->
+<div id="toast" class="toast"></div>
 
-<!-- Enhanced Loading Overlay -->
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-content">
-    <div class="loading-spinner"></div>
-    <div id="loadingText">Loading...</div>
-  </div>
-</div>
-
-<!-- Enhanced Auth Modal -->
-<div class="modal-overlay" id="authModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 class="modal-title">Welcome to BNI Yekhlef Student Portal</h3>
-      <button class="modal-close" id="closeAuthModal">
-        <span class="material-symbols-outlined">close</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label" for="modalEmail">Email</label>
-        <input type="email" id="modalEmail" class="form-control" placeholder="student@bniyekhlef.edu" value="test@student.com">
-        <div class="form-error" id="modalEmailError"></div>
+<!-- Auth Modal -->
+<div id="authModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;z-index:1000;">
+  <div style="background:var(--surface);padding:24px;border-radius:var(--radius);max-width:400px;width:90%;">
+    <h3 style="margin-bottom:20px;">Sign in / Register</h3>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <input id="modalFirstName" placeholder="First Name" class="form-control">
+        <input id="modalLastName" placeholder="Last Name" class="form-control">
       </div>
-      <div class="form-group">
-        <label class="form-label" for="modalPass">Password</label>
-        <input type="password" id="modalPass" class="form-control" placeholder="••••••••" value="password123">
-        <div class="form-error" id="modalPassError"></div>
+      <input id="modalEmail" type="email" placeholder="Email" class="form-control">
+      <input id="modalPass" type="password" placeholder="Password" class="form-control">
+      <select id="modalGrade" class="form-control">
+        <option value="">Select Grade</option>
+        <option value="TC">TC</option>
+        <option value="1BAC">1BAC</option>
+        <option value="2BAC">2BAC</option>
+      </select>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+        <button id="modalCancel" class="btn ghost">Cancel</button>
+        <button id="modalRegister" class="btn ghost">Register</button>
+        <button id="modalLogin" class="btn primary">Login</button>
       </div>
-      <div class="form-group" id="registerFields" style="display:none;">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="modalFirstName">First Name</label>
-            <input type="text" id="modalFirstName" class="form-control" placeholder="John">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="modalLastName">Last Name</label>
-            <input type="text" id="modalLastName" class="form-control" placeholder="Doe">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="modalGrade">Grade</label>
-          <select id="modalGrade" class="form-control form-select">
-            <option value="">Select Grade</option>
-            <option value="TC">TC</option>
-            <option value="1BAC">1BAC</option>
-            <option value="2BAC">2BAC</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" id="rememberMe" class="form-check-input">
-          <label for="rememberMe" style="font-size:14px;">Remember me</label>
-        </div>
-      </div>
-      <div class="form-group">
-        <button id="toggleRegister" class="btn ghost sm" style="font-size:13px;">Don't have an account? Register</button>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button id="modalCancel" class="btn ghost">Cancel</button>
-      <button id="modalAction" class="btn primary">Login</button>
     </div>
   </div>
 </div>
 
-<!-- Enhanced Project Creation Modal -->
-<div class="modal-overlay" id="createProjectModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 class="modal-title">Create New Project</h3>
-      <button class="modal-close" id="closeProjectModal">
-        <span class="material-symbols-outlined">close</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label" for="projectTitle">Project Title *</label>
-        <input type="text" id="projectTitle" class="form-control" placeholder="e.g., Science Fair Project">
-        <div class="form-error" id="projectTitleError"></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="projectDescription">Description *</label>
-        <textarea id="projectDescription" class="form-control form-textarea" placeholder="Describe your project..."></textarea>
-        <div class="form-error" id="projectDescriptionError"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label" for="projectDeadline">Deadline</label>
-          <input type="date" id="projectDeadline" class="form-control">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="projectStatus">Status</label>
-          <select id="projectStatus" class="form-control form-select">
-            <option value="planning">Planning</option>
-            <option value="in-progress" selected>In Progress</option>
-            <option value="review">Under Review</option>
-            <option value="completed">Completed</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button id="cancelProjectBtn" class="btn ghost">Cancel</button>
-      <button id="saveProjectBtn" class="btn success">Create Project</button>
-    </div>
-  </div>
-</div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
 // =============================================
-// BNI YEKHELF HIGHSCHOOL - STUDENT PORTAL
-// SIMPLIFIED VERSION WITH LOCAL STORAGE
+// SIMPLE WORKING VERSION - BNI YEKHELF PORTAL
 // =============================================
 
-// --- State Management ---
-const State = {
-  currentUser: null,
-  userData: null,
-  userRole: 'guest',
-  activeTab: 'dashboard',
-  isOnline: navigator.onLine
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBcvybNF9Hn89jb2zRQxknb6l0uMeiS-EM",
+  authDomain: "school-bni-yekhlef-id.firebaseapp.com",
+  projectId: "bniyekhlef-high-school",
+  storageBucket: "school-bni-yekhlef-id",
+  messagingSenderId: "893030570286",
+  appId: "1:893030570286:web:bec5df8427b532f5e202bf",
+  measurementId: "G-4V7JRRR48W"
 };
 
-// --- Toast System ---
-class Toast {
-  static show(message, type = 'info', duration = 4000) {
-    const container = document.getElementById('toastContainer');
-    if (!container) return;
-    
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = `
-      <span class="material-symbols-outlined toast-icon">
-        ${this.getIconForType(type)}
-      </span>
-      <div class="toast-content">
-        <div class="toast-title">${this.getTitleForType(type)}</div>
-        <div class="toast-message">${message}</div>
-      </div>
-      <button class="toast-close">
-        <span class="material-symbols-outlined">close</span>
-      </button>
-    `;
-    
-    container.appendChild(toast);
-    
-    setTimeout(() => toast.classList.add('show'), 10);
-    
-    const autoRemove = setTimeout(() => this.remove(toast), duration);
-    
-    const closeBtn = toast.querySelector('.toast-close');
-    closeBtn.onclick = () => this.remove(toast);
-    
-    toast._autoRemove = autoRemove;
+// Initialize Firebase
+try {
+  firebase.initializeApp(firebaseConfig);
+} catch (err) {
+  console.error('Firebase error:', err);
+}
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// Simple State
+let currentUser = null;
+let userData = null;
+let currentLanguage = 'en';
+
+// Translations
+const translations = {
+  en: {
+    welcome: "Welcome",
+    pleaseSignIn: "Please sign in",
+    dashboard: "Dashboard",
+    projects: "Projects",
+    assignments: "Assignments",
+    clubs: "Clubs",
+    profile: "Profile",
+    admin: "Admin",
+    login: "Login",
+    logout: "Logout",
+    search: "Search...",
+    noProjects: "No projects yet",
+    noAssignments: "No assignments yet",
+    loadingClubs: "Loading clubs...",
+    save: "Save",
+    cancel: "Cancel",
+    create: "Create"
+  },
+  fr: {
+    welcome: "Bienvenue",
+    pleaseSignIn: "Veuillez vous connecter",
+    dashboard: "Tableau de bord",
+    projects: "Projets",
+    assignments: "Devoirs",
+    clubs: "Clubs",
+    profile: "Profil",
+    admin: "Administration",
+    login: "Connexion",
+    logout: "Déconnexion",
+    search: "Rechercher...",
+    noProjects: "Aucun projet pour le moment",
+    noAssignments: "Aucun devoir pour le moment",
+    loadingClubs: "Chargement des clubs...",
+    save: "Enregistrer",
+    cancel: "Annuler",
+    create: "Créer"
+  },
+  ar: {
+    welcome: "مرحباً",
+    pleaseSignIn: "يرجى تسجيل الدخول",
+    dashboard: "لوحة التحكم",
+    projects: "المشاريع",
+    assignments: "الواجبات",
+    clubs: "الأندية",
+    profile: "الملف الشخصي",
+    admin: "الإدارة",
+    login: "تسجيل الدخول",
+    logout: "تسجيل الخروج",
+    search: "بحث...",
+    noProjects: "لا توجد مشاريع بعد",
+    noAssignments: "لا توجد واجبات بعد",
+    loadingClubs: "جاري تحميل الأندية...",
+    save: "حفظ",
+    cancel: "إلغاء",
+    create: "إنشاء"
   }
+};
+
+// Simple Toast System
+function showToast(message, type = 'info') {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = `toast ${type}`;
+  toast.classList.add('show');
   
-  static remove(toast) {
-    if (toast._autoRemove) clearTimeout(toast._autoRemove);
+  setTimeout(() => {
     toast.classList.remove('show');
-    setTimeout(() => toast.remove(), 300);
-  }
-  
-  static getIconForType(type) {
-    const icons = {
-      success: 'check_circle',
-      error: 'error',
-      warning: 'warning',
-      info: 'info'
-    };
-    return icons[type] || 'info';
-  }
-  
-  static getTitleForType(type) {
-    const titles = {
-      success: 'Success',
-      error: 'Error',
-      warning: 'Warning',
-      info: 'Info'
-    };
-    return titles[type] || 'Info';
+  }, 3000);
+}
+
+// Set Loading State
+function setLoading(button, isLoading) {
+  if (isLoading) {
+    button.disabled = true;
+    button.innerHTML = '<span class="loading"></span>';
+  } else {
+    button.disabled = false;
+    button.innerHTML = button.getAttribute('data-original-text') || button.textContent;
   }
 }
 
-// --- Modal System ---
-class Modal {
-  static show(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
+// Get Initials from Name
+function getInitials(name) {
+  if (!name) return 'GU';
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+}
+
+// Update Language
+function updateLanguage(lang) {
+  currentLanguage = lang;
+  localStorage.setItem('portal_language', lang);
+  
+  const t = translations[lang];
+  const langBtn = document.getElementById('languageBtn');
+  if (langBtn) {
+    langBtn.querySelector('span:last-child').textContent = 
+      lang === 'en' ? 'English' : lang === 'fr' ? 'Français' : 'العربية';
   }
   
-  static hide(id) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  }
+  // Update search placeholder
+  const search = document.getElementById('globalSearch');
+  if (search) search.placeholder = t.search;
   
-  static closeAll() {
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-      modal.style.display = 'none';
+  // Update navigation
+  const navItems = document.querySelectorAll('.nav-item');
+  const navTexts = ['dashboard', 'projects', 'assignments', 'clubs', 'profile', 'admin'];
+  navItems.forEach((item, index) => {
+    const icon = item.querySelector('.icon');
+    if (icon && t[navTexts[index]]) {
+      item.innerHTML = icon.outerHTML + t[navTexts[index]];
+    }
+  });
+  
+  // Update buttons
+  const buttons = {
+    'openLogin': t.login,
+    'sidebarLogout': t.logout,
+    'saveProfileBtn': t.save,
+    'modalCancel': t.cancel,
+    'modalRegister': t.create,
+    'modalLogin': t.login
+  };
+  
+  Object.keys(buttons).forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.textContent = buttons[id];
+  });
+}
+
+// Initialize UI
+function initUI() {
+  // Navigation
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const tab = item.dataset.tab;
+      
+      // Hide all sections
+      document.querySelectorAll('main section').forEach(sec => {
+        sec.style.display = 'none';
+      });
+      
+      // Show selected section
+      document.getElementById(tab).style.display = 'block';
+      
+      // Update active state
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      
+      // Load data for section
+      loadSectionData(tab);
     });
-    document.body.style.overflow = 'auto';
-  }
-}
-
-// --- Loading System ---
-class Loading {
-  static show(text = 'Loading...') {
-    const overlay = document.getElementById('loadingOverlay');
-    const textEl = document.getElementById('loadingText');
-    if (overlay && textEl) {
-      textEl.textContent = text;
-      overlay.classList.add('show');
+  });
+  
+  // Auth Modal
+  document.getElementById('openLogin').addEventListener('click', () => {
+    document.getElementById('authModal').style.display = 'flex';
+  });
+  
+  document.getElementById('modalCancel').addEventListener('click', () => {
+    document.getElementById('authModal').style.display = 'none';
+  });
+  
+  document.getElementById('authModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      document.getElementById('authModal').style.display = 'none';
     }
-  }
+  });
   
-  static hide() {
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) {
-      overlay.classList.remove('show');
+  // Login
+  document.getElementById('modalLogin').addEventListener('click', async () => {
+    const email = document.getElementById('modalEmail').value;
+    const password = document.getElementById('modalPass').value;
+    
+    if (!email || !password) {
+      showToast('Please enter email and password', 'error');
+      return;
     }
-  }
-}
-
-// --- Form Validation ---
-class Validator {
-  static validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  }
-  
-  static validatePassword(password) {
-    return password.length >= 6;
-  }
-  
-  static validateRequired(value) {
-    return value && value.trim().length > 0;
-  }
-}
-
-// --- Local Storage Management ---
-class StorageManager {
-  static getUsers() {
-    const users = localStorage.getItem('portal_users');
-    return users ? JSON.parse(users) : [];
-  }
-  
-  static saveUsers(users) {
-    localStorage.setItem('portal_users', JSON.stringify(users));
-  }
-  
-  static getProjects() {
-    const projects = localStorage.getItem('portal_projects');
-    return projects ? JSON.parse(projects) : [];
-  }
-  
-  static saveProjects(projects) {
-    localStorage.setItem('portal_projects', JSON.stringify(projects));
-  }
-  
-  static getClubs() {
-    const clubs = localStorage.getItem('portal_clubs');
-    return clubs ? JSON.parse(clubs) : [];
-  }
-  
-  static saveClubs(clubs) {
-    localStorage.setItem('portal_clubs', JSON.stringify(clubs));
-  }
-  
-  static getCurrentUser() {
-    const user = localStorage.getItem('portal_currentUser');
-    return user ? JSON.parse(user) : null;
-  }
-  
-  static saveCurrentUser(user) {
-    if (user) {
-      localStorage.setItem('portal_currentUser', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('portal_currentUser');
-    }
-  }
-}
-
-// --- Authentication System ---
-class AuthManager {
-  static async login(email, password) {
+    
+    const button = document.getElementById('modalLogin');
+    button.setAttribute('data-original-text', button.textContent);
+    setLoading(button, true);
+    
     try {
-      Loading.show('Signing in...');
+      const userCredential = await auth.signInWithEmailAndPassword(email, password);
+      showToast('Logged in successfully!', 'success');
+      document.getElementById('authModal').style.display = 'none';
       
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Check against stored users
-      const users = StorageManager.getUsers();
-      const user = users.find(u => u.email === email && u.password === password);
-      
-      if (user) {
-        // Remove password from user object
-        const { password, ...userData } = user;
-        State.currentUser = { email: user.email, uid: user.id };
-        State.userData = userData;
-        State.userRole = user.role || 'student';
-        
-        StorageManager.saveCurrentUser(userData);
-        
-        Toast.show('Logged in successfully!', 'success');
-        return true;
-      } else {
-        // If no users exist, create a test user
-        if (users.length === 0 && email === 'test@student.com' && password === 'password123') {
-          const testUser = {
-            id: '1',
-            email: 'test@student.com',
-            password: 'password123',
-            name: 'Test Student',
-            firstName: 'Test',
-            lastName: 'Student',
-            grade: '2BAC',
-            role: 'student',
-            createdAt: new Date().toISOString(),
-            status: 'active'
-          };
-          
-          StorageManager.saveUsers([testUser]);
-          
-          const { password: _, ...userData } = testUser;
-          State.currentUser = { email: testUser.email, uid: testUser.id };
-          State.userData = userData;
-          State.userRole = 'student';
-          
-          StorageManager.saveCurrentUser(userData);
-          
-          Toast.show('Logged in with test account!', 'success');
-          return true;
-        }
-        
-        Toast.show('Invalid email or password', 'error');
-        return false;
-      }
+      // Clear form
+      document.getElementById('modalEmail').value = '';
+      document.getElementById('modalPass').value = '';
+      document.getElementById('modalFirstName').value = '';
+      document.getElementById('modalLastName').value = '';
+      document.getElementById('modalGrade').value = '';
     } catch (error) {
-      Toast.show('Login failed: ' + error.message, 'error');
-      return false;
+      console.error('Login error:', error);
+      showToast('Login failed: ' + error.message, 'error');
     } finally {
-      Loading.hide();
+      setLoading(button, false);
     }
-  }
+  });
   
-  static async register(email, password, userData) {
+  // Register
+  document.getElementById('modalRegister').addEventListener('click', async () => {
+    const firstName = document.getElementById('modalFirstName').value;
+    const lastName = document.getElementById('modalLastName').value;
+    const email = document.getElementById('modalEmail').value;
+    const password = document.getElementById('modalPass').value;
+    const grade = document.getElementById('modalGrade').value;
+    
+    if (!firstName || !lastName || !email || !password || !grade) {
+      showToast('Please fill all fields', 'error');
+      return;
+    }
+    
+    const button = document.getElementById('modalRegister');
+    button.setAttribute('data-original-text', button.textContent);
+    setLoading(button, true);
+    
     try {
-      Loading.show('Creating account...');
+      // Create user
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
       
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const users = StorageManager.getUsers();
-      
-      // Check if user already exists
-      if (users.some(u => u.email === email)) {
-        Toast.show('Email already in use', 'error');
-        return false;
-      }
-      
-      const newUser = {
-        id: Date.now().toString(),
-        email,
-        password,
-        name: `${userData.firstName} ${userData.lastName}`,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        grade: userData.grade,
+      // Create user document
+      await db.collection('users').doc(userCredential.user.uid).set({
+        uid: userCredential.user.uid,
+        email: email,
+        name: `${firstName} ${lastName}`,
+        firstName: firstName,
+        lastName: lastName,
+        grade: grade,
         role: 'student',
-        createdAt: new Date().toISOString(),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      
+      showToast('Account created successfully!', 'success');
+      document.getElementById('authModal').style.display = 'none';
+      
+      // Clear form
+      document.getElementById('modalEmail').value = '';
+      document.getElementById('modalPass').value = '';
+      document.getElementById('modalFirstName').value = '';
+      document.getElementById('modalLastName').value = '';
+      document.getElementById('modalGrade').value = '';
+    } catch (error) {
+      console.error('Register error:', error);
+      showToast('Registration failed: ' + error.message, 'error');
+    } finally {
+      setLoading(button, false);
+    }
+  });
+  
+  // Logout
+  document.getElementById('sidebarLogout').addEventListener('click', () => {
+    auth.signOut();
+    showToast('Logged out', 'info');
+  });
+  
+  // Create Project
+  document.getElementById('createProjectBtn').addEventListener('click', async () => {
+    if (!currentUser) {
+      showToast('Please login first', 'error');
+      return;
+    }
+    
+    const title = prompt('Enter project title:');
+    if (!title) return;
+    
+    const description = prompt('Enter project description:');
+    
+    try {
+      await db.collection('projects').add({
+        title: title,
+        description: description || '',
+        createdBy: currentUser.uid,
+        creatorEmail: currentUser.email,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         status: 'active'
-      };
+      });
       
-      users.push(newUser);
-      StorageManager.saveUsers(users);
-      
-      const { password: _, ...userDataWithoutPass } = newUser;
-      State.currentUser = { email: newUser.email, uid: newUser.id };
-      State.userData = userDataWithoutPass;
-      State.userRole = 'student';
-      
-      StorageManager.saveCurrentUser(userDataWithoutPass);
-      
-      Toast.show('Account created successfully!', 'success');
-      return true;
+      showToast('Project created!', 'success');
+      loadProjects();
     } catch (error) {
-      Toast.show('Registration failed: ' + error.message, 'error');
-      return false;
-    } finally {
-      Loading.hide();
+      showToast('Failed to create project', 'error');
     }
-  }
+  });
   
-  static logout() {
-    State.currentUser = null;
-    State.userData = null;
-    State.userRole = 'guest';
-    StorageManager.saveCurrentUser(null);
-    Toast.show('Logged out successfully', 'info');
-  }
-}
-
-// --- Project Management ---
-class ProjectManager {
-  static async createProject(projectData) {
-    try {
-      Loading.show('Creating project...');
-      
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      const projects = StorageManager.getProjects();
-      
-      const newProject = {
-        id: Date.now().toString(),
-        title: projectData.title,
-        description: projectData.description,
-        status: projectData.status || 'planning',
-        deadline: projectData.deadline || null,
-        createdBy: State.currentUser.uid,
-        creatorEmail: State.userData.email,
-        creatorName: State.userData.name,
-        progress: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-      
-      projects.push(newProject);
-      StorageManager.saveProjects(projects);
-      
-      Toast.show('Project created successfully!', 'success');
-      return newProject.id;
-    } catch (error) {
-      Toast.show('Failed to create project: ' + error.message, 'error');
-      throw error;
-    } finally {
-      Loading.hide();
+  // Create Club
+  document.getElementById('createClubBtn').addEventListener('click', async () => {
+    if (!currentUser) {
+      showToast('Please login first', 'error');
+      return;
     }
-  }
-  
-  static async loadProjects() {
-    try {
-      const projects = StorageManager.getProjects();
-      if (!State.currentUser) return [];
-      
-      return projects.filter(p => p.createdBy === State.currentUser.uid);
-    } catch (error) {
-      console.error('Error loading projects:', error);
-      return [];
+    
+    const name = prompt('Enter club name:');
+    if (!name) return;
+    
+    const abbreviation = prompt('Enter club abbreviation (2-4 letters):');
+    const leader1 = prompt('Enter primary leader name:');
+    const description = prompt('Enter club description:');
+    
+    if (!name || !abbreviation || !leader1 || !description) {
+      showToast('All fields are required', 'error');
+      return;
     }
-  }
-}
-
-// --- Club Management ---
-class ClubManager {
-  static async createClub(clubData) {
+    
     try {
-      Loading.show('Creating club...');
-      
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      const clubs = StorageManager.getClubs();
-      
-      const newClub = {
-        id: Date.now().toString(),
-        name: clubData.name,
-        abbreviation: clubData.abbreviation,
-        description: clubData.description,
-        category: clubData.category,
-        leader1: clubData.leader1,
-        leader2: clubData.leader2 || '',
-        createdBy: State.currentUser.uid,
-        creatorEmail: State.userData.email,
-        members: [State.currentUser.uid],
+      await db.collection('clubs').add({
+        name: name,
+        abbreviation: abbreviation,
+        description: description,
+        leader1: leader1,
+        createdBy: currentUser.uid,
+        creatorEmail: currentUser.email,
+        members: [currentUser.uid],
         memberCount: 1,
         funds: 0,
         projects: [],
         events: [],
         status: 'active',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
       
-      clubs.push(newClub);
-      StorageManager.saveClubs(clubs);
-      
-      Toast.show('Club created successfully!', 'success');
-      return newClub.id;
+      showToast('Club created!', 'success');
+      loadClubs();
     } catch (error) {
-      Toast.show('Failed to create club: ' + error.message, 'error');
-      throw error;
+      showToast('Failed to create club', 'error');
+    }
+  });
+  
+  // Save Profile
+  document.getElementById('saveProfileBtn').addEventListener('click', async () => {
+    if (!currentUser) {
+      showToast('Please login first', 'error');
+      return;
+    }
+    
+    const name = document.getElementById('profileName').value;
+    const grade = document.getElementById('profileGrade').value;
+    const bio = document.getElementById('profileBio').value;
+    
+    if (!name) {
+      showToast('Name is required', 'error');
+      return;
+    }
+    
+    const button = document.getElementById('saveProfileBtn');
+    button.setAttribute('data-original-text', button.textContent);
+    setLoading(button, true);
+    
+    try {
+      await db.collection('users').doc(currentUser.uid).update({
+        name: name,
+        grade: grade,
+        bio: bio,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      
+      showToast('Profile saved!', 'success');
+      
+      // Update UI
+      userData = { ...userData, name, grade, bio };
+      updateUIForUser();
+    } catch (error) {
+      showToast('Failed to save profile', 'error');
     } finally {
-      Loading.hide();
+      setLoading(button, false);
     }
-  }
-  
-  static async loadClubs() {
-    try {
-      const clubs = StorageManager.getClubs();
-      return clubs;
-    } catch (error) {
-      console.error('Error loading clubs:', error);
-      return [];
-    }
-  }
-  
-  static async joinClub(clubId) {
-    try {
-      const clubs = StorageManager.getClubs();
-      const clubIndex = clubs.findIndex(c => c.id === clubId);
-      
-      if (clubIndex === -1) {
-        Toast.show('Club not found', 'error');
-        return false;
-      }
-      
-      const club = clubs[clubIndex];
-      
-      if (club.members.includes(State.currentUser.uid)) {
-        Toast.show('You are already a member', 'info');
-        return false;
-      }
-      
-      club.members.push(State.currentUser.uid);
-      club.memberCount = club.members.length;
-      club.updatedAt = new Date().toISOString();
-      
-      StorageManager.saveClubs(clubs);
-      
-      Toast.show('Successfully joined the club!', 'success');
-      return true;
-    } catch (error) {
-      Toast.show('Failed to join club: ' + error.message, 'error');
-      return false;
-    }
-  }
-}
-
-// --- Dashboard System ---
-class DashboardManager {
-  static async loadDashboardData() {
-    try {
-      if (!State.currentUser) return;
-      
-      const [projects, clubs] = await Promise.all([
-        ProjectManager.loadProjects(),
-        this.getUserClubs()
-      ]);
-      
-      // Update dashboard widgets
-      this.updateWidgets(projects.length, clubs.length, 0);
-      
-      // Update profile stats
-      this.updateProfileStats(projects.length, clubs.length, 0);
-      
-      // Update recent activity
-      this.updateRecentActivity([...projects, ...clubs]);
-    } catch (error) {
-      console.error('Error loading dashboard data:', error);
-    }
-  }
-  
-  static async getUserClubs() {
-    try {
-      const clubs = StorageManager.getClubs();
-      if (!State.currentUser) return [];
-      
-      return clubs.filter(c => c.members.includes(State.currentUser.uid));
-    } catch (error) {
-      console.error('Error loading user clubs:', error);
-      return [];
-    }
-  }
-  
-  static updateWidgets(projects, clubs, assignments) {
-    document.getElementById('widgetProjects').textContent = projects;
-    document.getElementById('widgetClubs').textContent = clubs;
-    document.getElementById('widgetAssignments').textContent = assignments;
-    document.getElementById('widgetActivity').textContent = projects + clubs;
-  }
-  
-  static updateProfileStats(projects, clubs, assignments) {
-    document.getElementById('projectsCount').textContent = projects;
-    document.getElementById('clubsCount').textContent = clubs;
-    document.getElementById('assignmentsCount').textContent = assignments;
-    document.getElementById('streakCount').textContent = '0';
-  }
-  
-  static updateRecentActivity(items) {
-    const container = document.getElementById('recentActivity');
-    if (!container) return;
-    
-    if (items.length === 0) {
-      container.innerHTML = '<div class="list-item">No recent activity</div>';
-      return;
-    }
-    
-    // Sort by creation date
-    items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    
-    const recentItems = items.slice(0, 5);
-    
-    container.innerHTML = recentItems.map(item => `
-      <div class="list-item">
-        <div class="list-item-content">
-          <div class="list-item-title">${item.title || item.name}</div>
-          <div class="list-item-subtitle">${item.description || ''}</div>
-          <div class="list-item-meta">
-            <span>${new Date(item.createdAt).toLocaleDateString()}</span>
-            <span>${item.status ? `Status: ${item.status}` : ''}</span>
-          </div>
-        </div>
-      </div>
-    `).join('');
-  }
-}
-
-// --- UI Initialization ---
-function initUI() {
-  // Sidebar navigation
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', handleNavigation);
   });
   
-  // Auth modal
-  document.getElementById('openLogin').addEventListener('click', () => Modal.show('authModal'));
-  document.getElementById('profileLoginBtn')?.addEventListener('click', () => Modal.show('authModal'));
-  document.getElementById('closeAuthModal').addEventListener('click', () => Modal.hide('authModal'));
-  document.getElementById('modalCancel').addEventListener('click', () => Modal.hide('authModal'));
-  document.getElementById('toggleRegister').addEventListener('click', toggleRegisterMode);
-  document.getElementById('modalAction').addEventListener('click', handleAuthAction);
-  
-  // Project modal
-  document.getElementById('createProjectBtn').addEventListener('click', () => {
-    if (!State.currentUser) {
-      Toast.show('Please login to create a project', 'error');
-      Modal.show('authModal');
-      return;
-    }
-    Modal.show('createProjectModal');
+  // Language Switcher
+  document.getElementById('languageBtn').addEventListener('click', () => {
+    const languages = ['en', 'fr', 'ar'];
+    const currentIndex = languages.indexOf(currentLanguage);
+    const nextIndex = (currentIndex + 1) % languages.length;
+    updateLanguage(languages[nextIndex]);
   });
-  
-  document.getElementById('closeProjectModal').addEventListener('click', () => Modal.hide('createProjectModal'));
-  document.getElementById('cancelProjectBtn').addEventListener('click', () => Modal.hide('createProjectModal'));
-  document.getElementById('saveProjectBtn').addEventListener('click', handleCreateProject);
-  
-  // Dashboard refresh
-  document.getElementById('refreshDashboard').addEventListener('click', () => DashboardManager.loadDashboardData());
-  
-  // Logout
-  document.getElementById('sidebarLogout').addEventListener('click', handleLogout);
-  
-  // Set today's date as default for project deadline
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  document.getElementById('projectDeadline').valueAsDate = tomorrow;
-  
-  // Initialize with sample data if empty
-  initializeSampleData();
 }
 
-// --- Event Handlers ---
-async function handleNavigation(e) {
-  const item = e.currentTarget;
-  const tab = item.dataset.tab;
+// Update UI for user
+function updateUIForUser() {
+  const t = translations[currentLanguage];
   
-  // Update active state
-  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-  item.classList.add('active');
-  
-  // Hide all sections
-  document.querySelectorAll('main section').forEach(sec => {
-    sec.style.display = 'none';
-  });
-  
-  // Show selected section
-  const section = document.getElementById(tab);
-  if (section) {
-    section.style.display = 'block';
-    State.activeTab = tab;
+  if (currentUser && userData) {
+    const initials = getInitials(userData.name || userData.email);
     
-    // Load section data
-    await loadSectionData(tab);
-  }
-}
-
-async function handleAuthAction() {
-  const email = document.getElementById('modalEmail').value;
-  const password = document.getElementById('modalPass').value;
-  const isRegisterMode = document.getElementById('registerFields').style.display !== 'none';
-  
-  // Validation
-  if (!Validator.validateEmail(email)) {
-    Toast.show('Please enter a valid email address', 'error');
-    return;
-  }
-  
-  if (!Validator.validatePassword(password)) {
-    Toast.show('Password must be at least 6 characters', 'error');
-    return;
-  }
-  
-  let success = false;
-  
-  if (isRegisterMode) {
-    const firstName = document.getElementById('modalFirstName').value;
-    const lastName = document.getElementById('modalLastName').value;
-    const grade = document.getElementById('modalGrade').value;
+    // Update sidebar
+    document.getElementById('sideName').textContent = userData.name || userData.email;
+    document.getElementById('sideRole').textContent = userData.role === 'admin' ? 'Administrator' : 'Student';
+    document.getElementById('sideProfileInitials').textContent = initials;
+    document.getElementById('profileAvatarFallback').textContent = initials;
     
-    if (!Validator.validateRequired(firstName) || !Validator.validateRequired(lastName)) {
-      Toast.show('Please enter your name', 'error');
-      return;
-    }
+    // Update topbar
+    document.getElementById('welcomeText').textContent = t.welcome + ', ' + (userData.firstName || userData.name || 'User');
+    document.getElementById('welcomeSub').textContent = userData.role === 'admin' ? 'Administrator Dashboard' : 'Student Dashboard';
     
-    if (!Validator.validateRequired(grade)) {
-      Toast.show('Please select your grade', 'error');
-      return;
-    }
+    // Show/hide admin
+    document.getElementById('adminNav').style.display = userData.role === 'admin' ? 'block' : 'none';
     
-    success = await AuthManager.register(email, password, {
-      firstName,
-      lastName,
-      grade
-    });
+    // Update login/logout
+    document.getElementById('openLogin').style.display = 'none';
+    document.getElementById('sidebarLogout').style.display = 'block';
+    
+    // Update profile form
+    document.getElementById('profileName').value = userData.name || '';
+    document.getElementById('profileEmail').value = userData.email || '';
+    document.getElementById('profileGrade').value = userData.grade || '';
+    document.getElementById('profileBio').value = userData.bio || '';
   } else {
-    success = await AuthManager.login(email, password);
-  }
-  
-  if (success) {
-    Modal.hide('authModal');
-    clearAuthForm();
-    updateUIForUser(State.userData);
-    DashboardManager.loadDashboardData();
-  }
-}
-
-function toggleRegisterMode() {
-  const registerFields = document.getElementById('registerFields');
-  const toggleBtn = document.getElementById('toggleRegister');
-  const actionBtn = document.getElementById('modalAction');
-  
-  if (registerFields.style.display === 'none') {
-    registerFields.style.display = 'block';
-    toggleBtn.textContent = 'Already have an account? Login';
-    actionBtn.textContent = 'Register';
-  } else {
-    registerFields.style.display = 'none';
-    toggleBtn.textContent = 'Don\'t have an account? Register';
-    actionBtn.textContent = 'Login';
-  }
-}
-
-async function handleCreateProject() {
-  const title = document.getElementById('projectTitle').value;
-  const description = document.getElementById('projectDescription').value;
-  const deadline = document.getElementById('projectDeadline').value;
-  const status = document.getElementById('projectStatus').value;
-  
-  // Validation
-  if (!Validator.validateRequired(title)) {
-    Toast.show('Project title is required', 'error');
-    return;
-  }
-  
-  if (!Validator.validateRequired(description)) {
-    Toast.show('Description is required', 'error');
-    return;
-  }
-  
-  try {
-    await ProjectManager.createProject({
-      title,
-      description,
-      deadline: deadline || null,
-      status
-    });
+    // Guest user
+    document.getElementById('sideName').textContent = 'Guest User';
+    document.getElementById('sideRole').textContent = 'Not signed in';
+    document.getElementById('sideProfileInitials').textContent = 'GU';
+    document.getElementById('profileAvatarFallback').textContent = 'GU';
     
-    Modal.hide('createProjectModal');
-    clearProjectForm();
-    loadSectionData('projects');
-    DashboardManager.loadDashboardData();
-  } catch (error) {
-    // Error already handled by ProjectManager
+    document.getElementById('welcomeText').textContent = t.welcome;
+    document.getElementById('welcomeSub').textContent = t.pleaseSignIn;
+    
+    document.getElementById('adminNav').style.display = 'none';
+    document.getElementById('openLogin').style.display = 'block';
+    document.getElementById('sidebarLogout').style.display = 'none';
+    
+    document.getElementById('profileName').value = '';
+    document.getElementById('profileEmail').value = '';
+    document.getElementById('profileGrade').value = '';
+    document.getElementById('profileBio').value = '';
   }
 }
 
-function handleLogout() {
-  AuthManager.logout();
-  updateUIForGuest();
-}
-
-// --- UI Update Functions ---
-function updateUIForUser(userData) {
-  State.userData = userData;
-  
-  // Update sidebar
-  document.getElementById('sideName').textContent = userData.name || 'Guest';
-  document.getElementById('sideRole').textContent = userData.role || 'Student';
-  
-  // Update profile avatar initials
-  const initials = getInitials(userData.name || 'GU');
-  document.getElementById('sideProfileInitials').textContent = initials;
-  
-  // Update topbar
-  document.getElementById('welcomeText').textContent = `Welcome, ${userData.firstName || userData.name || 'User'}`;
-  document.getElementById('welcomeSub').textContent = `${userData.role || 'Student'} Dashboard`;
-  
-  // Update login/logout buttons
-  document.getElementById('openLogin').style.display = 'none';
-  document.getElementById('sidebarLogout').style.display = 'block';
-  
-  // Update profile section
-  const profileForm = document.getElementById('profileForm');
-  if (profileForm) {
-    profileForm.innerHTML = `
-      <div class="form-group" style="display:flex; gap:24px; align-items:flex-start;">
-        <div style="text-align: center;">
-          <div class="profile-avatar" style="width: 100px; height: 100px; font-size: 32px;">${initials}</div>
-          <button class="btn ghost sm" style="margin-top: 12px;">Change Photo</button>
-        </div>
-        <div style="flex:1">
-          <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <div style="padding: 12px; background: var(--surface-secondary); border-radius: var(--radius-sm);">
-              ${userData.name}
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <div style="padding: 12px; background: var(--surface-secondary); border-radius: var(--radius-sm);">
-                ${userData.email}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Grade</label>
-              <div style="padding: 12px; background: var(--surface-secondary); border-radius: var(--radius-sm);">
-                ${userData.grade || 'Not set'}
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Role</label>
-            <div style="padding: 12px; background: var(--surface-secondary); border-radius: var(--radius-sm);">
-              <span class="role-badge role-${userData.role}">${userData.role}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    // Show profile buttons
-    document.getElementById('changePasswordBtn').style.display = 'inline-flex';
-    document.getElementById('saveProfileBtn').style.display = 'inline-flex';
-  }
-  
-  // Show/hide admin features
-  const isAdmin = userData.role === 'admin';
-  document.querySelectorAll('.admin-only').forEach(el => {
-    el.style.display = isAdmin ? 'block' : 'none';
-  });
-  
-  // Update last sync time
-  document.getElementById('lastSync').textContent = `Last sync: ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
-  
-  // Load initial data
-  DashboardManager.loadDashboardData();
-}
-
-function updateUIForGuest() {
-  State.userData = null;
-  
-  // Update sidebar
-  document.getElementById('sideName').textContent = 'Guest User';
-  document.getElementById('sideRole').textContent = 'Not signed in';
-  document.getElementById('sideProfileInitials').textContent = 'GU';
-  
-  // Update topbar
-  document.getElementById('welcomeText').textContent = 'Welcome';
-  document.getElementById('welcomeSub').textContent = 'Please sign in';
-  
-  // Update login/logout buttons
-  document.getElementById('openLogin').style.display = 'block';
-  document.getElementById('sidebarLogout').style.display = 'none';
-  
-  // Reset profile section
-  const profileForm = document.getElementById('profileForm');
-  if (profileForm) {
-    profileForm.innerHTML = `
-      <div style="text-align: center; padding: 40px 20px;">
-        <div class="profile-avatar" style="width: 80px; height: 80px; margin: 0 auto 20px; font-size: 24px;">GU</div>
-        <h3 style="margin-bottom: 8px;">Guest User</h3>
-        <p style="color: var(--muted); margin-bottom: 24px;">Please login to access your profile</p>
-        <button id="profileLoginBtn" class="btn primary">Login to Continue</button>
-      </div>
-    `;
-    
-    // Re-attach event listener
-    document.getElementById('profileLoginBtn')?.addEventListener('click', () => Modal.show('authModal'));
-    
-    // Hide profile buttons
-    document.getElementById('changePasswordBtn').style.display = 'none';
-    document.getElementById('saveProfileBtn').style.display = 'none';
-  }
-  
-  // Hide admin features
-  document.querySelectorAll('.admin-only').forEach(el => {
-    el.style.display = 'none';
-  });
-  
-  // Reset dashboard
-  document.getElementById('widgetProjects').textContent = '0';
-  document.getElementById('widgetClubs').textContent = '0';
-  document.getElementById('widgetAssignments').textContent = '0';
-  document.getElementById('widgetActivity').textContent = '0';
-  document.getElementById('recentActivity').innerHTML = '<div class="list-item">No recent activity</div>';
-  
-  // Reset profile stats
-  document.getElementById('projectsCount').textContent = '0';
-  document.getElementById('clubsCount').textContent = '0';
-  document.getElementById('assignmentsCount').textContent = '0';
-  document.getElementById('streakCount').textContent = '0';
-}
-
-function getInitials(name) {
-  return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) || 'GU';
-}
-
-// --- Section Loading ---
+// Load section data
 async function loadSectionData(section) {
+  if (!currentUser) return;
+  
   switch(section) {
-    case 'dashboard':
-      await DashboardManager.loadDashboardData();
-      break;
     case 'projects':
       await loadProjects();
       break;
     case 'clubs':
       await loadClubs();
       break;
+    case 'admin':
+      await loadAdminData();
+      break;
   }
 }
 
+// Load projects
 async function loadProjects() {
-  const projects = await ProjectManager.loadProjects();
-  const container = document.getElementById('projectsList');
-  
-  if (!projects.length) {
-    container.innerHTML = '<div class="list-item">No projects yet. Create one to get started!</div>';
-    return;
-  }
-  
-  container.innerHTML = projects.map(project => `
-    <div class="list-item">
-      <div class="list-item-content">
-        <div class="list-item-title">${project.title}</div>
-        <div class="list-item-subtitle">${project.description}</div>
-        <div class="list-item-meta">
-          <span>Created: ${new Date(project.createdAt).toLocaleDateString()}</span>
-          <span>Status: ${project.status}</span>
-          ${project.deadline ? `<span>Deadline: ${new Date(project.deadline).toLocaleDateString()}</span>` : ''}
-        </div>
-      </div>
-      <div class="list-item-actions">
-        <button class="btn sm ghost">View</button>
-        <button class="btn sm primary">Edit</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-async function loadClubs() {
-  const clubs = await ClubManager.loadClubs();
-  const container = document.getElementById('clubsList');
-  
-  if (!clubs.length) {
-    container.innerHTML = '<div class="list-item">No clubs available yet.</div>';
-    return;
-  }
-  
-  container.innerHTML = clubs.map(club => {
-    const isMember = State.currentUser && club.members.includes(State.currentUser.uid);
+  try {
+    const snapshot = await db.collection('projects')
+      .where('createdBy', '==', currentUser.uid)
+      .get();
     
-    return `
-      <div class="list-item">
-        <div class="list-item-content">
-          <div class="list-item-title">${club.name} (${club.abbreviation})</div>
-          <div class="list-item-subtitle">${club.description}</div>
-          <div class="list-item-meta">
-            <span>Category: ${club.category}</span>
-            <span>Members: ${club.memberCount}</span>
-            <span>Leader: ${club.leader1}</span>
+    const projectsList = document.getElementById('projectsList');
+    
+    if (snapshot.empty) {
+      projectsList.innerHTML = '<div class="list-item">No projects yet. Create one!</div>';
+      return;
+    }
+    
+    projectsList.innerHTML = snapshot.docs.map(doc => {
+      const data = doc.data();
+      return `
+        <div class="list-item">
+          <div>
+            <strong>${data.title}</strong>
+            <div style="font-size:14px;color:var(--muted);margin-top:4px">${data.description}</div>
+          </div>
+          <div style="font-size:12px;color:var(--muted)">
+            ${data.createdAt ? data.createdAt.toDate().toLocaleDateString() : 'Recently'}
           </div>
         </div>
-        <div class="list-item-actions">
-          ${isMember ? 
-            '<button class="btn sm success">Joined</button>' : 
-            `<button class="btn sm primary" onclick="joinClub('${club.id}')">Join Club</button>`
-          }
-          <button class="btn sm ghost">View</button>
+      `;
+    }).join('');
+  } catch (error) {
+    console.error('Error loading projects:', error);
+  }
+}
+
+// Load clubs
+async function loadClubs() {
+  try {
+    const snapshot = await db.collection('clubs').get();
+    const clubsList = document.getElementById('clubsList');
+    
+    if (snapshot.empty) {
+      clubsList.innerHTML = '<div class="club-card">No clubs yet</div>';
+      return;
+    }
+    
+    clubsList.innerHTML = snapshot.docs.map(doc => {
+      const data = doc.data();
+      const isMember = data.members && data.members.includes(currentUser.uid);
+      
+      return `
+        <div class="club-card">
+          <div class="club-header">
+            <div class="club-logo">
+              <span class="material-symbols-outlined">groups</span>
+            </div>
+            <div class="club-info">
+              <h3 class="club-name">${data.name}</h3>
+              <p class="club-leaders">Leaders: ${data.leader1}</p>
+              <p class="club-description">${data.description}</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:16px">
+            ${isMember ? 
+              '<button class="btn success" style="font-size:12px;padding:6px 12px">Already Joined</button>' : 
+              `<button class="btn primary" style="font-size:12px;padding:6px 12px" onclick="joinClub('${doc.id}')">Join Club</button>`
+            }
+          </div>
         </div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }).join('');
+  } catch (error) {
+    console.error('Error loading clubs:', error);
+  }
 }
 
+// Join club
 async function joinClub(clubId) {
-  if (!State.currentUser) {
-    Toast.show('Please login to join a club', 'error');
-    Modal.show('authModal');
-    return;
-  }
+  if (!currentUser) return;
   
-  const success = await ClubManager.joinClub(clubId);
-  if (success) {
-    loadClubs();
-    DashboardManager.loadDashboardData();
-  }
-}
-
-// --- Form Clearing Functions ---
-function clearAuthForm() {
-  document.getElementById('modalEmail').value = 'test@student.com';
-  document.getElementById('modalPass').value = 'password123';
-  document.getElementById('modalFirstName').value = '';
-  document.getElementById('modalLastName').value = '';
-  document.getElementById('modalGrade').value = '';
-  document.getElementById('registerFields').style.display = 'none';
-  document.getElementById('toggleRegister').textContent = 'Don\'t have an account? Register';
-  document.getElementById('modalAction').textContent = 'Login';
-}
-
-function clearProjectForm() {
-  document.getElementById('projectTitle').value = '';
-  document.getElementById('projectDescription').value = '';
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  document.getElementById('projectDeadline').valueAsDate = tomorrow;
-  document.getElementById('projectStatus').value = 'in-progress';
-}
-
-// --- Initialize Sample Data ---
-function initializeSampleData() {
-  // Initialize clubs if empty
-  const clubs = StorageManager.getClubs();
-  if (clubs.length === 0) {
-    const sampleClubs = [
-      {
-        id: '1',
-        name: 'Science Club',
-        abbreviation: 'SC',
-        description: 'Exploring the wonders of science through experiments and discussions.',
-        category: 'academic',
-        leader1: 'Dr. Ahmed Zaki',
-        leader2: 'Prof. Sarah Johnson',
-        createdBy: 'admin',
-        creatorEmail: 'admin@school.edu',
-        members: ['admin'],
-        memberCount: 1,
-        funds: 500,
-        projects: [],
-        events: [],
-        status: 'active',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      },
-      {
-        id: '2',
-        name: 'Debate Society',
-        abbreviation: 'DS',
-        description: 'Developing public speaking and critical thinking skills through debates.',
-        category: 'academic',
-        leader1: 'Ms. Leila Smith',
-        createdBy: 'admin',
-        creatorEmail: 'admin@school.edu',
-        members: ['admin'],
-        memberCount: 1,
-        funds: 300,
-        projects: [],
-        events: [],
-        status: 'active',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      },
-      {
-        id: '3',
-        name: 'Football Team',
-        abbreviation: 'FT',
-        description: 'School football team for competitions and fitness.',
-        category: 'sports',
-        leader1: 'Coach Mohamed Ali',
-        createdBy: 'admin',
-        creatorEmail: 'admin@school.edu',
-        members: ['admin'],
-        memberCount: 1,
-        funds: 1000,
-        projects: [],
-        events: [],
-        status: 'active',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+  try {
+    const clubRef = db.collection('clubs').doc(clubId);
+    const clubDoc = await clubRef.get();
+    
+    if (clubDoc.exists) {
+      const data = clubDoc.data();
+      const members = data.members || [];
+      
+      if (members.includes(currentUser.uid)) {
+        showToast('Already a member', 'info');
+        return;
       }
-    ];
-    StorageManager.saveClubs(sampleClubs);
-  }
-  
-  // Initialize users if empty
-  const users = StorageManager.getUsers();
-  if (users.length === 0) {
-    const sampleUsers = [
-      {
-        id: 'admin',
-        email: 'admin@school.edu',
-        password: 'admin123',
-        name: 'System Administrator',
-        firstName: 'System',
-        lastName: 'Admin',
-        grade: 'Admin',
-        role: 'admin',
-        createdAt: new Date().toISOString(),
-        status: 'active'
-      }
-    ];
-    StorageManager.saveUsers(sampleUsers);
-  }
-  
-  // Check for saved user
-  const savedUser = StorageManager.getCurrentUser();
-  if (savedUser) {
-    State.userData = savedUser;
-    State.currentUser = { email: savedUser.email, uid: savedUser.id };
-    State.userRole = savedUser.role || 'student';
-    updateUIForUser(savedUser);
+      
+      members.push(currentUser.uid);
+      
+      await clubRef.update({
+        members: members,
+        memberCount: members.length
+      });
+      
+      showToast('Joined club!', 'success');
+      loadClubs();
+    }
+  } catch (error) {
+    showToast('Failed to join club', 'error');
   }
 }
 
-// --- Initialize the application ---
+// Load admin data
+async function loadAdminData() {
+  if (!currentUser || userData.role !== 'admin') return;
+  
+  try {
+    const snapshot = await db.collection('users').get();
+    const adminContent = document.getElementById('adminContent');
+    
+    let html = '<h3>Users</h3>';
+    
+    if (snapshot.empty) {
+      html += '<p>No users found</p>';
+    } else {
+      html += '<div style="display:grid;gap:8px;margin-top:16px">';
+      
+      snapshot.docs.forEach(doc => {
+        const user = doc.data();
+        html += `
+          <div class="list-item">
+            <div>
+              <strong>${user.name || user.email}</strong>
+              <div style="font-size:12px;color:var(--muted)">${user.email} • ${user.grade || 'No grade'}</div>
+            </div>
+            <div style="font-size:12px;color:var(--muted)">${user.role || 'student'}</div>
+          </div>
+        `;
+      });
+      
+      html += '</div>';
+    }
+    
+    adminContent.innerHTML = html;
+  } catch (error) {
+    console.error('Error loading admin data:', error);
+  }
+}
+
+// Initialize everything
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize UI
   initUI();
+  
+  // Load saved language
+  const savedLang = localStorage.getItem('portal_language') || 'en';
+  updateLanguage(savedLang);
+  
+  // Auth state listener
+  auth.onAuthStateChanged(async (user) => {
+    currentUser = user;
+    
+    if (user) {
+      // Get user data
+      try {
+        const doc = await db.collection('users').doc(user.uid).get();
+        if (doc.exists) {
+          userData = doc.data();
+        } else {
+          // Create user document if doesn't exist
+          userData = {
+            uid: user.uid,
+            email: user.email,
+            name: user.email.split('@')[0],
+            role: 'student',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          };
+          await db.collection('users').doc(user.uid).set(userData);
+        }
+      } catch (error) {
+        console.error('Error loading user data:', error);
+      }
+    } else {
+      userData = null;
+    }
+    
+    updateUIForUser();
+    
+    // Load initial data if logged in
+    if (user) {
+      loadProjects();
+      loadClubs();
+    }
+  });
   
   // Show welcome message
   setTimeout(() => {
-    Toast.show('Welcome to BNI Yekhlef Student Portal! Use test@student.com / password123 to login.', 'info', 5000);
+    showToast('Welcome to BNI Yekhlef Student Portal!', 'info');
   }, 1000);
 });
-
-// Make joinClub function available globally
-window.joinClub = joinClub;
 </script>
 </body>
 </html>
