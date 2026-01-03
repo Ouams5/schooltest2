@@ -27,7 +27,6 @@
   --maxWidth: 1400px;
   --gap: 20px;
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
 * {
@@ -40,12 +39,12 @@ body {
   margin: 0;
   padding: 24px;
   background: var(--bg);
-  font-family: var(--font);
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   justify-content: center;
-  color: var(--primary);
+  color: #1e293b;
   min-height: 100vh;
 }
 
@@ -132,7 +131,7 @@ body {
   padding: 12px;
   border-radius: var(--radius-sm);
   font-weight: 500;
-  color: var(--primary);
+  color: #475569;
   cursor: pointer;
   transition: var(--transition);
   border: 1px solid transparent;
@@ -155,19 +154,10 @@ body {
   color: var(--primary-light);
 }
 
-.nav-item .badge {
-  margin-left: auto;
-  background: var(--primary-light);
-  color: white;
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 12px;
-}
-
 .icon {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   font-size: 20px;
-  color: var(--primary);
+  color: #475569;
 }
 
 .profile-card {
@@ -285,7 +275,7 @@ body {
   background: transparent;
   width: 100%;
   font-size: 14px;
-  color: var(--primary);
+  color: #1e293b;
 }
 
 .search input::placeholder {
@@ -310,33 +300,6 @@ body {
 .welcome-sub {
   font-size: 12px;
   color: var(--muted);
-}
-
-.notification-bell {
-  position: relative;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: var(--radius-sm);
-  transition: var(--transition);
-}
-
-.notification-bell:hover {
-  background: var(--surface-secondary);
-}
-
-.notification-badge {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  background: var(--danger);
-  color: white;
-  font-size: 10px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* Enhanced Cards */
@@ -427,94 +390,6 @@ body {
   gap: 8px;
 }
 
-/* Enhanced Chat */
-.chat-area {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.chat-window {
-  height: 400px;
-  border-radius: var(--radius);
-  border: 1px solid #e2e8f0;
-  padding: 16px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: #f8fbff;
-}
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-.message {
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  background: white;
-  margin-bottom: 12px;
-  border: 1px solid #e2e8f0;
-  max-width: 80%;
-}
-
-.message.sent {
-  margin-left: auto;
-  background: linear-gradient(135deg, var(--primary-light), #2563eb);
-  color: white;
-  border: none;
-}
-
-.message .meta {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.message.sent .meta {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.message-sender {
-  font-weight: 600;
-}
-
-.message-time {
-  font-size: 11px;
-}
-
-.message-text {
-  line-height: 1.5;
-}
-
-.chat-input-container {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.chat-input {
-  flex: 1;
-  padding: 14px;
-  border-radius: var(--radius);
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
-  font-family: inherit;
-  font-size: 14px;
-  transition: var(--transition);
-}
-
-.chat-input:focus {
-  outline: none;
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
 /* Enhanced Buttons */
 .btn {
   padding: 10px 16px;
@@ -530,6 +405,7 @@ body {
   align-items: center;
   gap: 8px;
   justify-content: center;
+  font-family: 'Poppins', sans-serif;
 }
 
 .btn:hover {
@@ -589,27 +465,6 @@ body {
 .btn.sm {
   padding: 6px 12px;
   font-size: 12px;
-}
-
-.btn.lg {
-  padding: 14px 24px;
-  font-size: 16px;
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-.btn-icon {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* Enhanced Modals */
@@ -851,22 +706,6 @@ body {
 }
 
 /* Enhanced Loading */
-.loading {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(59, 130, 246, 0.3);
-  border-radius: 50%;
-  border-top-color: var(--primary-light);
-  animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -896,249 +735,10 @@ body {
   margin-bottom: 16px;
 }
 
-/* Enhanced Profile */
-.profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 500px;
-}
-
-.profile-avatar-upload {
-  position: relative;
-  width: 100px;
-  height: 100px;
-}
-
-.profile-avatar-upload img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--primary-light);
-}
-
-.profile-avatar-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: var(--transition);
-  cursor: pointer;
-}
-
-.profile-avatar-upload:hover .profile-avatar-overlay {
-  opacity: 1;
-}
-
-.profile-avatar-overlay span {
-  color: white;
-  font-size: 24px;
-}
-
-/* Enhanced Admin */
-.admin-controls {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-.admin-table-container {
-  overflow-x: auto;
-  border-radius: var(--radius-sm);
-  border: 1px solid #e2e8f0;
-}
-
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 800px;
-}
-
-.admin-table th {
-  background: var(--surface-secondary);
-  font-weight: 600;
-  text-align: left;
-  padding: 16px;
-  border-bottom: 2px solid #e2e8f0;
-  color: var(--primary);
-}
-
-.admin-table td {
-  padding: 16px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.admin-table tr:hover {
-  background: var(--surface-secondary);
-}
-
-/* Enhanced Club System */
-.club-card {
-  border: 1px solid #e2e8f0;
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 16px;
-  background: white;
-  transition: var(--transition);
-}
-
-.club-card:hover {
-  border-color: var(--primary-light);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-}
-
-.club-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.club-logo {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-  border: 2px solid #e2e8f0;
-  background: var(--surface-secondary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.club-logo span {
-  font-size: 32px;
-  color: var(--muted);
-}
-
-.club-info {
-  flex: 1;
-}
-
-.club-name {
-  font-weight: 700;
-  font-size: 20px;
-  margin: 0 0 4px 0;
-  color: var(--primary);
-}
-
-.club-abbr {
-  font-size: 14px;
-  color: var(--muted);
-  margin: 0 0 8px 0;
-  font-weight: 500;
-}
-
-.club-leaders {
-  font-size: 14px;
-  color: var(--accent);
-  margin: 0 0 12px 0;
-}
-
-.club-description {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--primary);
-  margin: 0 0 16px 0;
-}
-
-.club-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.club-stat {
-  text-align: center;
-  padding: 12px;
-  background: var(--surface-secondary);
-  border-radius: var(--radius-sm);
-  border: 1px solid #e2e8f0;
-}
-
-.club-stat-value {
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--primary);
-  margin-bottom: 4px;
-}
-
-.club-stat-label {
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.club-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-/* Role Badges */
-.role-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.role-admin {
-  background: linear-gradient(135deg, #fef2f2, #fee2e2);
-  color: #dc2626;
-  border: 1px solid #fecaca;
-}
-
-.role-leader {
-  background: linear-gradient(135deg, #fffbeb, #fef3c7);
-  color: #d97706;
-  border: 1px solid #fde68a;
-}
-
-.role-student {
-  background: linear-gradient(135deg, #eff6ff, #dbeafe);
-  color: #2563eb;
-  border: 1px solid #bfdbfe;
-}
-
-.role-owner {
-  background: linear-gradient(135deg, #f5f3ff, #ede9fe);
-  color: #7c3aed;
-  border: 1px solid #ddd6fe;
-}
-
-/* Status Badges */
-.status-badge {
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.status-active {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.status-pending {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.status-inactive {
-  background: #f3f4f6;
-  color: #374151;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Dashboard Widgets */
@@ -1201,72 +801,33 @@ body {
   font-weight: 500;
 }
 
-.widget-trend.up {
-  color: var(--success);
-}
-
-.widget-trend.down {
-  color: var(--danger);
-}
-
-/* Language Switcher */
-.language-switcher {
-  position: relative;
-}
-
-.language-btn {
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  border: 1px solid #e2e8f0;
-  color: var(--primary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-.language-btn:hover {
-  background: var(--surface-secondary);
-  border-color: var(--primary-light);
-}
-
-.language-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 4px;
-  background: var(--surface);
-  border: 1px solid #e2e8f0;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-lg);
-  min-width: 120px;
-  display: none;
-  z-index: 100;
-}
-
-.language-dropdown.show {
-  display: block;
-}
-
-.language-option {
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.language-option:hover {
-  background: var(--surface-secondary);
-}
-
-.language-option.active {
-  color: var(--primary-light);
+/* Role Badges */
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.role-admin {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.role-leader {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.role-student {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
 }
 
 /* Responsive Design */
@@ -1308,10 +869,6 @@ body {
     grid-template-columns: 1fr;
   }
   
-  .club-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
   .form-row {
     grid-template-columns: 1fr;
   }
@@ -1323,82 +880,26 @@ body {
     align-items: flex-end;
   }
   
-  .club-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .club-logo {
-    width: 80px;
-    height: 80px;
-  }
-  
   .modal {
     padding: 20px;
     width: 95%;
   }
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    --surface: #1e293b;
-    --surface-secondary: #334155;
-    --muted: #94a3b8;
-    --primary: #f1f5f9;
-    --primary-light: #60a5fa;
-    --accent: #cbd5e1;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-  }
-  
-  body {
-    color: var(--primary);
-  }
-  
-  .search {
-    background: var(--surface-secondary);
-  }
-  
-  .list-item {
-    background: var(--surface-secondary);
-  }
-  
-  .club-card {
-    background: var(--surface-secondary);
-  }
-  
-  .club-stat {
-    background: var(--surface);
-  }
-  
-  .dashboard-widget {
-    background: var(--surface-secondary);
-  }
-  
-  .admin-table th {
-    background: var(--surface);
-  }
+/* Fix for admin-only elements */
+.admin-only {
+  display: none !important;
 }
 
-/* Accessibility Improvements */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.focus-visible {
-  outline: 2px solid var(--primary-light);
-  outline-offset: 2px;
+/* Fix for error messages */
+.error-message {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  margin: 16px 0;
+  font-size: 14px;
 }
 </style>
 </head>
@@ -1428,9 +929,6 @@ body {
         <div class="nav-item" data-tab="events" tabindex="0">
           <span class="material-symbols-outlined icon">event</span>Events
         </div>
-        <div id="conversationsNav" class="nav-item admin-only" data-tab="conversations" tabindex="0">
-          <span class="material-symbols-outlined icon">chat_bubble</span>Conversations
-        </div>
         <div class="nav-item" data-tab="clubs" tabindex="0">
           <span class="material-symbols-outlined icon">groups</span>Clubs
         </div>
@@ -1443,7 +941,6 @@ body {
         <div id="adminNav" class="nav-item admin-only" data-tab="admin" tabindex="0">
           <span class="material-symbols-outlined icon">admin_panel_settings</span>Admin Panel
         </div>
-        <!-- Club tabs will be dynamically added here -->
       </nav>
       
       <div class="profile-card">
@@ -1498,31 +995,6 @@ body {
         </div>
       </div>
       <div class="top-actions">
-        <div class="language-switcher">
-          <button class="language-btn" id="languageBtn">
-            <span class="material-symbols-outlined">language</span>
-            <span>English</span>
-            <span class="material-symbols-outlined" style="font-size:16px">arrow_drop_down</span>
-          </button>
-          <div class="language-dropdown" id="languageDropdown">
-            <div class="language-option active" data-lang="en">
-              <span>🇬🇧</span>
-              <span>English</span>
-            </div>
-            <div class="language-option" data-lang="fr">
-              <span>🇫🇷</span>
-              <span>Français</span>
-            </div>
-            <div class="language-option" data-lang="ar">
-              <span>🇲🇦</span>
-              <span>العربية</span>
-            </div>
-          </div>
-        </div>
-        <div class="notification-bell" id="notificationBell" tabindex="0" aria-label="Notifications">
-          <span class="material-symbols-outlined">notifications</span>
-          <span class="notification-badge" id="notificationCount" style="display:none">0</span>
-        </div>
         <div class="welcome-container">
           <div class="welcome-text" id="welcomeText">Welcome</div>
           <div class="welcome-sub" id="welcomeSub">Please sign in</div>
@@ -1640,29 +1112,6 @@ body {
       <div id="eventsList">No upcoming events</div>
     </section>
     
-    <!-- Enhanced Conversations Section -->
-    <section id="conversations" class="card admin-only" style="display:none">
-      <div class="card-header">
-        <h2 class="card-title">Conversations</h2>
-        <div class="card-actions">
-          <button id="newConversationBtn" class="btn primary">
-            <span class="material-symbols-outlined" style="font-size:18px">add_comment</span> New Conversation
-          </button>
-        </div>
-      </div>
-      <div class="chat-area">
-        <div class="chat-window">
-          <div class="chat-messages" id="chatWindow"></div>
-        </div>
-        <div class="chat-input-container">
-          <input id="chatInput" placeholder="Type your message..." class="chat-input" aria-label="Message input">
-          <button class="btn primary" id="sendBtn">
-            <span class="material-symbols-outlined">send</span> Send
-          </button>
-        </div>
-      </div>
-    </section>
-    
     <!-- Enhanced Clubs Section -->
     <section id="clubs" class="card" style="display:none">
       <div class="card-header">
@@ -1694,57 +1143,16 @@ body {
       <div class="card-header">
         <h2 class="card-title">My Profile</h2>
         <div class="card-actions">
-          <button id="changePasswordBtn" class="btn ghost">Change Password</button>
-          <button id="saveProfileBtn" class="btn success">Save Profile</button>
+          <button id="changePasswordBtn" class="btn ghost" style="display:none">Change Password</button>
+          <button id="saveProfileBtn" class="btn success" style="display:none">Save Profile</button>
         </div>
       </div>
-      <div class="profile-form">
-        <div class="form-group" style="display:flex; gap:24px; align-items:flex-start;">
-          <div class="profile-avatar-upload">
-            <img id="profilePic" src="" class="profile-avatar" alt="Profile Picture" style="display:none">
-            <div class="profile-avatar" id="profileAvatarFallback">GU</div>
-            <div class="profile-avatar-overlay" id="uploadAvatarOverlay">
-              <span class="material-symbols-outlined">photo_camera</span>
-            </div>
-          </div>
-          <div style="flex:1">
-            <input type="file" id="profilePicInput" class="sr-only" accept="image/*">
-            <div class="form-group">
-              <label class="form-label" for="profileName">Full Name</label>
-              <input type="text" id="profileName" class="form-control" placeholder="Your Full Name">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="profileEmail">Email</label>
-                <input type="email" id="profileEmail" class="form-control" placeholder="your.email@example.com" disabled>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="profileGrade">Grade</label>
-                <select id="profileGrade" class="form-control form-select">
-                  <option value="">Select Grade</option>
-                  <option value="TC">TC</option>
-                  <option value="1BAC">1BAC</option>
-                  <option value="2BAC">2BAC</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" for="profileBio">Bio</label>
-          <textarea id="profileBio" class="form-control form-textarea" placeholder="Tell us about yourself..." rows="4"></textarea>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="profilePhone">Phone Number</label>
-            <input type="tel" id="profilePhone" class="form-control" placeholder="+212 6XX-XXXXXX">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="profileLocation">Location</label>
-            <input type="text" id="profileLocation" class="form-control" placeholder="City, Country">
-          </div>
+      <div class="profile-form" id="profileForm">
+        <div style="text-align: center; padding: 40px 20px;">
+          <div class="profile-avatar" style="width: 80px; height: 80px; margin: 0 auto 20px; font-size: 24px;">GU</div>
+          <h3 style="margin-bottom: 8px;">Guest User</h3>
+          <p style="color: var(--muted); margin-bottom: 24px;">Please login to access your profile</p>
+          <button id="profileLoginBtn" class="btn primary">Login to Continue</button>
         </div>
       </div>
     </section>
@@ -1760,13 +1168,10 @@ body {
       <div class="admin-controls">
         <button id="manageUsersBtn" class="btn primary">Manage Users</button>
         <button id="systemStatsBtn" class="btn">System Stats</button>
-        <button id="manageRolesBtn" class="btn">Manage Roles</button>
         <button id="settingsBtn" class="btn">Settings</button>
       </div>
       <div id="adminContent"></div>
     </section>
-    
-    <!-- Club sections will be dynamically added here -->
   </main>
 </div>
 
@@ -1793,12 +1198,12 @@ body {
     <div class="modal-body">
       <div class="form-group">
         <label class="form-label" for="modalEmail">Email</label>
-        <input type="email" id="modalEmail" class="form-control" placeholder="student@bniyekhlef.edu">
+        <input type="email" id="modalEmail" class="form-control" placeholder="student@bniyekhlef.edu" value="test@student.com">
         <div class="form-error" id="modalEmailError"></div>
       </div>
       <div class="form-group">
         <label class="form-label" for="modalPass">Password</label>
-        <input type="password" id="modalPass" class="form-control" placeholder="••••••••">
+        <input type="password" id="modalPass" class="form-control" placeholder="••••••••" value="password123">
         <div class="form-error" id="modalPassError"></div>
       </div>
       <div class="form-group" id="registerFields" style="display:none;">
@@ -1823,73 +1228,18 @@ body {
         </div>
       </div>
       <div class="form-group">
-        <div class="form-check" style="display:flex; align-items:center; gap:8px;">
+        <div style="display:flex; align-items:center; gap:8px;">
           <input type="checkbox" id="rememberMe" class="form-check-input">
           <label for="rememberMe" style="font-size:14px;">Remember me</label>
         </div>
       </div>
       <div class="form-group">
         <button id="toggleRegister" class="btn ghost sm" style="font-size:13px;">Don't have an account? Register</button>
-        <button id="forgotPassword" class="btn ghost sm" style="font-size:13px;">Forgot password?</button>
       </div>
     </div>
     <div class="modal-footer">
       <button id="modalCancel" class="btn ghost">Cancel</button>
       <button id="modalAction" class="btn primary">Login</button>
-    </div>
-  </div>
-</div>
-
-<!-- Enhanced Club Creation Modal -->
-<div class="modal-overlay" id="createClubModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 class="modal-title">Create New Club</h3>
-      <button class="modal-close" id="closeClubModal">
-        <span class="material-symbols-outlined">close</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label" for="clubName">Club Name *</label>
-        <input type="text" id="clubName" class="form-control" placeholder="e.g., Science Club">
-        <div class="form-error" id="clubNameError"></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="clubAbbreviation">Abbreviation *</label>
-        <input type="text" id="clubAbbreviation" class="form-control" placeholder="e.g., SC" maxlength="10">
-        <div class="form-error" id="clubAbbreviationError"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label" for="clubLeader1">Primary Leader *</label>
-          <input type="text" id="clubLeader1" class="form-control" placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="clubLeader2">Secondary Leader</label>
-          <input type="text" id="clubLeader2" class="form-control" placeholder="Optional">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="clubDescription">Description *</label>
-        <textarea id="clubDescription" class="form-control form-textarea" placeholder="Describe the club's purpose and activities..."></textarea>
-        <div class="form-error" id="clubDescriptionError"></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="clubCategory">Category</label>
-        <select id="clubCategory" class="form-control form-select">
-          <option value="academic">Academic</option>
-          <option value="sports">Sports</option>
-          <option value="arts">Arts & Culture</option>
-          <option value="technology">Technology</option>
-          <option value="social">Social & Community</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button id="cancelClubBtn" class="btn ghost">Cancel</button>
-      <button id="saveClubBtn" class="btn success">Create Club</button>
     </div>
   </div>
 </div>
@@ -1923,7 +1273,7 @@ body {
           <label class="form-label" for="projectStatus">Status</label>
           <select id="projectStatus" class="form-control form-select">
             <option value="planning">Planning</option>
-            <option value="in-progress">In Progress</option>
+            <option value="in-progress" selected>In Progress</option>
             <option value="review">Under Review</option>
             <option value="completed">Completed</option>
           </select>
@@ -1937,93 +1287,11 @@ body {
   </div>
 </div>
 
-<!-- Enhanced Role Management Modal -->
-<div class="modal-overlay" id="roleModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 class="modal-title">Manage User Role</h3>
-      <button class="modal-close" id="closeRoleModal">
-        <span class="material-symbols-outlined">close</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div id="roleUserInfo" style="margin-bottom: 24px; padding:16px; background:var(--surface-secondary); border-radius:var(--radius-sm);"></div>
-      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px;">
-        <label style="display:block; padding:16px; border:2px solid #e2e8f0; border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);" class="role-option">
-          <input type="radio" name="userRole" value="student" style="display:none;">
-          <div style="text-align:center;">
-            <span class="material-symbols-outlined" style="font-size:32px; margin-bottom:8px;">school</span>
-            <div style="font-weight:600;">Student</div>
-            <div style="font-size:12px; color:var(--muted);">Regular user</div>
-          </div>
-        </label>
-        <label style="display:block; padding:16px; border:2px solid #e2e8f0; border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);" class="role-option">
-          <input type="radio" name="userRole" value="leader" style="display:none;">
-          <div style="text-align:center;">
-            <span class="material-symbols-outlined" style="font-size:32px; margin-bottom:8px;">leaderboard</span>
-            <div style="font-weight:600;">Leader</div>
-            <div style="font-size:12px; color:var(--muted);">Club leadership</div>
-          </div>
-        </label>
-        <label style="display:block; padding:16px; border:2px solid #e2e8f0; border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition);" class="role-option">
-          <input type="radio" name="userRole" value="admin" style="display:none;">
-          <div style="text-align:center;">
-            <span class="material-symbols-outlined" style="font-size:32px; margin-bottom:8px;">admin_panel_settings</span>
-            <div style="font-weight:600;">Admin</div>
-            <div style="font-size:12px; color:var(--muted);">Full system access</div>
-          </div>
-        </label>
-      </div>
-      <div class="form-group" style="margin-top:16px;">
-        <label class="form-label" for="roleNotes">Notes (Optional)</label>
-        <textarea id="roleNotes" class="form-control form-textarea" placeholder="Add notes about this role change..." rows="2"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button id="cancelRoleBtn" class="btn ghost">Cancel</button>
-      <button id="saveRoleBtn" class="btn success">Save Changes</button>
-    </div>
-  </div>
-</div>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-
 <script>
 // =============================================
 // BNI YEKHELF HIGHSCHOOL - STUDENT PORTAL
+// SIMPLIFIED VERSION WITH LOCAL STORAGE
 // =============================================
-
-// --- Firebase Configuration ---
-const firebaseConfig = {
-  apiKey: "AIzaSyBcvybNF9Hn89jb2zRQxknb6l0uMeiS-EM",
-  authDomain: "school-bni-yekhlef-id.firebaseapp.com",
-  projectId: "bniyekhlef-high-school",
-  storageBucket: "school-bni-yekhlef-id",
-  messagingSenderId: "893030570286",
-  appId: "1:893030570286:web:bec5df8427b532f5e202bf",
-  measurementId: "G-4V7JRRR48W"
-};
-
-// --- Initialize Firebase ---
-try {
-  firebase.initializeApp(firebaseConfig);
-} catch (err) {
-  console.error('Firebase initialization error:', err);
-}
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
-
-// Enable offline persistence
-db.enablePersistence().catch((err) => {
-  console.error('Offline persistence failed:', err);
-});
 
 // --- State Management ---
 const State = {
@@ -2031,106 +1299,7 @@ const State = {
   userData: null,
   userRole: 'guest',
   activeTab: 'dashboard',
-  clubTabs: new Map(),
-  isOnline: navigator.onLine,
-  currentLanguage: 'en'
-};
-
-// --- Language Translations ---
-const translations = {
-  en: {
-    welcome: "Welcome",
-    pleaseSignIn: "Please sign in",
-    dashboard: "Dashboard",
-    projects: "Projects",
-    assignments: "Assignments",
-    events: "Events",
-    conversations: "Conversations",
-    clubs: "Clubs",
-    reports: "Reports",
-    profile: "Profile",
-    adminPanel: "Admin Panel",
-    logout: "Logout",
-    login: "Login",
-    searchPlaceholder: "Search projects, clubs, assignments...",
-    noProjects: "No projects yet. Create one to get started!",
-    noAssignments: "No assignments yet",
-    noEvents: "No upcoming events",
-    loading: "Loading...",
-    save: "Save",
-    cancel: "Cancel",
-    create: "Create",
-    update: "Update",
-    delete: "Delete",
-    join: "Join",
-    leave: "Leave",
-    members: "Members",
-    leader: "Leader",
-    student: "Student",
-    admin: "Administrator"
-  },
-  fr: {
-    welcome: "Bienvenue",
-    pleaseSignIn: "Veuillez vous connecter",
-    dashboard: "Tableau de bord",
-    projects: "Projets",
-    assignments: "Devoirs",
-    events: "Événements",
-    conversations: "Conversations",
-    clubs: "Clubs",
-    reports: "Rapports",
-    profile: "Profil",
-    adminPanel: "Panneau d'administration",
-    logout: "Déconnexion",
-    login: "Connexion",
-    searchPlaceholder: "Rechercher projets, clubs, devoirs...",
-    noProjects: "Aucun projet pour le moment. Créez-en un pour commencer!",
-    noAssignments: "Aucun devoir pour le moment",
-    noEvents: "Aucun événement à venir",
-    loading: "Chargement...",
-    save: "Enregistrer",
-    cancel: "Annuler",
-    create: "Créer",
-    update: "Mettre à jour",
-    delete: "Supprimer",
-    join: "Rejoindre",
-    leave: "Quitter",
-    members: "Membres",
-    leader: "Responsable",
-    student: "Étudiant",
-    admin: "Administrateur"
-  },
-  ar: {
-    welcome: "مرحباً",
-    pleaseSignIn: "يرجى تسجيل الدخول",
-    dashboard: "لوحة التحكم",
-    projects: "المشاريع",
-    assignments: "الواجبات",
-    events: "الفعاليات",
-    conversations: "المحادثات",
-    clubs: "الأندية",
-    reports: "التقارير",
-    profile: "الملف الشخصي",
-    adminPanel: "لوحة الإدارة",
-    logout: "تسجيل الخروج",
-    login: "تسجيل الدخول",
-    searchPlaceholder: "ابحث في المشاريع، الأندية، الواجبات...",
-    noProjects: "لا توجد مشاريع بعد. أنشئ مشروعاً لتبدأ!",
-    noAssignments: "لا توجد واجبات بعد",
-    noEvents: "لا توجد فعاليات قادمة",
-    loading: "جاري التحميل...",
-    save: "حفظ",
-    cancel: "إلغاء",
-    create: "إنشاء",
-    update: "تحديث",
-    delete: "حذف",
-    join: "انضم",
-    leave: "غادر",
-    members: "الأعضاء",
-    leader: "قائد",
-    student: "طالب",
-    admin: "مدير"
-  }
+  isOnline: navigator.onLine
 };
 
 // --- Toast System ---
@@ -2254,43 +1423,108 @@ class Validator {
   }
 }
 
+// --- Local Storage Management ---
+class StorageManager {
+  static getUsers() {
+    const users = localStorage.getItem('portal_users');
+    return users ? JSON.parse(users) : [];
+  }
+  
+  static saveUsers(users) {
+    localStorage.setItem('portal_users', JSON.stringify(users));
+  }
+  
+  static getProjects() {
+    const projects = localStorage.getItem('portal_projects');
+    return projects ? JSON.parse(projects) : [];
+  }
+  
+  static saveProjects(projects) {
+    localStorage.setItem('portal_projects', JSON.stringify(projects));
+  }
+  
+  static getClubs() {
+    const clubs = localStorage.getItem('portal_clubs');
+    return clubs ? JSON.parse(clubs) : [];
+  }
+  
+  static saveClubs(clubs) {
+    localStorage.setItem('portal_clubs', JSON.stringify(clubs));
+  }
+  
+  static getCurrentUser() {
+    const user = localStorage.getItem('portal_currentUser');
+    return user ? JSON.parse(user) : null;
+  }
+  
+  static saveCurrentUser(user) {
+    if (user) {
+      localStorage.setItem('portal_currentUser', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('portal_currentUser');
+    }
+  }
+}
+
 // --- Authentication System ---
 class AuthManager {
-  static async login(email, password, rememberMe = false) {
+  static async login(email, password) {
     try {
       Loading.show('Signing in...');
       
-      // Set persistence
-      const persistence = rememberMe ? 
-        firebase.auth.Auth.Persistence.LOCAL : 
-        firebase.auth.Auth.Persistence.SESSION;
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      await auth.setPersistence(persistence);
-      const userCredential = await auth.signInWithEmailAndPassword(email, password);
+      // Check against stored users
+      const users = StorageManager.getUsers();
+      const user = users.find(u => u.email === email && u.password === password);
       
-      Toast.show('Logged in successfully!', 'success');
-      return userCredential;
-    } catch (error) {
-      let errorMessage = 'Login failed';
-      switch(error.code) {
-        case 'auth/user-not-found':
-          errorMessage = 'User not found';
-          break;
-        case 'auth/wrong-password':
-          errorMessage = 'Invalid password';
-          break;
-        case 'auth/invalid-email':
-          errorMessage = 'Invalid email address';
-          break;
-        case 'auth/user-disabled':
-          errorMessage = 'Account disabled';
-          break;
-        case 'auth/too-many-requests':
-          errorMessage = 'Too many attempts. Try again later';
-          break;
+      if (user) {
+        // Remove password from user object
+        const { password, ...userData } = user;
+        State.currentUser = { email: user.email, uid: user.id };
+        State.userData = userData;
+        State.userRole = user.role || 'student';
+        
+        StorageManager.saveCurrentUser(userData);
+        
+        Toast.show('Logged in successfully!', 'success');
+        return true;
+      } else {
+        // If no users exist, create a test user
+        if (users.length === 0 && email === 'test@student.com' && password === 'password123') {
+          const testUser = {
+            id: '1',
+            email: 'test@student.com',
+            password: 'password123',
+            name: 'Test Student',
+            firstName: 'Test',
+            lastName: 'Student',
+            grade: '2BAC',
+            role: 'student',
+            createdAt: new Date().toISOString(),
+            status: 'active'
+          };
+          
+          StorageManager.saveUsers([testUser]);
+          
+          const { password: _, ...userData } = testUser;
+          State.currentUser = { email: testUser.email, uid: testUser.id };
+          State.userData = userData;
+          State.userRole = 'student';
+          
+          StorageManager.saveCurrentUser(userData);
+          
+          Toast.show('Logged in with test account!', 'success');
+          return true;
+        }
+        
+        Toast.show('Invalid email or password', 'error');
+        return false;
       }
-      Toast.show(errorMessage, 'error');
-      throw error;
+    } catch (error) {
+      Toast.show('Login failed: ' + error.message, 'error');
+      return false;
     } finally {
       Loading.hide();
     }
@@ -2300,108 +1534,104 @@ class AuthManager {
     try {
       Loading.show('Creating account...');
       
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Create user profile in Firestore
-      const profileData = {
-        uid: userCredential.user.uid,
-        email: email,
+      const users = StorageManager.getUsers();
+      
+      // Check if user already exists
+      if (users.some(u => u.email === email)) {
+        Toast.show('Email already in use', 'error');
+        return false;
+      }
+      
+      const newUser = {
+        id: Date.now().toString(),
+        email,
+        password,
         name: `${userData.firstName} ${userData.lastName}`,
         firstName: userData.firstName,
         lastName: userData.lastName,
         grade: userData.grade,
         role: 'student',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+        createdAt: new Date().toISOString(),
         status: 'active'
       };
       
-      await db.collection('users').doc(userCredential.user.uid).set(profileData);
+      users.push(newUser);
+      StorageManager.saveUsers(users);
       
-      // Create user stats document
-      await db.collection('userStats').doc(userCredential.user.uid).set({
-        uid: userCredential.user.uid,
-        projects: 0,
-        clubs: 0,
-        assignments: 0,
-        streak: 0,
-        lastActive: firebase.firestore.FieldValue.serverTimestamp(),
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      const { password: _, ...userDataWithoutPass } = newUser;
+      State.currentUser = { email: newUser.email, uid: newUser.id };
+      State.userData = userDataWithoutPass;
+      State.userRole = 'student';
+      
+      StorageManager.saveCurrentUser(userDataWithoutPass);
       
       Toast.show('Account created successfully!', 'success');
-      return userCredential;
+      return true;
     } catch (error) {
-      let errorMessage = 'Registration failed';
-      switch(error.code) {
-        case 'auth/email-already-in-use':
-          errorMessage = 'Email already in use';
-          break;
-        case 'auth/invalid-email':
-          errorMessage = 'Invalid email address';
-          break;
-        case 'auth/operation-not-allowed':
-          errorMessage = 'Registration is not allowed';
-          break;
-        case 'auth/weak-password':
-          errorMessage = 'Password is too weak';
-          break;
-      }
-      Toast.show(errorMessage, 'error');
+      Toast.show('Registration failed: ' + error.message, 'error');
+      return false;
+    } finally {
+      Loading.hide();
+    }
+  }
+  
+  static logout() {
+    State.currentUser = null;
+    State.userData = null;
+    State.userRole = 'guest';
+    StorageManager.saveCurrentUser(null);
+    Toast.show('Logged out successfully', 'info');
+  }
+}
+
+// --- Project Management ---
+class ProjectManager {
+  static async createProject(projectData) {
+    try {
+      Loading.show('Creating project...');
+      
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      const projects = StorageManager.getProjects();
+      
+      const newProject = {
+        id: Date.now().toString(),
+        title: projectData.title,
+        description: projectData.description,
+        status: projectData.status || 'planning',
+        deadline: projectData.deadline || null,
+        createdBy: State.currentUser.uid,
+        creatorEmail: State.userData.email,
+        creatorName: State.userData.name,
+        progress: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      
+      projects.push(newProject);
+      StorageManager.saveProjects(projects);
+      
+      Toast.show('Project created successfully!', 'success');
+      return newProject.id;
+    } catch (error) {
+      Toast.show('Failed to create project: ' + error.message, 'error');
       throw error;
     } finally {
       Loading.hide();
     }
   }
   
-  static async resetPassword(email) {
+  static async loadProjects() {
     try {
-      await auth.sendPasswordResetEmail(email);
-      Toast.show('Password reset email sent', 'success');
+      const projects = StorageManager.getProjects();
+      if (!State.currentUser) return [];
+      
+      return projects.filter(p => p.createdBy === State.currentUser.uid);
     } catch (error) {
-      Toast.show('Failed to send reset email', 'error');
-    }
-  }
-}
-
-// --- User Management ---
-class UserManager {
-  static async getUserData(uid) {
-    try {
-      const doc = await db.collection('users').doc(uid).get();
-      if (doc.exists) {
-        return doc.data();
-      }
-      return null;
-    } catch (error) {
-      console.error('Error getting user data:', error);
-      return null;
-    }
-  }
-  
-  static async updateUserProfile(uid, updates) {
-    try {
-      await db.collection('users').doc(uid).update({
-        ...updates,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      return true;
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      return false;
-    }
-  }
-  
-  static async updateUserRole(uid, newRole) {
-    try {
-      await db.collection('users').doc(uid).update({
-        role: newRole,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      return true;
-    } catch (error) {
-      console.error('Error updating role:', error);
-      return false;
+      console.error('Error loading projects:', error);
+      return [];
     }
   }
 }
@@ -2412,7 +1642,12 @@ class ClubManager {
     try {
       Loading.show('Creating club...');
       
-      const clubDoc = {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      const clubs = StorageManager.getClubs();
+      
+      const newClub = {
+        id: Date.now().toString(),
         name: clubData.name,
         abbreviation: clubData.abbreviation,
         description: clubData.description,
@@ -2420,127 +1655,68 @@ class ClubManager {
         leader1: clubData.leader1,
         leader2: clubData.leader2 || '',
         createdBy: State.currentUser.uid,
-        creatorEmail: State.currentUser.email,
+        creatorEmail: State.userData.email,
         members: [State.currentUser.uid],
         memberCount: 1,
         funds: 0,
         projects: [],
         events: [],
         status: 'active',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
       
-      const result = await db.collection('clubs').add(clubDoc);
-      
-      // Update user stats
-      await db.collection('userStats').doc(State.currentUser.uid).update({
-        clubs: firebase.firestore.FieldValue.increment(1)
-      });
+      clubs.push(newClub);
+      StorageManager.saveClubs(clubs);
       
       Toast.show('Club created successfully!', 'success');
-      return result.id;
+      return newClub.id;
     } catch (error) {
-      Toast.show('Failed to create club', 'error');
+      Toast.show('Failed to create club: ' + error.message, 'error');
       throw error;
     } finally {
       Loading.hide();
-    }
-  }
-  
-  static async joinClub(clubId) {
-    try {
-      const clubRef = db.collection('clubs').doc(clubId);
-      const clubDoc = await clubRef.get();
-      
-      if (!clubDoc.exists) {
-        Toast.show('Club not found', 'error');
-        return;
-      }
-      
-      const clubData = clubDoc.data();
-      if (clubData.members.includes(State.currentUser.uid)) {
-        Toast.show('You are already a member', 'info');
-        return;
-      }
-      
-      await clubRef.update({
-        members: firebase.firestore.FieldValue.arrayUnion(State.currentUser.uid),
-        memberCount: clubData.members.length + 1,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      
-      // Update user stats
-      await db.collection('userStats').doc(State.currentUser.uid).update({
-        clubs: firebase.firestore.FieldValue.increment(1)
-      });
-      
-      Toast.show('Successfully joined the club!', 'success');
-      return true;
-    } catch (error) {
-      Toast.show('Failed to join club', 'error');
-      return false;
     }
   }
   
   static async loadClubs() {
     try {
-      const snapshot = await db.collection('clubs').get();
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const clubs = StorageManager.getClubs();
+      return clubs;
     } catch (error) {
       console.error('Error loading clubs:', error);
       return [];
     }
   }
-}
-
-// --- Project Management ---
-class ProjectManager {
-  static async createProject(projectData) {
-    try {
-      Loading.show('Creating project...');
-      
-      const projectDoc = {
-        title: projectData.title,
-        description: projectData.description,
-        status: projectData.status || 'planning',
-        deadline: projectData.deadline || null,
-        createdBy: State.currentUser.uid,
-        creatorEmail: State.currentUser.email,
-        creatorName: State.userData.name,
-        team: [State.currentUser.uid],
-        progress: 0,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
-      
-      const result = await db.collection('projects').add(projectDoc);
-      
-      // Update user stats
-      await db.collection('userStats').doc(State.currentUser.uid).update({
-        projects: firebase.firestore.FieldValue.increment(1)
-      });
-      
-      Toast.show('Project created successfully!', 'success');
-      return result.id;
-    } catch (error) {
-      Toast.show('Failed to create project', 'error');
-      throw error;
-    } finally {
-      Loading.hide();
-    }
-  }
   
-  static async loadProjects() {
+  static async joinClub(clubId) {
     try {
-      const snapshot = await db.collection('projects')
-        .where('createdBy', '==', State.currentUser.uid)
-        .get();
+      const clubs = StorageManager.getClubs();
+      const clubIndex = clubs.findIndex(c => c.id === clubId);
       
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      if (clubIndex === -1) {
+        Toast.show('Club not found', 'error');
+        return false;
+      }
+      
+      const club = clubs[clubIndex];
+      
+      if (club.members.includes(State.currentUser.uid)) {
+        Toast.show('You are already a member', 'info');
+        return false;
+      }
+      
+      club.members.push(State.currentUser.uid);
+      club.memberCount = club.members.length;
+      club.updatedAt = new Date().toISOString();
+      
+      StorageManager.saveClubs(clubs);
+      
+      Toast.show('Successfully joined the club!', 'success');
+      return true;
     } catch (error) {
-      console.error('Error loading projects:', error);
-      return [];
+      Toast.show('Failed to join club: ' + error.message, 'error');
+      return false;
     }
   }
 }
@@ -2551,17 +1727,16 @@ class DashboardManager {
     try {
       if (!State.currentUser) return;
       
-      const [projects, clubs, assignments] = await Promise.all([
+      const [projects, clubs] = await Promise.all([
         ProjectManager.loadProjects(),
-        this.getUserClubs(),
-        this.getUserAssignments()
+        this.getUserClubs()
       ]);
       
       // Update dashboard widgets
-      this.updateWidgets(projects.length, clubs.length, assignments.pending);
+      this.updateWidgets(projects.length, clubs.length, 0);
       
       // Update profile stats
-      this.updateProfileStats(projects.length, clubs.length, assignments.pending);
+      this.updateProfileStats(projects.length, clubs.length, 0);
       
       // Update recent activity
       this.updateRecentActivity([...projects, ...clubs]);
@@ -2572,20 +1747,14 @@ class DashboardManager {
   
   static async getUserClubs() {
     try {
-      const snapshot = await db.collection('clubs')
-        .where('members', 'array-contains', State.currentUser.uid)
-        .get();
+      const clubs = StorageManager.getClubs();
+      if (!State.currentUser) return [];
       
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      return clubs.filter(c => c.members.includes(State.currentUser.uid));
     } catch (error) {
       console.error('Error loading user clubs:', error);
       return [];
     }
-  }
-  
-  static async getUserAssignments() {
-    // Simplified - implement based on your needs
-    return { pending: 0, all: [] };
   }
   
   static updateWidgets(projects, clubs, assignments) {
@@ -2612,11 +1781,7 @@ class DashboardManager {
     }
     
     // Sort by creation date
-    items.sort((a, b) => {
-      const dateA = a.createdAt?.toDate() || new Date(0);
-      const dateB = b.createdAt?.toDate() || new Date(0);
-      return dateB - dateA;
-    });
+    items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     
     const recentItems = items.slice(0, 5);
     
@@ -2626,7 +1791,7 @@ class DashboardManager {
           <div class="list-item-title">${item.title || item.name}</div>
           <div class="list-item-subtitle">${item.description || ''}</div>
           <div class="list-item-meta">
-            <span>${item.createdAt ? item.createdAt.toDate().toLocaleDateString() : 'Recent'}</span>
+            <span>${new Date(item.createdAt).toLocaleDateString()}</span>
             <span>${item.status ? `Status: ${item.status}` : ''}</span>
           </div>
         </div>
@@ -2635,184 +1800,49 @@ class DashboardManager {
   }
 }
 
-// --- Language System ---
-class LanguageManager {
-  static setLanguage(lang) {
-    if (!translations[lang]) return;
-    
-    State.currentLanguage = lang;
-    localStorage.setItem('portal_language', lang);
-    
-    // Update language button
-    const langBtn = document.getElementById('languageBtn');
-    if (langBtn) {
-      const langText = langBtn.querySelector('span:nth-child(2)');
-      if (langText) {
-        langText.textContent = lang === 'en' ? 'English' : 
-                               lang === 'fr' ? 'Français' : 'العربية';
-      }
-    }
-    
-    // Update all translations
-    this.updateTranslations();
-  }
-  
-  static updateTranslations() {
-    const t = translations[State.currentLanguage];
-    
-    // Update navigation
-    document.querySelectorAll('.nav-item').forEach((item, index) => {
-      const textSpan = item.querySelector('.nav-item-text');
-      if (textSpan) {
-        const texts = ['dashboard', 'projects', 'assignments', 'events', 'conversations', 'clubs', 'reports', 'profile', 'adminPanel'];
-        if (texts[index]) {
-          textSpan.textContent = t[texts[index]];
-        }
-      }
-    });
-    
-    // Update buttons
-    const elements = {
-      'openLogin': t.login,
-      'sidebarLogout': t.logout,
-      'saveProfileBtn': t.save,
-      'modalAction': t.login,
-      'cancelClubBtn': t.cancel,
-      'saveClubBtn': t.create,
-      'cancelProjectBtn': t.cancel,
-      'saveProjectBtn': t.create,
-      'cancelRoleBtn': t.cancel,
-      'saveRoleBtn': t.save
-    };
-    
-    Object.keys(elements).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = elements[id];
-    });
-    
-    // Update placeholders
-    const searchInput = document.getElementById('globalSearch');
-    if (searchInput) searchInput.placeholder = t.searchPlaceholder;
-    
-    const chatInput = document.getElementById('chatInput');
-    if (chatInput) chatInput.placeholder = t.searchPlaceholder;
-  }
-  
-  static init() {
-    // Load saved language or default to English
-    const savedLang = localStorage.getItem('portal_language') || 'en';
-    this.setLanguage(savedLang);
-  }
-}
-
 // --- UI Initialization ---
 function initUI() {
   // Sidebar navigation
   document.querySelectorAll('.nav-item').forEach(item => {
-    const text = item.textContent;
-    const icon = item.querySelector('.icon');
-    item.innerHTML = '';
-    if (icon) item.appendChild(icon);
-    const textSpan = document.createElement('span');
-    textSpan.className = 'nav-item-text';
-    textSpan.textContent = text.trim();
-    item.appendChild(textSpan);
-    
     item.addEventListener('click', handleNavigation);
   });
   
   // Auth modal
   document.getElementById('openLogin').addEventListener('click', () => Modal.show('authModal'));
+  document.getElementById('profileLoginBtn')?.addEventListener('click', () => Modal.show('authModal'));
   document.getElementById('closeAuthModal').addEventListener('click', () => Modal.hide('authModal'));
   document.getElementById('modalCancel').addEventListener('click', () => Modal.hide('authModal'));
   document.getElementById('toggleRegister').addEventListener('click', toggleRegisterMode);
-  document.getElementById('forgotPassword').addEventListener('click', handleForgotPassword);
   document.getElementById('modalAction').addEventListener('click', handleAuthAction);
   
-  // Club modal
-  document.getElementById('createClubBtn').addEventListener('click', () => Modal.show('createClubModal'));
-  document.getElementById('closeClubModal').addEventListener('click', () => Modal.hide('createClubModal'));
-  document.getElementById('cancelClubBtn').addEventListener('click', () => Modal.hide('createClubModal'));
-  document.getElementById('saveClubBtn').addEventListener('click', handleCreateClub);
-  
   // Project modal
-  document.getElementById('createProjectBtn').addEventListener('click', () => Modal.show('createProjectModal'));
+  document.getElementById('createProjectBtn').addEventListener('click', () => {
+    if (!State.currentUser) {
+      Toast.show('Please login to create a project', 'error');
+      Modal.show('authModal');
+      return;
+    }
+    Modal.show('createProjectModal');
+  });
+  
   document.getElementById('closeProjectModal').addEventListener('click', () => Modal.hide('createProjectModal'));
   document.getElementById('cancelProjectBtn').addEventListener('click', () => Modal.hide('createProjectModal'));
   document.getElementById('saveProjectBtn').addEventListener('click', handleCreateProject);
   
-  // Role modal
-  document.getElementById('closeRoleModal').addEventListener('click', () => Modal.hide('roleModal'));
-  document.getElementById('cancelRoleBtn').addEventListener('click', () => Modal.hide('roleModal'));
-  document.getElementById('saveRoleBtn').addEventListener('click', handleSaveRole);
-  
-  // Role option selection
-  document.querySelectorAll('.role-option').forEach(option => {
-    option.addEventListener('click', function() {
-      document.querySelectorAll('.role-option').forEach(opt => {
-        opt.style.borderColor = '#e2e8f0';
-      });
-      this.style.borderColor = 'var(--primary-light)';
-      const radio = this.querySelector('input[type="radio"]');
-      if (radio) radio.checked = true;
-    });
-  });
-  
-  // Chat
-  document.getElementById('sendBtn').addEventListener('click', handleSendMessage);
-  document.getElementById('chatInput').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  });
-  
-  // Profile
-  document.getElementById('saveProfileBtn').addEventListener('click', handleSaveProfile);
-  document.getElementById('uploadAvatarOverlay').addEventListener('click', () => {
-    document.getElementById('profilePicInput').click();
-  });
-  document.getElementById('profilePicInput').addEventListener('change', handleProfilePicChange);
-  document.getElementById('changePasswordBtn').addEventListener('click', handleChangePassword);
-  
-  // Dashboard
+  // Dashboard refresh
   document.getElementById('refreshDashboard').addEventListener('click', () => DashboardManager.loadDashboardData());
-  
-  // Admin
-  document.getElementById('manageUsersBtn').addEventListener('click', handleManageUsers);
-  document.getElementById('systemStatsBtn').addEventListener('click', handleSystemStats);
-  document.getElementById('manageRolesBtn').addEventListener('click', handleManageRoles);
-  document.getElementById('settingsBtn').addEventListener('click', handleSettings);
-  document.getElementById('systemHealthBtn').addEventListener('click', handleSystemHealth);
-  
-  // Language switcher
-  document.getElementById('languageBtn').addEventListener('click', function() {
-    const dropdown = document.getElementById('languageDropdown');
-    dropdown.classList.toggle('show');
-  });
-  
-  document.querySelectorAll('.language-option').forEach(option => {
-    option.addEventListener('click', function() {
-      const lang = this.dataset.lang;
-      LanguageManager.setLanguage(lang);
-      document.getElementById('languageDropdown').classList.remove('show');
-    });
-  });
-  
-  // Close dropdown when clicking outside
-  document.addEventListener('click', function(event) {
-    const dropdown = document.getElementById('languageDropdown');
-    const btn = document.getElementById('languageBtn');
-    if (dropdown && btn && !dropdown.contains(event.target) && !btn.contains(event.target)) {
-      dropdown.classList.remove('show');
-    }
-  });
   
   // Logout
   document.getElementById('sidebarLogout').addEventListener('click', handleLogout);
   
-  // Initialize language
-  LanguageManager.init();
+  // Set today's date as default for project deadline
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('projectDeadline').valueAsDate = tomorrow;
+  
+  // Initialize with sample data if empty
+  initializeSampleData();
 }
 
 // --- Event Handlers ---
@@ -2856,38 +1886,37 @@ async function handleAuthAction() {
     return;
   }
   
-  try {
-    if (isRegisterMode) {
-      const firstName = document.getElementById('modalFirstName').value;
-      const lastName = document.getElementById('modalLastName').value;
-      const grade = document.getElementById('modalGrade').value;
-      
-      if (!Validator.validateRequired(firstName) || !Validator.validateRequired(lastName)) {
-        Toast.show('Please enter your name', 'error');
-        return;
-      }
-      
-      if (!Validator.validateRequired(grade)) {
-        Toast.show('Please select your grade', 'error');
-        return;
-      }
-      
-      await AuthManager.register(email, password, {
-        firstName,
-        lastName,
-        grade
-      });
-      
-      Modal.hide('authModal');
-      clearAuthForm();
-    } else {
-      const rememberMe = document.getElementById('rememberMe').checked;
-      await AuthManager.login(email, password, rememberMe);
-      Modal.hide('authModal');
-      clearAuthForm();
+  let success = false;
+  
+  if (isRegisterMode) {
+    const firstName = document.getElementById('modalFirstName').value;
+    const lastName = document.getElementById('modalLastName').value;
+    const grade = document.getElementById('modalGrade').value;
+    
+    if (!Validator.validateRequired(firstName) || !Validator.validateRequired(lastName)) {
+      Toast.show('Please enter your name', 'error');
+      return;
     }
-  } catch (error) {
-    // Error already handled by AuthManager
+    
+    if (!Validator.validateRequired(grade)) {
+      Toast.show('Please select your grade', 'error');
+      return;
+    }
+    
+    success = await AuthManager.register(email, password, {
+      firstName,
+      lastName,
+      grade
+    });
+  } else {
+    success = await AuthManager.login(email, password);
+  }
+  
+  if (success) {
+    Modal.hide('authModal');
+    clearAuthForm();
+    updateUIForUser(State.userData);
+    DashboardManager.loadDashboardData();
   }
 }
 
@@ -2904,63 +1933,6 @@ function toggleRegisterMode() {
     registerFields.style.display = 'none';
     toggleBtn.textContent = 'Don\'t have an account? Register';
     actionBtn.textContent = 'Login';
-  }
-}
-
-async function handleForgotPassword() {
-  const email = document.getElementById('modalEmail').value;
-  if (!Validator.validateEmail(email)) {
-    Toast.show('Please enter your email address', 'error');
-    return;
-  }
-  
-  await AuthManager.resetPassword(email);
-}
-
-async function handleCreateClub() {
-  const name = document.getElementById('clubName').value;
-  const abbreviation = document.getElementById('clubAbbreviation').value;
-  const leader1 = document.getElementById('clubLeader1').value;
-  const description = document.getElementById('clubDescription').value;
-  const category = document.getElementById('clubCategory').value;
-  const leader2 = document.getElementById('clubLeader2').value;
-  
-  // Validation
-  if (!Validator.validateRequired(name)) {
-    Toast.show('Club name is required', 'error');
-    return;
-  }
-  
-  if (!Validator.validateRequired(abbreviation)) {
-    Toast.show('Club abbreviation is required', 'error');
-    return;
-  }
-  
-  if (!Validator.validateRequired(leader1)) {
-    Toast.show('Primary leader is required', 'error');
-    return;
-  }
-  
-  if (!Validator.validateRequired(description)) {
-    Toast.show('Description is required', 'error');
-    return;
-  }
-  
-  try {
-    await ClubManager.createClub({
-      name,
-      abbreviation,
-      leader1,
-      leader2,
-      description,
-      category
-    });
-    
-    Modal.hide('createClubModal');
-    clearClubForm();
-    loadSectionData('clubs');
-  } catch (error) {
-    // Error already handled by ClubManager
   }
 }
 
@@ -2992,255 +1964,15 @@ async function handleCreateProject() {
     Modal.hide('createProjectModal');
     clearProjectForm();
     loadSectionData('projects');
+    DashboardManager.loadDashboardData();
   } catch (error) {
     // Error already handled by ProjectManager
   }
 }
 
-async function handleSaveProfile() {
-  const name = document.getElementById('profileName').value;
-  const grade = document.getElementById('profileGrade').value;
-  const bio = document.getElementById('profileBio').value;
-  const phone = document.getElementById('profilePhone').value;
-  const location = document.getElementById('profileLocation').value;
-  
-  if (!Validator.validateRequired(name)) {
-    Toast.show('Name is required', 'error');
-    return;
-  }
-  
-  const updates = {
-    name,
-    grade,
-    bio,
-    phone,
-    location,
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-  };
-  
-  const success = await UserManager.updateUserProfile(State.currentUser.uid, updates);
-  if (success) {
-    Toast.show('Profile saved successfully!', 'success');
-    updateUIForUser({ ...State.userData, ...updates });
-  }
-}
-
-async function handleChangePassword() {
-  const newPassword = prompt('Enter new password (min 6 characters):');
-  if (!newPassword) return;
-  
-  if (!Validator.validatePassword(newPassword)) {
-    Toast.show('Password must be at least 6 characters', 'error');
-    return;
-  }
-  
-  const confirmPassword = prompt('Confirm new password:');
-  if (newPassword !== confirmPassword) {
-    Toast.show('Passwords do not match', 'error');
-    return;
-  }
-  
-  try {
-    await State.currentUser.updatePassword(newPassword);
-    Toast.show('Password changed successfully!', 'success');
-  } catch (error) {
-    Toast.show('Failed to change password', 'error');
-  }
-}
-
-async function handleSendMessage() {
-  const input = document.getElementById('chatInput');
-  const message = input.value.trim();
-  
-  if (!message) return;
-  
-  try {
-    await db.collection('messages').add({
-      text: message,
-      sender: State.currentUser.uid,
-      senderEmail: State.currentUser.email,
-      senderName: State.userData.name,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      readBy: [State.currentUser.uid]
-    });
-    
-    input.value = '';
-  } catch (error) {
-    Toast.show('Failed to send message', 'error');
-  }
-}
-
-async function handleManageUsers() {
-  Loading.show('Loading users...');
-  
-  try {
-    const snapshot = await db.collection('users').get();
-    const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    
-    displayUsersTable(users);
-  } catch (error) {
-    Toast.show('Failed to load users', 'error');
-  } finally {
-    Loading.hide();
-  }
-}
-
-function displayUsersTable(users) {
-  const container = document.getElementById('adminContent');
-  
-  container.innerHTML = `
-    <div class="admin-table-container">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Grade</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Joined</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${users.map(user => `
-            <tr>
-              <td>${user.name}</td>
-              <td>${user.email}</td>
-              <td>${user.grade || '-'}</td>
-              <td><span class="role-badge ${user.role}">${user.role}</span></td>
-              <td><span class="status-badge ${user.status || 'active'}">${user.status || 'Active'}</span></td>
-              <td>${user.createdAt ? user.createdAt.toDate().toLocaleDateString() : '-'}</td>
-              <td>
-                <button class="btn sm" onclick="openRoleModal('${user.id}', '${user.name}', '${user.role}')">
-                  Change Role
-                </button>
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
-
-function openRoleModal(userId, userName, currentRole) {
-  document.getElementById('roleUserInfo').innerHTML = `
-    <div><strong>User:</strong> ${userName}</div>
-    <div><strong>Current Role:</strong> <span class="role-badge ${currentRole}">${currentRole}</span></div>
-  `;
-  
-  // Set current role as selected
-  document.querySelectorAll('.role-option').forEach(option => {
-    const radio = option.querySelector('input[type="radio"]');
-    if (radio && radio.value === currentRole) {
-      option.style.borderColor = 'var(--primary-light)';
-      radio.checked = true;
-    } else {
-      option.style.borderColor = '#e2e8f0';
-    }
-  });
-  
-  document.getElementById('roleNotes').value = '';
-  State.roleModalUserId = userId;
-  Modal.show('roleModal');
-}
-
-async function handleSaveRole() {
-  const selectedRadio = document.querySelector('input[name="userRole"]:checked');
-  if (!selectedRadio) {
-    Toast.show('Please select a role', 'error');
-    return;
-  }
-  
-  const newRole = selectedRadio.value;
-  
-  const success = await UserManager.updateUserRole(State.roleModalUserId, newRole);
-  if (success) {
-    Modal.hide('roleModal');
-    handleManageUsers(); // Refresh table
-  }
-}
-
-async function handleSystemStats() {
-  Loading.show('Loading statistics...');
-  
-  try {
-    const [users, projects, clubs, messages] = await Promise.all([
-      db.collection('users').get(),
-      db.collection('projects').get(),
-      db.collection('clubs').get(),
-      db.collection('messages').get()
-    ]);
-    
-    const container = document.getElementById('adminContent');
-    
-    container.innerHTML = `
-      <div class="dashboard-grid">
-        <div class="dashboard-widget">
-          <div class="widget-header">
-            <div class="widget-icon">
-              <span class="material-symbols-outlined">people</span>
-            </div>
-            <div class="widget-title">Total Users</div>
-          </div>
-          <div class="widget-value">${users.size}</div>
-        </div>
-        
-        <div class="dashboard-widget">
-          <div class="widget-header">
-            <div class="widget-icon">
-              <span class="material-symbols-outlined">work</span>
-            </div>
-            <div class="widget-title">Active Projects</div>
-          </div>
-          <div class="widget-value">${projects.size}</div>
-        </div>
-        
-        <div class="dashboard-widget">
-          <div class="widget-header">
-            <div class="widget-icon">
-              <span class="material-symbols-outlined">groups</span>
-            </div>
-            <div class="widget-title">Clubs</div>
-          </div>
-          <div class="widget-value">${clubs.size}</div>
-        </div>
-        
-        <div class="dashboard-widget">
-          <div class="widget-header">
-            <div class="widget-icon">
-              <span class="material-symbols-outlined">chat</span>
-            </div>
-            <div class="widget-title">Messages</div>
-          </div>
-          <div class="widget-value">${messages.size}</div>
-        </div>
-      </div>
-    `;
-  } catch (error) {
-    Toast.show('Failed to load statistics', 'error');
-  } finally {
-    Loading.hide();
-  }
-}
-
 function handleLogout() {
-  auth.signOut();
-}
-
-function handleProfilePicChange(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = document.getElementById('profilePic');
-    img.src = e.target.result;
-    img.style.display = 'block';
-    document.getElementById('profileAvatarFallback').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
+  AuthManager.logout();
+  updateUIForGuest();
 }
 
 // --- UI Update Functions ---
@@ -3249,38 +1981,76 @@ function updateUIForUser(userData) {
   
   // Update sidebar
   document.getElementById('sideName').textContent = userData.name || 'Guest';
-  document.getElementById('sideRole').textContent = getRoleDisplay(userData.role);
+  document.getElementById('sideRole').textContent = userData.role || 'Student';
   
   // Update profile avatar initials
   const initials = getInitials(userData.name || 'GU');
   document.getElementById('sideProfileInitials').textContent = initials;
-  document.getElementById('profileAvatarFallback').textContent = initials;
   
   // Update topbar
   document.getElementById('welcomeText').textContent = `Welcome, ${userData.firstName || userData.name || 'User'}`;
-  document.getElementById('welcomeSub').textContent = getRoleDisplay(userData.role) + ' Dashboard';
+  document.getElementById('welcomeSub').textContent = `${userData.role || 'Student'} Dashboard`;
   
   // Update login/logout buttons
   document.getElementById('openLogin').style.display = 'none';
   document.getElementById('sidebarLogout').style.display = 'block';
   
+  // Update profile section
+  const profileForm = document.getElementById('profileForm');
+  if (profileForm) {
+    profileForm.innerHTML = `
+      <div class="form-group" style="display:flex; gap:24px; align-items:flex-start;">
+        <div style="text-align: center;">
+          <div class="profile-avatar" style="width: 100px; height: 100px; font-size: 32px;">${initials}</div>
+          <button class="btn ghost sm" style="margin-top: 12px;">Change Photo</button>
+        </div>
+        <div style="flex:1">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <div style="padding: 12px; background: var(--surface-secondary); border-radius: var(--radius-sm);">
+              ${userData.name}
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <div style="padding: 12px; background: var(--surface-secondary); border-radius: var(--radius-sm);">
+                ${userData.email}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Grade</label>
+              <div style="padding: 12px; background: var(--surface-secondary); border-radius: var(--radius-sm);">
+                ${userData.grade || 'Not set'}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role</label>
+            <div style="padding: 12px; background: var(--surface-secondary); border-radius: var(--radius-sm);">
+              <span class="role-badge role-${userData.role}">${userData.role}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Show profile buttons
+    document.getElementById('changePasswordBtn').style.display = 'inline-flex';
+    document.getElementById('saveProfileBtn').style.display = 'inline-flex';
+  }
+  
   // Show/hide admin features
-  const isAdmin = userData.role === 'admin' || userData.role === 'owner';
+  const isAdmin = userData.role === 'admin';
   document.querySelectorAll('.admin-only').forEach(el => {
     el.style.display = isAdmin ? 'block' : 'none';
   });
   
-  // Update profile form
-  document.getElementById('profileName').value = userData.name || '';
-  document.getElementById('profileEmail').value = userData.email || '';
-  document.getElementById('profileGrade').value = userData.grade || '';
-  document.getElementById('profileBio').value = userData.bio || '';
-  document.getElementById('profilePhone').value = userData.phone || '';
-  document.getElementById('profileLocation').value = userData.location || '';
+  // Update last sync time
+  document.getElementById('lastSync').textContent = `Last sync: ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
   
   // Load initial data
   DashboardManager.loadDashboardData();
-  loadClubs();
 }
 
 function updateUIForGuest() {
@@ -3299,21 +2069,30 @@ function updateUIForGuest() {
   document.getElementById('openLogin').style.display = 'block';
   document.getElementById('sidebarLogout').style.display = 'none';
   
+  // Reset profile section
+  const profileForm = document.getElementById('profileForm');
+  if (profileForm) {
+    profileForm.innerHTML = `
+      <div style="text-align: center; padding: 40px 20px;">
+        <div class="profile-avatar" style="width: 80px; height: 80px; margin: 0 auto 20px; font-size: 24px;">GU</div>
+        <h3 style="margin-bottom: 8px;">Guest User</h3>
+        <p style="color: var(--muted); margin-bottom: 24px;">Please login to access your profile</p>
+        <button id="profileLoginBtn" class="btn primary">Login to Continue</button>
+      </div>
+    `;
+    
+    // Re-attach event listener
+    document.getElementById('profileLoginBtn')?.addEventListener('click', () => Modal.show('authModal'));
+    
+    // Hide profile buttons
+    document.getElementById('changePasswordBtn').style.display = 'none';
+    document.getElementById('saveProfileBtn').style.display = 'none';
+  }
+  
   // Hide admin features
   document.querySelectorAll('.admin-only').forEach(el => {
     el.style.display = 'none';
   });
-  
-  // Reset profile form
-  document.getElementById('profileName').value = '';
-  document.getElementById('profileEmail').value = '';
-  document.getElementById('profileGrade').value = '';
-  document.getElementById('profileBio').value = '';
-  document.getElementById('profilePhone').value = '';
-  document.getElementById('profileLocation').value = '';
-  document.getElementById('profilePic').style.display = 'none';
-  document.getElementById('profileAvatarFallback').style.display = 'block';
-  document.getElementById('profileAvatarFallback').textContent = 'GU';
   
   // Reset dashboard
   document.getElementById('widgetProjects').textContent = '0';
@@ -3321,22 +2100,16 @@ function updateUIForGuest() {
   document.getElementById('widgetAssignments').textContent = '0';
   document.getElementById('widgetActivity').textContent = '0';
   document.getElementById('recentActivity').innerHTML = '<div class="list-item">No recent activity</div>';
+  
+  // Reset profile stats
+  document.getElementById('projectsCount').textContent = '0';
+  document.getElementById('clubsCount').textContent = '0';
+  document.getElementById('assignmentsCount').textContent = '0';
+  document.getElementById('streakCount').textContent = '0';
 }
 
 function getInitials(name) {
   return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) || 'GU';
-}
-
-function getRoleDisplay(role) {
-  const t = translations[State.currentLanguage];
-  const roles = {
-    student: t.student,
-    leader: t.leader,
-    admin: t.admin,
-    owner: 'System Owner',
-    guest: 'Guest'
-  };
-  return roles[role] || 'User';
 }
 
 // --- Section Loading ---
@@ -3351,19 +2124,10 @@ async function loadSectionData(section) {
     case 'clubs':
       await loadClubs();
       break;
-    case 'profile':
-      // Profile data is already loaded
-      break;
-    case 'admin':
-      // Default to user management
-      handleManageUsers();
-      break;
   }
 }
 
 async function loadProjects() {
-  if (!State.currentUser) return;
-  
   const projects = await ProjectManager.loadProjects();
   const container = document.getElementById('projectsList');
   
@@ -3378,8 +2142,9 @@ async function loadProjects() {
         <div class="list-item-title">${project.title}</div>
         <div class="list-item-subtitle">${project.description}</div>
         <div class="list-item-meta">
-          <span>Created: ${project.createdAt.toDate().toLocaleDateString()}</span>
+          <span>Created: ${new Date(project.createdAt).toLocaleDateString()}</span>
           <span>Status: ${project.status}</span>
+          ${project.deadline ? `<span>Deadline: ${new Date(project.deadline).toLocaleDateString()}</span>` : ''}
         </div>
       </div>
       <div class="list-item-actions">
@@ -3395,7 +2160,7 @@ async function loadClubs() {
   const container = document.getElementById('clubsList');
   
   if (!clubs.length) {
-    container.innerHTML = '<div class="club-card">No clubs yet. Admins can create clubs.</div>';
+    container.innerHTML = '<div class="list-item">No clubs available yet.</div>';
     return;
   }
   
@@ -3403,50 +2168,46 @@ async function loadClubs() {
     const isMember = State.currentUser && club.members.includes(State.currentUser.uid);
     
     return `
-      <div class="club-card">
-        <div class="club-header">
-          <div class="club-logo"><span class="material-symbols-outlined">groups</span></div>
-          <div class="club-info">
-            <h3 class="club-name">${club.name}</h3>
-            <p class="club-abbr">${club.abbreviation}</p>
-            <p class="club-leaders">Leaders: ${club.leader1}${club.leader2 ? `, ${club.leader2}` : ''}</p>
-            <p class="club-description">${club.description}</p>
+      <div class="list-item">
+        <div class="list-item-content">
+          <div class="list-item-title">${club.name} (${club.abbreviation})</div>
+          <div class="list-item-subtitle">${club.description}</div>
+          <div class="list-item-meta">
+            <span>Category: ${club.category}</span>
+            <span>Members: ${club.memberCount}</span>
+            <span>Leader: ${club.leader1}</span>
           </div>
         </div>
-        <div class="club-stats">
-          <div class="club-stat">
-            <div class="club-stat-value">${club.memberCount}</div>
-            <div class="club-stat-label">Members</div>
-          </div>
-          <div class="club-stat">
-            <div class="club-stat-value">${club.funds || 0} DH</div>
-            <div class="club-stat-label">Funds</div>
-          </div>
-          <div class="club-stat">
-            <div class="club-stat-value">${club.projects ? club.projects.length : 0}</div>
-            <div class="club-stat-label">Projects</div>
-          </div>
-          <div class="club-stat">
-            <div class="club-stat-value">${club.events ? club.events.length : 0}</div>
-            <div class="club-stat-label">Events</div>
-          </div>
-        </div>
-        <div class="club-actions">
+        <div class="list-item-actions">
           ${isMember ? 
-            '<button class="btn sm success">Already Joined</button>' : 
-            `<button class="btn sm primary" onclick="ClubManager.joinClub('${club.id}')">Join Club</button>`
+            '<button class="btn sm success">Joined</button>' : 
+            `<button class="btn sm primary" onclick="joinClub('${club.id}')">Join Club</button>`
           }
-          <button class="btn sm ghost">View Club</button>
+          <button class="btn sm ghost">View</button>
         </div>
       </div>
     `;
   }).join('');
 }
 
+async function joinClub(clubId) {
+  if (!State.currentUser) {
+    Toast.show('Please login to join a club', 'error');
+    Modal.show('authModal');
+    return;
+  }
+  
+  const success = await ClubManager.joinClub(clubId);
+  if (success) {
+    loadClubs();
+    DashboardManager.loadDashboardData();
+  }
+}
+
 // --- Form Clearing Functions ---
 function clearAuthForm() {
-  document.getElementById('modalEmail').value = '';
-  document.getElementById('modalPass').value = '';
+  document.getElementById('modalEmail').value = 'test@student.com';
+  document.getElementById('modalPass').value = 'password123';
   document.getElementById('modalFirstName').value = '';
   document.getElementById('modalLastName').value = '';
   document.getElementById('modalGrade').value = '';
@@ -3455,114 +2216,122 @@ function clearAuthForm() {
   document.getElementById('modalAction').textContent = 'Login';
 }
 
-function clearClubForm() {
-  document.getElementById('clubName').value = '';
-  document.getElementById('clubAbbreviation').value = '';
-  document.getElementById('clubLeader1').value = '';
-  document.getElementById('clubLeader2').value = '';
-  document.getElementById('clubDescription').value = '';
-  document.getElementById('clubCategory').value = 'academic';
-}
-
 function clearProjectForm() {
   document.getElementById('projectTitle').value = '';
   document.getElementById('projectDescription').value = '';
-  document.getElementById('projectDeadline').value = '';
-  document.getElementById('projectStatus').value = 'planning';
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('projectDeadline').valueAsDate = tomorrow;
+  document.getElementById('projectStatus').value = 'in-progress';
+}
+
+// --- Initialize Sample Data ---
+function initializeSampleData() {
+  // Initialize clubs if empty
+  const clubs = StorageManager.getClubs();
+  if (clubs.length === 0) {
+    const sampleClubs = [
+      {
+        id: '1',
+        name: 'Science Club',
+        abbreviation: 'SC',
+        description: 'Exploring the wonders of science through experiments and discussions.',
+        category: 'academic',
+        leader1: 'Dr. Ahmed Zaki',
+        leader2: 'Prof. Sarah Johnson',
+        createdBy: 'admin',
+        creatorEmail: 'admin@school.edu',
+        members: ['admin'],
+        memberCount: 1,
+        funds: 500,
+        projects: [],
+        events: [],
+        status: 'active',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      },
+      {
+        id: '2',
+        name: 'Debate Society',
+        abbreviation: 'DS',
+        description: 'Developing public speaking and critical thinking skills through debates.',
+        category: 'academic',
+        leader1: 'Ms. Leila Smith',
+        createdBy: 'admin',
+        creatorEmail: 'admin@school.edu',
+        members: ['admin'],
+        memberCount: 1,
+        funds: 300,
+        projects: [],
+        events: [],
+        status: 'active',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      },
+      {
+        id: '3',
+        name: 'Football Team',
+        abbreviation: 'FT',
+        description: 'School football team for competitions and fitness.',
+        category: 'sports',
+        leader1: 'Coach Mohamed Ali',
+        createdBy: 'admin',
+        creatorEmail: 'admin@school.edu',
+        members: ['admin'],
+        memberCount: 1,
+        funds: 1000,
+        projects: [],
+        events: [],
+        status: 'active',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+    ];
+    StorageManager.saveClubs(sampleClubs);
+  }
+  
+  // Initialize users if empty
+  const users = StorageManager.getUsers();
+  if (users.length === 0) {
+    const sampleUsers = [
+      {
+        id: 'admin',
+        email: 'admin@school.edu',
+        password: 'admin123',
+        name: 'System Administrator',
+        firstName: 'System',
+        lastName: 'Admin',
+        grade: 'Admin',
+        role: 'admin',
+        createdAt: new Date().toISOString(),
+        status: 'active'
+      }
+    ];
+    StorageManager.saveUsers(sampleUsers);
+  }
+  
+  // Check for saved user
+  const savedUser = StorageManager.getCurrentUser();
+  if (savedUser) {
+    State.userData = savedUser;
+    State.currentUser = { email: savedUser.email, uid: savedUser.id };
+    State.userRole = savedUser.role || 'student';
+    updateUIForUser(savedUser);
+  }
 }
 
 // --- Initialize the application ---
 document.addEventListener('DOMContentLoaded', () => {
   initUI();
   
-  // Set up auth state listener
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      State.currentUser = user;
-      const userData = await UserManager.getUserData(user.uid);
-      
-      if (userData) {
-        State.userData = userData;
-        State.userRole = userData.role || 'student';
-        updateUIForUser(userData);
-      } else {
-        // User document doesn't exist, create it
-        const defaultUserData = {
-          uid: user.uid,
-          email: user.email,
-          name: user.email.split('@')[0],
-          role: 'student',
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-          status: 'active'
-        };
-        
-        await db.collection('users').doc(user.uid).set(defaultUserData);
-        State.userData = defaultUserData;
-        State.userRole = 'student';
-        updateUIForUser(defaultUserData);
-      }
-      
-      // Set up chat listener if on conversations page
-      if (State.activeTab === 'conversations') {
-        db.collection('messages')
-          .orderBy('timestamp', 'desc')
-          .limit(50)
-          .onSnapshot(snapshot => {
-            const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            updateChatUI(messages.reverse());
-          });
-      }
-    } else {
-      State.currentUser = null;
-      State.userData = null;
-      State.userRole = 'guest';
-      updateUIForGuest();
-    }
-  });
-  
-  // Initialize toast container
-  if (!document.getElementById('toastContainer')) {
-    const container = document.createElement('div');
-    container.id = 'toastContainer';
-    container.className = 'toast-container';
-    document.body.appendChild(container);
-  }
-  
   // Show welcome message
   setTimeout(() => {
-    Toast.show('Welcome to BNI Yekhlef Student Portal!', 'info', 3000);
+    Toast.show('Welcome to BNI Yekhlef Student Portal! Use test@student.com / password123 to login.', 'info', 5000);
   }, 1000);
 });
 
-// --- Chat UI Update ---
-function updateChatUI(messages) {
-  const container = document.getElementById('chatWindow');
-  if (!container) return;
-  
-  container.innerHTML = messages.map(msg => {
-    const isSent = msg.sender === State.currentUser.uid;
-    return `
-      <div class="message ${isSent ? 'sent' : ''}">
-        <div class="meta">
-          <span class="message-sender">${msg.senderName}</span>
-          <span class="message-time">${msg.timestamp ? msg.timestamp.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now'}</span>
-        </div>
-        <div class="message-text">${msg.text}</div>
-      </div>
-    `;
-  }).join('');
-  
-  container.scrollTop = container.scrollHeight;
-}
-
-// Placeholder functions for unimplemented features
-function handleSettings() { Toast.show('Feature coming soon', 'info'); }
-function handleSystemHealth() { Toast.show('Feature coming soon', 'info'); }
-function handleManageRoles() { handleManageUsers(); }
-
-// Export for debugging
-window.AppState = State;
+// Make joinClub function available globally
+window.joinClub = joinClub;
 </script>
 </body>
 </html>
